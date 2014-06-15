@@ -14,5 +14,10 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
-
+*~
 vendor/bundle
+
+config/initializers/amazon_ecs.rb
+db/groonga/
+
+

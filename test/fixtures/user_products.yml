@@ -1,0 +1,24 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+user_product1:
+  user: user1
+  product: keyword_search1
+  type_name: shelf
+  tags_json: "[]"
+
+user_product2:
+  user: user2
+  product: keyword_search1
+  type_name: shelf
+  tags_json: '["search1","search2"]'
+
+user_product3:
+  user: user2
+  product: product1
+  type_name: shelf
+  tags_json: '["search3","search2"]'
+

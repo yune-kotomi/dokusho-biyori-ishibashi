@@ -3,8 +3,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.4'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+gem 'pg'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.2'
@@ -16,7 +15,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -43,3 +42,22 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+group :test do
+  gem 'webmock'
+  gem 'rr', :require => false
+end
+
+group :development, :test do
+  gem 'pry'
+  gem 'pry-doc'
+end
+
+gem 'opal-rails'
+
+gem 'log4r'
+gem 'uuidtools'
+gem 'icalendar'
+gem 'tlsmail'
+gem 'rroonga'
+gem 'amazon-ecs'
+
