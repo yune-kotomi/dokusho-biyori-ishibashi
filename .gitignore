@@ -18,6 +18,5 @@
 vendor/bundle
 
 config/initializers/amazon_ecs.rb
+config/initializers/rakuten_books.rb
 db/groonga/
-
-
