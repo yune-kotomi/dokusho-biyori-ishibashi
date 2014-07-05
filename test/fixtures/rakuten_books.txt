@@ -1,0 +1,101 @@
+---
+- 1
+- - :ean: '2100010214980'
+    :r_title: "【新品】【送料無料】ゆゆ式　1-6巻セット【漫画 全巻 買うなら楽天ブックス】"
+    :r_url: http://hb.afl.rakuten.co.jp/hgc/g00q0722.33jo485d.g00q0722.33jo53be/?pc=http%3A%2F%2Fbooks.rakuten.co.jp%2Frb%2F12790241%2F
+    :r_manufacturer: "芳文社"
+    :r_release_date: 2014-06-01 00:00:00.000000000 +09:00
+    :r_image_medium: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/4980/2100010214980.jpg?_ex=120x120
+    :r_image_small: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/4980/2100010214980.jpg?_ex=64x64
+    :r_authors:
+    - "三上小又"
+  - :ean: '9784832244429'
+    :r_title: "ゆゆ式（6）"
+    :r_url: http://hb.afl.rakuten.co.jp/hgc/g00q0722.33jo485d.g00q0722.33jo53be/?pc=http%3A%2F%2Fbooks.rakuten.co.jp%2Frb%2F12724570%2F
+    :r_manufacturer: "芳文社"
+    :r_release_date: 2014-05-01 00:00:00.000000000 +09:00
+    :r_image_medium: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/4429/9784832244429.jpg?_ex=120x120
+    :r_image_small: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/4429/9784832244429.jpg?_ex=64x64
+    :r_authors:
+    - "三上小又"
+  - :ean: '9784832243170'
+    :r_title: "ゆゆ式一式〜ゆゆ式ファンブック"
+    :r_url: http://hb.afl.rakuten.co.jp/hgc/g00q0722.33jo485d.g00q0722.33jo53be/?pc=http%3A%2F%2Fbooks.rakuten.co.jp%2Frb%2F12324817%2F
+    :r_manufacturer: "芳文社"
+    :r_release_date: 2013-06-27 00:00:00.000000000 +09:00
+    :r_image_medium: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/3170/9784832243170.jpg?_ex=120x120
+    :r_image_small: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/3170/9784832243170.jpg?_ex=64x64
+    :r_authors:
+    - "三上小又"
+  - :ean: '9784832242944'
+    :r_title: "ゆゆ式 ストーリーアンソロジーコミック（1）"
+    :r_url: http://hb.afl.rakuten.co.jp/hgc/g00q0722.33jo485d.g00q0722.33jo53be/?pc=http%3A%2F%2Fbooks.rakuten.co.jp%2Frb%2F12235761%2F
+    :r_manufacturer: "芳文社"
+    :r_release_date: 2013-04-26 00:00:00.000000000 +09:00
+    :r_image_medium: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/2944/9784832242944.jpg?_ex=120x120
+    :r_image_small: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/2944/9784832242944.jpg?_ex=64x64
+    :r_authors:
+    - "アンソロジー"
+  - :ean: '9784832242876'
+    :r_title: "ゆゆ式（5）"
+    :r_url: http://hb.afl.rakuten.co.jp/hgc/g00q0722.33jo485d.g00q0722.33jo53be/?pc=http%3A%2F%2Fbooks.rakuten.co.jp%2Frb%2F12235754%2F
+    :r_manufacturer: "芳文社"
+    :r_release_date: 2013-04-26 00:00:00.000000000 +09:00
+    :r_image_medium: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/2876/9784832242876.jpg?_ex=120x120
+    :r_image_small: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/2876/9784832242876.jpg?_ex=64x64
+    :r_authors:
+    - "三上小又"
+  - :ean: '2100010161413'
+    :r_title: "【新品】【送料無料】ゆゆ式 1-5巻セット【漫画 全巻 買うなら楽天ブックス】"
+    :r_url: http://hb.afl.rakuten.co.jp/hgc/g00q0722.33jo485d.g00q0722.33jo53be/?pc=http%3A%2F%2Fbooks.rakuten.co.jp%2Frb%2F12328555%2F
+    :r_manufacturer: "芳文社"
+    :r_release_date: 2012-06-01 00:00:00.000000000 +09:00
+    :r_image_medium: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/1413/2100010161413.jpg?_ex=120x120
+    :r_image_small: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/1413/2100010161413.jpg?_ex=64x64
+    :r_authors:
+    - "三上小又"
+  - :ean: '9784832241268'
+    :r_title: "ゆゆ式（4）"
+    :r_url: http://hb.afl.rakuten.co.jp/hgc/g00q0722.33jo485d.g00q0722.33jo53be/?pc=http%3A%2F%2Fbooks.rakuten.co.jp%2Frb%2F11537047%2F
+    :r_manufacturer: "芳文社"
+    :r_release_date: 2012-03-01 00:00:00.000000000 +09:00
+    :r_image_medium: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/1268/9784832241268.jpg?_ex=120x120
+    :r_image_small: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/1268/9784832241268.jpg?_ex=64x64
+    :r_authors:
+    - "三上小又"
+  - :ean: '2100010145178'
+    :r_title: "【新品】【送料無料】ゆゆ式 1-4巻セット【漫画 全巻 買うなら楽天ブックス】"
+    :r_url: http://hb.afl.rakuten.co.jp/hgc/g00q0722.33jo485d.g00q0722.33jo53be/?pc=http%3A%2F%2Fbooks.rakuten.co.jp%2Frb%2F12188431%2F
+    :r_manufacturer: "芳文社"
+    :r_release_date: 2012-02-01 00:00:00.000000000 +09:00
+    :r_image_medium: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/5178/2100010145178.jpg?_ex=120x120
+    :r_image_small: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/5178/2100010145178.jpg?_ex=64x64
+    :r_authors:
+    - "三上小又"
+  - :ean: '9784832240063'
+    :r_title: "ゆゆ式（3）"
+    :r_url: http://hb.afl.rakuten.co.jp/hgc/g00q0722.33jo485d.g00q0722.33jo53be/?pc=http%3A%2F%2Fbooks.rakuten.co.jp%2Frb%2F7000651%2F
+    :r_manufacturer: "芳文社"
+    :r_release_date: 2011-03-26 00:00:00.000000000 +09:00
+    :r_image_medium: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/0063/9784832240063.jpg?_ex=120x120
+    :r_image_small: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/0063/9784832240063.jpg?_ex=64x64
+    :r_authors:
+    - "三上小又"
+  - :ean: '9784832278929'
+    :r_title: "ゆゆ式（2）"
+    :r_url: http://hb.afl.rakuten.co.jp/hgc/g00q0722.33jo485d.g00q0722.33jo53be/?pc=http%3A%2F%2Fbooks.rakuten.co.jp%2Frb%2F6315146%2F
+    :r_manufacturer: "芳文社"
+    :r_release_date: 2010-02-01 00:00:00.000000000 +09:00
+    :r_image_medium: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/8929/9784832278929.jpg?_ex=120x120
+    :r_image_small: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/8929/9784832278929.jpg?_ex=64x64
+    :r_authors:
+    - "三上小又"
+  - :ean: '9784832277946'
+    :r_title: "ゆゆ式（1）"
+    :r_url: http://hb.afl.rakuten.co.jp/hgc/g00q0722.33jo485d.g00q0722.33jo53be/?pc=http%3A%2F%2Fbooks.rakuten.co.jp%2Frb%2F5996868%2F
+    :r_manufacturer: "芳文社"
+    :r_release_date: 2009-03-01 00:00:00.000000000 +09:00
+    :r_image_medium: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/8322/83227794.jpg?_ex=120x120
+    :r_image_small: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/8322/83227794.jpg?_ex=64x64
+    :r_authors:
+    - "三上小又"

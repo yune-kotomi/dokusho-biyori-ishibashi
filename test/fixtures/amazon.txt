@@ -1,145 +1,87 @@
---- 
-- 21
-- - :a_release_date: 2014-05-27 00:00:00 +09:00
+---
+- 22
+- - :ean: '9784832244429'
+    :category: books
+    :a_title: "ゆゆ式 (6) (まんがタイムKRコミックス)"
     :a_url: http://www.amazon.co.jp/%E3%82%86%E3%82%86%E5%BC%8F-6-%E3%81%BE%E3%82%93%E3%81%8C%E3%82%BF%E3%82%A4%E3%83%A0KR%E3%82%B3%E3%83%9F%E3%83%83%E3%82%AF%E3%82%B9-%E4%B8%89%E4%B8%8A-%E5%B0%8F%E5%8F%88/dp/4832244426%3FSubscriptionId%3D1ZVXR2X53QNFAD6VX1R2%26tag%3Ddokushoyumenosora-22%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D4832244426
+    :a_manufacturer: "芳文社"
+    :a_release_date: 2014-05-27 00:00:00.000000000 +09:00
     :a_release_date_fixed: true
-    :ean: "9784832244429"
     :a_image_medium: http://ecx.images-amazon.com/images/I/51siGB3AqAL._SL160_.jpg
-    :category: books
-    :a_manufacturer: !binary |
-      6Iqz5paH56S+
-
     :a_image_small: http://ecx.images-amazon.com/images/I/51siGB3AqAL._SL75_.jpg
-    :a_authors: 
-    - !binary |
-      5LiJ5LiKIOWwj+WPiA==
-
-    :a_title: !binary |
-      44KG44KG5byPICg2KSAo44G+44KT44GM44K/44Kk44OgS1LjgrPjg5/jg4Pj
-      gq/jgrkp
-
-  - :a_release_date: 2013-09-27 00:00:00 +09:00
+    :a_authors:
+    - "三上 小又"
+  - :ean: '9784832243439'
+    :category: books
+    :a_title: "ゆゆ式 TVアニメ公式ガイドブック ~情報処理部のライフログ~ (まんがタイムKRコミックス)"
     :a_url: http://www.amazon.co.jp/%E3%82%86%E3%82%86%E5%BC%8F-TV%E3%82%A2%E3%83%8B%E3%83%A1%E5%85%AC%E5%BC%8F%E3%82%AC%E3%82%A4%E3%83%89%E3%83%96%E3%83%83%E3%82%AF-%7E%E6%83%85%E5%A0%B1%E5%87%A6%E7%90%86%E9%83%A8%E3%81%AE%E3%83%A9%E3%82%A4%E3%83%95%E3%83%AD%E3%82%B0%7E-%E3%81%BE%E3%82%93%E3%81%8C%E3%82%BF%E3%82%A4%E3%83%A0KR%E3%82%B3%E3%83%9F%E3%83%83%E3%82%AF%E3%82%B9-%E4%B8%89%E4%B8%8A%E5%B0%8F%E5%8F%88/dp/4832243438%3FSubscriptionId%3D1ZVXR2X53QNFAD6VX1R2%26tag%3Ddokushoyumenosora-22%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D4832243438
+    :a_manufacturer: "芳文社"
+    :a_release_date: 2013-09-27 00:00:00.000000000 +09:00
     :a_release_date_fixed: true
-    :ean: "9784832243439"
     :a_image_medium: http://ecx.images-amazon.com/images/I/51rGSrLohmL._SL160_.jpg
-    :category: books
-    :a_manufacturer: !binary |
-      6Iqz5paH56S+
-
     :a_image_small: http://ecx.images-amazon.com/images/I/51rGSrLohmL._SL75_.jpg
-    :a_authors: 
-    - !binary |
-      5Y6f5L2cOuS4ieS4iuWwj+WPiA==
-
-    :a_title: !binary |
-      44KG44KG5byPIFRW44Ki44OL44Oh5YWs5byP44Ks44Kk44OJ44OW44OD44Kv
-      IH7mg4XloLHlh6bnkIbpg6jjga7jg6njgqTjg5Xjg63jgrB+ICjjgb7jgpPj
-      gYzjgr/jgqTjg6BLUuOCs+ODn+ODg+OCr+OCuSk=
-
-  - :a_release_date: 2013-06-27 00:00:00 +09:00
+    :a_authors:
+    - "原作:三上小又"
+  - :ean: '9784832243170'
+    :category: books
+    :a_title: "ゆゆ式 一式~ゆゆ式ファンブック~ (まんがタイムKRコミックス)"
     :a_url: http://www.amazon.co.jp/%E3%82%86%E3%82%86%E5%BC%8F-%E4%B8%80%E5%BC%8F%7E%E3%82%86%E3%82%86%E5%BC%8F%E3%83%95%E3%82%A1%E3%83%B3%E3%83%96%E3%83%83%E3%82%AF%7E-%E3%81%BE%E3%82%93%E3%81%8C%E3%82%BF%E3%82%A4%E3%83%A0KR%E3%82%B3%E3%83%9F%E3%83%83%E3%82%AF%E3%82%B9-%E5%8E%9F%E4%BD%9C-%E4%B8%89%E4%B8%8A%E5%B0%8F%E5%8F%88/dp/4832243179%3FSubscriptionId%3D1ZVXR2X53QNFAD6VX1R2%26tag%3Ddokushoyumenosora-22%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D4832243179
+    :a_manufacturer: "芳文社"
+    :a_release_date: 2013-06-27 00:00:00.000000000 +09:00
     :a_release_date_fixed: true
-    :ean: "9784832243170"
     :a_image_medium: http://ecx.images-amazon.com/images/I/51KWHqQGmHL._SL160_.jpg
-    :category: books
-    :a_manufacturer: !binary |
-      6Iqz5paH56S+
-
     :a_image_small: http://ecx.images-amazon.com/images/I/51KWHqQGmHL._SL75_.jpg
-    :a_authors: 
-    - !binary |
-      5Y6f5L2cOuS4ieS4iuWwj+WPiA==
-
-    :a_title: !binary |
-      44KG44KG5byPIOS4gOW8j37jgobjgoblvI/jg5XjgqHjg7Pjg5bjg4Pjgq9+
-      ICjjgb7jgpPjgYzjgr/jgqTjg6BLUuOCs+ODn+ODg+OCr+OCuSk=
-
-  - :a_release_date: 2013-06-07 00:00:00 +09:00
-    :a_url: http://www.amazon.co.jp/%E3%80%8C%E3%82%86%E3%82%86%E5%BC%8F%E3%80%8D4%E3%82%B3%E3%83%9E%E9%A2%A8%E3%82%AA%E3%83%AA%E3%82%B8%E3%83%8A%E3%83%AB%E3%81%B5%E3%81%9B%E3%82%93%E4%BB%98-%E3%81%BE%E3%82%93%E3%81%8C%E3%82%BF%E3%82%A4%E3%83%A0%E3%81%8D%E3%82%89%E3%82%89-2013%E5%B9%B4-07%E6%9C%88%E5%8F%B7-%E9%9B%91%E8%AA%8C/dp/B00C6FBM4U%3FSubscriptionId%3D1ZVXR2X53QNFAD6VX1R2%26tag%3Ddokushoyumenosora-22%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB00C6FBM4U
-    :a_release_date_fixed: true
-    :ean: "4910083450738"
-    :a_image_medium: http://ecx.images-amazon.com/images/I/61khdhD9OHL._SL160_.jpg
+    :a_authors:
+    - "原作:三上小又"
+  - :ean: '4910083450738'
     :category: books
-    :a_manufacturer: !binary |
-      6Iqz5paH56S+
-
+    :a_title: "「ゆゆ式」4コマ風オリジナルふせん付 まんがタイムきらら 2013年 07月号 [雑誌]"
+    :a_url: http://www.amazon.co.jp/%E3%80%8C%E3%82%86%E3%82%86%E5%BC%8F%E3%80%8D4%E3%82%B3%E3%83%9E%E9%A2%A8%E3%82%AA%E3%83%AA%E3%82%B8%E3%83%8A%E3%83%AB%E3%81%B5%E3%81%9B%E3%82%93%E4%BB%98-%E3%81%BE%E3%82%93%E3%81%8C%E3%82%BF%E3%82%A4%E3%83%A0%E3%81%8D%E3%82%89%E3%82%89-2013%E5%B9%B4-07%E6%9C%88%E5%8F%B7-%E9%9B%91%E8%AA%8C/dp/B00C6FBM4U%3FSubscriptionId%3D1ZVXR2X53QNFAD6VX1R2%26tag%3Ddokushoyumenosora-22%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB00C6FBM4U
+    :a_manufacturer: "芳文社"
+    :a_release_date: 2013-06-07 00:00:00.000000000 +09:00
+    :a_release_date_fixed: true
+    :a_image_medium: http://ecx.images-amazon.com/images/I/61khdhD9OHL._SL160_.jpg
     :a_image_small: http://ecx.images-amazon.com/images/I/61khdhD9OHL._SL75_.jpg
     :a_authors: []
-
-    :a_title: !binary |
-      44CM44KG44KG5byP44CNNOOCs+ODnumiqOOCquODquOCuOODiuODq+OBteOB
-      m+OCk+S7mCDjgb7jgpPjgYzjgr/jgqTjg6DjgY3jgonjgokgMjAxM+W5tCAw
-      N+aciOWPtyBb6ZuR6KqMXQ==
-
-  - :a_release_date: 2013-05-09 00:00:00 +09:00
-    :a_url: http://www.amazon.co.jp/%E3%80%8C%E3%82%86%E3%82%86%E5%BC%8F%E3%80%8D%E3%81%8B%E3%81%91%E3%81%8B%E3%81%88%E3%82%AB%E3%83%90%E3%83%BC%E4%BB%98-%E3%81%BE%E3%82%93%E3%81%8C%E3%82%BF%E3%82%A4%E3%83%A0%E3%81%8D%E3%82%89%E3%82%89-2013%E5%B9%B4-06%E6%9C%88%E5%8F%B7-%E9%9B%91%E8%AA%8C/dp/B00C6FBJHA%3FSubscriptionId%3D1ZVXR2X53QNFAD6VX1R2%26tag%3Ddokushoyumenosora-22%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB00C6FBJHA
-    :a_release_date_fixed: true
-    :ean: "4910083450639"
-    :a_image_medium: http://ecx.images-amazon.com/images/I/61tqVdH8SML._SL160_.jpg
+  - :ean: '4910083450639'
     :category: books
-    :a_manufacturer: !binary |
-      6Iqz5paH56S+
-
+    :a_title: "「ゆゆ式」かけかえカバー付 まんがタイムきらら 2013年 06月号 [雑誌]"
+    :a_url: http://www.amazon.co.jp/%E3%80%8C%E3%82%86%E3%82%86%E5%BC%8F%E3%80%8D%E3%81%8B%E3%81%91%E3%81%8B%E3%81%88%E3%82%AB%E3%83%90%E3%83%BC%E4%BB%98-%E3%81%BE%E3%82%93%E3%81%8C%E3%82%BF%E3%82%A4%E3%83%A0%E3%81%8D%E3%82%89%E3%82%89-2013%E5%B9%B4-06%E6%9C%88%E5%8F%B7-%E9%9B%91%E8%AA%8C/dp/B00C6FBJHA%3FSubscriptionId%3D1ZVXR2X53QNFAD6VX1R2%26tag%3Ddokushoyumenosora-22%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB00C6FBJHA
+    :a_manufacturer: "芳文社"
+    :a_release_date: 2013-05-09 00:00:00.000000000 +09:00
+    :a_release_date_fixed: true
+    :a_image_medium: http://ecx.images-amazon.com/images/I/61tqVdH8SML._SL160_.jpg
     :a_image_small: http://ecx.images-amazon.com/images/I/61tqVdH8SML._SL75_.jpg
     :a_authors: []
-
-    :a_title: !binary |
-      44CM44KG44KG5byP44CN44GL44GR44GL44GI44Kr44OQ44O85LuYIOOBvuOC
-      k+OBjOOCv+OCpOODoOOBjeOCieOCiSAyMDEz5bm0IDA25pyI5Y+3IFvpm5Ho
-      qoxd
-
-  - :a_release_date: 2013-04-26 00:00:00 +09:00
+  - :ean: '9784832242876'
+    :category: books
+    :a_title: "ゆゆ式 (5) (まんがタイムKRコミックス)"
     :a_url: http://www.amazon.co.jp/%E3%82%86%E3%82%86%E5%BC%8F-5-%E3%81%BE%E3%82%93%E3%81%8C%E3%82%BF%E3%82%A4%E3%83%A0KR%E3%82%B3%E3%83%9F%E3%83%83%E3%82%AF%E3%82%B9-%E4%B8%89%E4%B8%8A-%E5%B0%8F%E5%8F%88/dp/4832242873%3FSubscriptionId%3D1ZVXR2X53QNFAD6VX1R2%26tag%3Ddokushoyumenosora-22%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D4832242873
+    :a_manufacturer: "芳文社"
+    :a_release_date: 2013-04-26 00:00:00.000000000 +09:00
     :a_release_date_fixed: true
-    :ean: "9784832242876"
     :a_image_medium: http://ecx.images-amazon.com/images/I/51FQF27rBKL._SL160_.jpg
-    :category: books
-    :a_manufacturer: !binary |
-      6Iqz5paH56S+
-
     :a_image_small: http://ecx.images-amazon.com/images/I/51FQF27rBKL._SL75_.jpg
-    :a_authors: 
-    - !binary |
-      5LiJ5LiKIOWwj+WPiA==
-
-    :a_title: !binary |
-      44KG44KG5byPICg1KSAo44G+44KT44GM44K/44Kk44OgS1LjgrPjg5/jg4Pj
-      gq/jgrkp
-
-  - :a_release_date: 2013-04-26 00:00:00 +09:00
+    :a_authors:
+    - "三上 小又"
+  - :ean: '9784832242944'
+    :category: books
+    :a_title: "ゆゆ式 ストーリーアンソロジーコミック (1) (まんがタイムKRコミックス)"
     :a_url: http://www.amazon.co.jp/%E3%82%86%E3%82%86%E5%BC%8F-%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AA%E3%83%BC%E3%82%A2%E3%83%B3%E3%82%BD%E3%83%AD%E3%82%B8%E3%83%BC%E3%82%B3%E3%83%9F%E3%83%83%E3%82%AF-1-%E3%81%BE%E3%82%93%E3%81%8C%E3%82%BF%E3%82%A4%E3%83%A0KR%E3%82%B3%E3%83%9F%E3%83%83%E3%82%AF%E3%82%B9-%E3%82%A2%E3%83%B3%E3%82%BD%E3%83%AD%E3%82%B8%E3%83%BC/dp/4832242946%3FSubscriptionId%3D1ZVXR2X53QNFAD6VX1R2%26tag%3Ddokushoyumenosora-22%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D4832242946
+    :a_manufacturer: "芳文社"
+    :a_release_date: 2013-04-26 00:00:00.000000000 +09:00
     :a_release_date_fixed: true
-    :ean: "9784832242944"
     :a_image_medium: http://ecx.images-amazon.com/images/I/51l-7Ki59vL._SL160_.jpg
-    :category: books
-    :a_manufacturer: !binary |
-      6Iqz5paH56S+
-
     :a_image_small: http://ecx.images-amazon.com/images/I/51l-7Ki59vL._SL75_.jpg
-    :a_authors: 
-    - !binary |
-      44Ki44Oz44K944Ot44K444O8
-
-    :a_title: !binary |
-      44KG44KG5byPIOOCueODiOODvOODquODvOOCouODs+OCveODreOCuOODvOOC
-      s+ODn+ODg+OCryAoMSkgKOOBvuOCk+OBjOOCv+OCpOODoEtS44Kz44Of44OD
-      44Kv44K5KQ==
-
-  - :a_release_date: 2013-04-09 00:00:00 +09:00
-    :a_url: http://www.amazon.co.jp/%E3%80%8C%E3%82%86%E3%82%86%E5%BC%8F%E3%80%8D%E3%82%AF%E3%83%AA%E3%82%A2%E3%81%97%E3%81%8A%E3%82%8A%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%80%E3%83%BC%E4%BB%98-%E3%81%BE%E3%82%93%E3%81%8C%E3%82%BF%E3%82%A4%E3%83%A0%E3%81%8D%E3%82%89%E3%82%89-2013%E5%B9%B4-05%E6%9C%88%E5%8F%B7-%E9%9B%91%E8%AA%8C/dp/B00BI2YNGG%3FSubscriptionId%3D1ZVXR2X53QNFAD6VX1R2%26tag%3Ddokushoyumenosora-22%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB00BI2YNGG
-    :a_release_date_fixed: true
-    :ean: "4910083450530"
-    :a_image_medium: http://ecx.images-amazon.com/images/I/61b76DP9UTL._SL160_.jpg
+    :a_authors:
+    - "アンソロジー"
+  - :ean: '4910083450530'
     :category: books
-    :a_manufacturer: !binary |
-      6Iqz5paH56S+
-
+    :a_title: "「ゆゆ式」クリアしおりカレンダー付 まんがタイムきらら 2013年 05月号 [雑誌]"
+    :a_url: http://www.amazon.co.jp/%E3%80%8C%E3%82%86%E3%82%86%E5%BC%8F%E3%80%8D%E3%82%AF%E3%83%AA%E3%82%A2%E3%81%97%E3%81%8A%E3%82%8A%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%80%E3%83%BC%E4%BB%98-%E3%81%BE%E3%82%93%E3%81%8C%E3%82%BF%E3%82%A4%E3%83%A0%E3%81%8D%E3%82%89%E3%82%89-2013%E5%B9%B4-05%E6%9C%88%E5%8F%B7-%E9%9B%91%E8%AA%8C/dp/B00BI2YNGG%3FSubscriptionId%3D1ZVXR2X53QNFAD6VX1R2%26tag%3Ddokushoyumenosora-22%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB00BI2YNGG
+    :a_manufacturer: "芳文社"
+    :a_release_date: 2013-04-09 00:00:00.000000000 +09:00
+    :a_release_date_fixed: true
+    :a_image_medium: http://ecx.images-amazon.com/images/I/61b76DP9UTL._SL160_.jpg
     :a_image_small: http://ecx.images-amazon.com/images/I/61b76DP9UTL._SL75_.jpg
     :a_authors: []
-
-    :a_title: !binary |
-      44CM44KG44KG5byP44CN44Kv44Oq44Ki44GX44GK44KK44Kr44Os44Oz44OA
-      44O85LuYIOOBvuOCk+OBjOOCv+OCpOODoOOBjeOCieOCiSAyMDEz5bm0IDA1
-      5pyI5Y+3IFvpm5Hoqoxd
-
