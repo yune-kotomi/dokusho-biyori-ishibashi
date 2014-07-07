@@ -4,75 +4,74 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-keyword_search1: 
+keyword_search1:
   ean: 0000000000001
   category: books
-  
+
   a_title: keyword-search1
-  a_authors_json: ["author-1"]
+  a_authors_json: '["author-1"]'
   a_manufacturer: manufacturer-1
   a_image_medium: image-medium.jpg
   a_image_small: image-small.jpg
   a_url: http://example.com/keyword-search1
   a_release_date: 2014-05-27 00:00:00 +09:00
   a_release_date_fixed: true
-  
-  r_title: 
-  r_authors: 
-  r_manufacturer: 
-  r_image_medium: 
-  r_image_small: 
-  r_url: 
-  r_release_date: 
-  
-  title: 
-  release_date: 
 
-keyword_search2: 
+  r_title:
+  r_authors:
+  r_manufacturer:
+  r_image_medium:
+  r_image_small:
+  r_url:
+  r_release_date:
+
+  title:
+  release_date:
+
+keyword_search2:
   ean: 0000000000002
   category: books
-  
+
   a_title: keyword-search2
-  a_authors_json: ["author-2"]
+  a_authors_json: '["author-2"]'
   a_manufacturer: manufacturer-2
   a_image_medium: image-medium.jpg
   a_image_small: image-small.jpg
   a_url: http://example.com/keyword-search2
   a_release_date: 2014-05-27 00:00:00 +09:00
   a_release_date_fixed: true
-  
-  r_title: 
-  r_authors: 
-  r_manufacturer: 
-  r_image_medium: 
-  r_image_small: 
-  r_url: 
-  r_release_date: 
-  
-  title: 
-  release_date: 
 
-product1: 
+  r_title:
+  r_authors:
+  r_manufacturer:
+  r_image_medium:
+  r_image_small:
+  r_url:
+  r_release_date:
+
+  title:
+  release_date:
+
+product1:
   ean: 1000000000001
   category: books
-  
+
   a_title: product1
-  a_authors_json: ["author-2"]
+  a_authors_json: '["author-2"]'
   a_manufacturer: manufacturer-2
   a_image_medium: image-medium.jpg
   a_image_small: image-small.jpg
   a_url: http://example.com/product1
   a_release_date: 2014-05-27 00:00:00 +09:00
   a_release_date_fixed: true
-  
-  r_title: 
-  r_authors: 
-  r_manufacturer: 
-  r_image_medium: 
-  r_image_small: 
-  r_url: 
-  r_release_date: 
-  
-  title: 
-  release_date: 
 
+  r_title:
+  r_authors:
+  r_manufacturer:
+  r_image_medium:
+  r_image_small:
+  r_url:
+  r_release_date:
+
+  title:
+  release_date:

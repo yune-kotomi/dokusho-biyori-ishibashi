@@ -11,11 +11,9 @@ two: {}
 #  column: value
 
 keyword1:
-  value: キーワード1
+  value: author-1
   category: books
 
 keyword2:
   value: キーワード2
   category: books
-
-

@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
     removed.each do |tag|
       if current[tag].present?
         if current[tag] == 1
-          current.remove(tag)
+          current.delete(tag)
         else
           current[tag] -= 1
         end
@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   end
   
   def search_user_products(keyword)
-    
+    UserProduct.search(:text => keyword, :user_id => self.id)
   end
   
   private

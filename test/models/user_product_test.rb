@@ -35,7 +35,7 @@ class UserProductTest < ActiveSupport::TestCase
       @user_product.tags = ['tag1', 'tag2']
       @user_product.save
     end
-    assert_equal 1, @groonga.select {|r| r.text =~ '[tag1]' }
+    assert_equal 1, @groonga.select {|r| r.text =~ '[tag1]' }.size
   end
   
   test "削除時にgroongaのインデックスからも削除する" do
@@ -45,27 +45,31 @@ class UserProductTest < ActiveSupport::TestCase
   end
   
   test "作成時、ユーザのタグ一覧を更新する" do
-    assert_difference '@user.tags["tag1"]' do
+    assert_difference '@user.tags["tag1"].to_i' do
       user_product = @user.user_products.build(:product_id => @product.id, :type_name => 'shelf')
       user_product.tags = ['tag1']
       user_product.save
+      @user.reload
     end
   end
   
   test "編集時にユーザのタグ一覧を更新する" do
-    assert_difference '@user.tags["tag1"]' do
+    assert_difference '@user.tags["tag1"].to_i' do
       @user_product.tags = ['tag1']
       @user_product.save
+      @user.reload
     end
   end
   
   test "削除時にユーザのタグ一覧を更新する" do
     @user_product.tags = ['tag1']
     @user_product.save
+    @user.reload
 
-    assert_difference '@user.tags["tag1"]', -1 do
+    assert_difference '@user.tags["tag1"].to_i', -1 do
       @user_product.tags = []
       @user_product.save
+      @user.reload
     end
   end
 end
