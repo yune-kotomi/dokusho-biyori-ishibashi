@@ -1,15 +1,34 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-
   # GET /users
   # GET /users.json
   def index
     @users = User.all
   end
 
-  # GET /users/1
-  # GET /users/1.json
   def show
+    @user = User.where(:domain_name => params[:domain_name], :screen_name => params[:screen_name]).first
+    if @user.private
+      forbidden unless @user == @login_user
+    end
+  end
+
+  def feeds
+    begin
+      @user = User.find(params[:id])
+
+    rescue ActiveRecord::RecordNotFound
+      @user = User.where(:random_key => params[:id]).first
+    end
+
+    if @user.present?
+      if @user.private
+        if @user.random_url == false or @user.random_key != params[:id]
+          forbidden
+        end
+      end
+    else
+      missing
+    end
   end
 
   # GET /users/new
@@ -21,54 +40,64 @@ class UsersController < ApplicationController
   def edit
   end
 
-  # POST /users
-  # POST /users.json
-  def create
-    @user = User.new(user_params)
+  def login
+    redirect_to Ishibashi::Application.config.authentication.start_authentication
+  end
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @user }
+  def login_complete
+    begin
+      user_data = Ishibashi::Application.config.authentication.retrieve(params[:key], params[:timestamp], params[:signature])
+      @user = User.where(:kitaguchi_profile_id => user_data['profile_id']).first
+      if @user.nil?
+        @user = User.new(
+          :nickname => user_data['nickname'],
+          :profile_text => user_data['profile_text']
+        )
+        @user.kitaguchi_profile_id = user_data['profile_id']
+        @user.domain_name = user_data['domain_name']
+        @user.screen_name = user_data['screen_name']
+        @user.save
+
+        # デフォルト出演者を投入
+        cast = @user.casts.build
+        cast.update_attribute(:character_id, Ishibashi::Application.config.default_character_id)
+
       else
-        format.html { render action: 'new' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        @user.update_attributes(
+          :nickname => user_data['nickname'],
+          :profile_text => user_data['profile_text']
+        )
       end
+
+      session[:user_id] = @user.id
+      redirect_to :controller => :etc, :action => :index
+
+    rescue Hotarugaike::Profile::InvalidProfileExchangeError
+      flash[:notice] = "ログインできませんでした"
+      forbidden
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
+  def logout
+    session.delete(:user_id)
+
+    redirect_to Ishibashi::Application.config.authentication.logout
+  end
+
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+    begin
+      data = Ishibashi::Application.config.authentication.updated_profile(params)
+      @user = User.where(:kitaguchi_profile_id => data['profile_id']).first
+      if @user.present?
+        @user.update_attributes(
+          :nickname => data[:nickname],
+          :profile_text => data[:profile_text]
+        )
       end
+      render :text => "success"
+
+    rescue Hotarugaike::Profile::InvalidProfileExchangeError
+      forbidden
     end
   end
-
-  # DELETE /users/1
-  # DELETE /users/1.json
-  def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url }
-      format.json { head :no_content }
-    end
-  end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params[:user]
-    end
 end

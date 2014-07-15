@@ -75,3 +75,27 @@ product1:
 
   title:
   release_date:
+
+product2:
+  ean: 1000000000002
+  category: books
+
+  a_title: product2
+  a_authors_json: '["author-2"]'
+  a_manufacturer: manufacturer-2
+  a_image_medium: image-medium.jpg
+  a_image_small: image-small.jpg
+  a_url: http://example.com/product1
+  a_release_date: 2014-05-27 00:00:00 +09:00
+  a_release_date_fixed: true
+
+  r_title:
+  r_authors:
+  r_manufacturer:
+  r_image_medium:
+  r_image_small:
+  r_url:
+  r_release_date:
+
+  title:
+  release_date:

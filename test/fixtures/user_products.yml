@@ -22,3 +22,20 @@ user_product3:
   type_name: shelf
   tags_json: '["search3","search2"]'
 
+search_user_product1:
+  user: user3
+  product: product1
+  type_name: 'search'
+  tags_json: '[]'
+
+shelf_user_product1:
+  user: user3
+  product: product1
+  type_name: 'shelf'
+  tags_json: '[]'
+
+ignore_user_product1:
+  user: user3
+  product: product2
+  type_name: 'ignore'
+  tags_json: '[]'

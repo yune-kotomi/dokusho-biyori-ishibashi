@@ -1,0 +1,25 @@
+case Rails.env
+when 'development'
+  params = {
+    :service_id => 1, 
+    :key => "xxxxxxxxxxxxxxxx",
+    :entry_point => 'http://localhost:3004/profile'
+  }
+
+when 'test'
+  params = {
+    :service_id => 1, 
+    :key => "xxxxxxxxxxxxxxxx",
+    :entry_point => 'http://localhost:3004/profile'
+  }
+
+when 'production'
+  params = {
+    :service_id => 1, 
+    :key => "xxxxxxxxxxxxxxxx",
+    :entry_point => 'http://kitaguchi.yumenosora.net/profile'
+  }
+end
+
+Ishibashi::Application.config.authentication = Hotarugaike::Profile::Client.new(params)
+

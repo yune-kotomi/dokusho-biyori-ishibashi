@@ -1,52 +1,26 @@
 class KeywordsController < ApplicationController
-  before_action :set_keyword, only: [:show, :edit, :update, :destroy]
+  before_filter :login_required
 
   # GET /keywords
   # GET /keywords.json
   def index
-    @keywords = Keyword.all
-  end
-
-  # GET /keywords/1
-  # GET /keywords/1.json
-  def show
-  end
-
-  # GET /keywords/new
-  def new
-    @keyword = Keyword.new
-  end
-
-  # GET /keywords/1/edit
-  def edit
+    @user_keywords = @login_user.user_keywords.includes(:keyword)
   end
 
   # POST /keywords
   # POST /keywords.json
   def create
-    @keyword = Keyword.new(keyword_params)
-
-    respond_to do |format|
-      if @keyword.save
-        format.html { redirect_to @keyword, notice: 'Keyword was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @keyword }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @keyword.errors, status: :unprocessable_entity }
+    Keyword.transaction do
+      @keyword = Keyword.where(:value => params[:keyword][:value], :category => params[:keyword][:category]).first
+      if @keyword.blank?
+        @keyword = Keyword.new(params[:keyword].permit(:value, :category))
+        @keyword.save
       end
-    end
-  end
 
-  # PATCH/PUT /keywords/1
-  # PATCH/PUT /keywords/1.json
-  def update
-    respond_to do |format|
-      if @keyword.update(keyword_params)
-        format.html { redirect_to @keyword, notice: 'Keyword was successfully updated.' }
-        format.json { head :no_content }
+      if @keyword.user_keywords.where(:user_id => @login_user.id).count > 0
+        forbidden
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @keyword.errors, status: :unprocessable_entity }
+        @user_keyword = @keyword.user_keywords.create(:user_id => @login_user.id)
       end
     end
   end
@@ -54,21 +28,16 @@ class KeywordsController < ApplicationController
   # DELETE /keywords/1
   # DELETE /keywords/1.json
   def destroy
-    @keyword.destroy
-    respond_to do |format|
-      format.html { redirect_to keywords_url }
-      format.json { head :no_content }
+    UserKeyword.transaction do
+      begin
+        @user_keyword = @login_user.user_keywords.find(params[:id])
+        @keyword = @user_keyword.keyword
+        @user_keyword.destroy
+        @keyword.destroy if @keyword.user_keywords.count == 0
+
+      rescue ActiveRecord::RecordNotFound
+        missing
+      end
     end
   end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_keyword
-      @keyword = Keyword.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def keyword_params
-      params[:keyword]
-    end
 end

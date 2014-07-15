@@ -1,9 +1,25 @@
 Ishibashi::Application.routes.draw do
   resources :keywords
-
-  resources :users
-
   resources :products
+  resources :user_products
+
+  get 'users/feeds/:id.:format',
+    :controller => 'users',
+    :to => 'users#feeds'
+
+  get 'users/:domain_name/:screen_name',
+    :controller => 'users',
+    :to => 'users#show',
+    :constraints => {:domain_name => /(.*?)/}
+
+  get 'users/:action',
+    :controller => 'users'
+
+  get 'users',
+    :controller => 'users',
+    :to => 'users#index'
+
+  get 'etc/index', :to => 'etc#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
