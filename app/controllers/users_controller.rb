@@ -70,7 +70,7 @@ class UsersController < ApplicationController
       end
 
       session[:user_id] = @user.id
-      redirect_to :controller => :etc, :action => :index
+      redirect_to :controller => :users, :action => :show, :domain_name => @user.domain_name, :screen_name => @user.screen_name
 
     rescue Hotarugaike::Profile::InvalidProfileExchangeError
       flash[:notice] = "ログインできませんでした"

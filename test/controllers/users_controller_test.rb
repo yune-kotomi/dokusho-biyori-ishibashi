@@ -95,7 +95,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_no_difference  'User.count' do
       get :login_complete, params
     end
-    assert_redirected_to :controller => :etc, :action => :index
+    assert_redirected_to :controller => :users, :action => :show, :domain_name => @user1.domain_name, :screen_name => @user1.screen_name
     assert_not_nil assigns(:user)
     assert_equal @user1.id, session[:user_id]
 
