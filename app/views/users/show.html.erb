@@ -1,2 +1,70 @@
-<p id="notice"><%= notice %></p>
+<% @title = "#{@user.nickname}: 発売日一覧" %>
 
+<ul class="product-list">
+  <% @user_products.each do |user_product| %>
+    <% product = user_product.product %>
+    <li>
+      <div class="mod mod-cards">
+        <div class="card fill-white">
+          <div class="title">
+            <%= link_to product.title, :controller => :products, :action => :show, :id => product.ean %>
+          </div>
+
+          <div class="content">
+            <div class="thumbnail">
+              <%
+                image =
+                  if product.image_small.present?
+                    image_tag(product.image_small, :alt => product.title)
+                  else
+                    image_tag('dummy_small.png', :alt => product.title)
+                  end
+              %>
+              <%= link_to image, :controller => :products, :action => :show, :id => product.ean %>
+            </div>
+
+            <div class="details">
+              <table>
+                <% if product.authors.present? %>
+                  <tr>
+                    <th><%= author_label product.category %></th>
+                    <td>
+                      <ul>
+                        <% product.authors.each do |author| %>
+                          <li>
+                            <%= link_to author,
+                              :controller => :products,
+                              :action => :index,
+                              :value => author,
+                              :category => product.category %>
+                          </li>
+                        <% end %>
+                      </ul>
+                    </td>
+                  </tr>
+                <% end %>
+
+                <tr>
+                  <th><%= maker_label product.category %></th>
+                  <td><%= product.manufacturer %></td>
+                </tr>
+
+                <tr>
+                  <th>発売日</th>
+                  <td>
+                    <%= display_time product %>
+                    <%= countdown(product.release_date) if product.a_release_date_fixed %>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  <% end %>
+</ul>
+
+<div class="paginate">
+
+</div>

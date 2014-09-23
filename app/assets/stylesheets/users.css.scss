@@ -1,3 +1,64 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.product-list {
+  align-items: stretch;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  >li {
+    align-items: stretch;
+    display: flex;
+    margin: 5px;
+    width: 300px;
+
+    .content {
+      display: table;
+
+      .details {
+        display: table-cell;
+        padding: 0 15px 0 0;
+        text-align: left;
+        width: 200px;
+        vertical-align: top;
+        
+        table {
+          tr{
+            th {
+              font-weight: bold;
+              padding: 0 0.5em 0 0;
+              text-align: right;
+              white-space: nowrap;
+              vertical-align: top;
+            }
+
+            td {
+              ul {
+                list-style-type: none;
+              }
+            }
+          }
+        }
+      }
+
+      .thumbnail {
+        display: table-cell;
+        padding: 0 0 0 15px;
+        text-align: center;
+        width: 100px;
+        vertical-align: top;
+      }
+    }
+
+    .mod-cards {
+      align-items: stretch;
+      display: flex;
+    }
+
+    .title {
+      padding: 0 15px;
+    }
+  }
+}

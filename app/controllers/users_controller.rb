@@ -7,9 +7,13 @@ class UsersController < ApplicationController
 
   def show
     @user = User.where(:domain_name => params[:domain_name], :screen_name => params[:screen_name]).first
-    if @user.private
-      forbidden unless @user == @login_user
-    end
+    forbidden if @user.private? and @user != @login_user
+    
+    @user_products = @user.user_products.
+      includes(:product).
+      where(:type_name => 'search').
+      offset(40 * (params[:page]|| 0).to_i).
+      limit(41)
   end
 
   def feeds
@@ -26,6 +30,12 @@ class UsersController < ApplicationController
           forbidden
         end
       end
+
+      @user_products = @user.user_products.
+        includes(:product).
+        where(:type_name => 'search').
+        offset(40 * (params[:page]|| 0).to_i).
+        limit(41)
     else
       missing
     end

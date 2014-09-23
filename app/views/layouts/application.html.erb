@@ -1,14 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Ishibashi</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0" />
 
-<%= yield %>
+    <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
 
-</body>
+    <title><%= @title %>: <%= Ishibashi::Application.config.title %></title>
+
+    <%= yield(:head) %>
+  </head>
+
+  <body class="<%= params[:controller] %>">
+    <div id="header" class="crow">
+      <div class="banner ws-4">
+        <%= link_to image_tag('logo.png', :alt => Ishibashi::Application.config.title), etc_index_path %>
+      </div>
+
+      <div class="navigation ws-8">
+        ようこそ <%= link_to_user @login_user %> さん
+
+        <% if @login_user.blank? %>
+          <%= link_to "ログイン", :controller => :users, :action => :login %>
+        <% else %>
+          <%= link_to "ログアウト", :controller => :users, :action => :logout %>
+        <% end %>
+      </div>
+    </div>
+
+    <%= yield %>
+
+    <div id="footer">
+      <div id="banners">
+        <a href="http://www.amazon.com/"><img src="http://g-ecx.images-amazon.com/images/G/01/00/00/00/64/82/48/64824821._V17009279_.jpg" alt="powered by amazon web services." /></a>
+
+        <!-- Rakuten Web Services Attribution Snippet FROM HERE -->
+        <a href="http://webservice.rakuten.co.jp/" target="_blank"><img src="http://webservice.rakuten.co.jp/img/credit/200709/credit_7052.gif" border="0" alt="楽天ウェブサービスセンター" title="楽天ウェブサービスセンター" width="70" height="52"/></a>
+        <!-- Rakuten Web Services Attribution Snippet TO HERE -->
+
+        <a href="http://ame.yumenosora.net/"><img src="http://static.yumenosora.net/common/images/brandlogo.png" alt="雨上がりの青空を探して"></a>
+      </div>
+    </div>
+  </body>
 </html>

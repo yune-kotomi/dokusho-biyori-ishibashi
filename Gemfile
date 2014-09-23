@@ -60,4 +60,4 @@ gem 'icalendar'
 gem 'tlsmail'
 gem 'rroonga'
 gem 'amazon-ecs'
-
+gem 'autoprefixer-rails'
