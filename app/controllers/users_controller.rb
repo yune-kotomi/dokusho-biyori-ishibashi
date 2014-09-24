@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   def show
     @user = User.where(:domain_name => params[:domain_name], :screen_name => params[:screen_name]).first
     forbidden if @user.private? and @user != @login_user
-    
+
     @user_products = @user.user_products.
       includes(:product).
       where(:type_name => 'search').

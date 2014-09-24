@@ -1,0 +1,143 @@
+<ul class="product-list">
+  <% user_products.each do |user_product| %>
+    <% product = user_product.product %>
+    <li>
+      <div class="mod mod-cards">
+        <div class="card fill-white">
+          <%= link_to '#', :class => 'list-item', :data => {:ean => product.ean} do %>
+            <div class="title">
+              <%= product.title %>
+            </div>
+
+            <div class="content">
+              <div class="thumbnail">
+                <% if product.image_small.present? %>
+                  <%= image_tag(product.image_small, :alt => product.title) %>
+                <% else %>
+                  <%= image_tag('dummy_small.png', :alt => product.title) %>
+                <% end %>
+              </div>
+
+              <div class="details">
+                <table>
+                  <% if product.authors.present? %>
+                    <tr>
+                      <th><%= author_label product.category %></th>
+                      <td>
+                        <ul>
+                          <% product.authors.each do |author| %>
+                            <li>
+                              <%= author %>
+                            </li>
+                          <% end %>
+                        </ul>
+                      </td>
+                    </tr>
+                  <% end %>
+
+                  <tr>
+                    <th><%= maker_label product.category %></th>
+                    <td><%= product.manufacturer %></td>
+                  </tr>
+
+                  <tr>
+                    <th>発売日</th>
+                    <td>
+                      <%= display_time product %>
+                      <%= countdown(product.release_date) if product.a_release_date_fixed %>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </li>
+  <% end %>
+</ul>
+
+<% user_products.each do |user_product| %>
+  <% product = user_product.product %>
+  <div class="product modal" style="display: none" id="product-<%= product.ean %>">
+    <div class="modal-inner">
+      <div class="fill-white card">
+        <div class="header fill-blue text-white">
+          <%= link_to product.title, product_path(:id => product.ean), :class => 'text-white' %>
+        </div>
+
+        <div class="body">
+          <div class="content">
+            <div class="thumbnail">
+              <%= link_to product_path(:id => product.ean) do %>
+                <% if product.image_small.present? %>
+                  <%= image_tag(product.image_medium, :alt => product.title) %>
+                <% else %>
+                  <%= image_tag('dummy_medium.png', :alt => product.title) %>
+                <% end %>
+              <% end %>
+            </div>
+
+            <div class="details">
+              <table>
+                <% if product.authors.present? %>
+                  <tr>
+                    <th><%= author_label product.category %></th>
+                    <td>
+                      <ul>
+                        <% product.authors.each do |author| %>
+                          <li>
+                            <%= link_to author, products_path(:value => author, :category => product.category) %>
+                          </li>
+                        <% end %>
+                      </ul>
+                    </td>
+                  </tr>
+                <% end %>
+
+                <tr>
+                  <th><%= maker_label product.category %></th>
+                  <td><%= product.manufacturer %></td>
+                </tr>
+
+                <tr>
+                  <th>発売日</th>
+                  <td>
+                    <%= display_time product %>
+                    <%= countdown(product.release_date) if product.a_release_date_fixed %>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div class="left">
+            <% if user == login_user %>
+              <%= link_to "#",
+                :class => 'button fill-red text-white' do %>
+                <i class="icon icon-blocked"></i>
+                表示しない
+              <% end %>
+
+              <%= link_to "#",
+                :class => 'button fill-blue text-white' do %>
+                <i class="icon icon-checkmark"></i>
+                更新する
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="right">
+            <%= link_to "#",
+              :class => 'button fill-blue text-white close-button' do %>
+              <i class="icon icon-cross"></i>
+              閉じる
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

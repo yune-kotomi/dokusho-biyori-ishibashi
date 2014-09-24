@@ -1,0 +1,137 @@
+.modal {
+  position: fixed !important;
+}
+
+.button {
+  text-transform: none !important;
+}
+
+.product-list {
+  align-items: stretch;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  >li {
+    align-items: stretch;
+    display: flex;
+    margin: 5px;
+    width: 300px;
+
+    .content {
+      display: table;
+
+      .details {
+        display: table-cell;
+        padding: 0 15px 0 10px;
+        text-align: left;
+        width: 190px;
+        vertical-align: top;
+
+        table {
+          tr{
+            th {
+              font-weight: bold;
+              padding: 0 0.5em 0 0;
+              text-align: right;
+              white-space: nowrap;
+              vertical-align: top;
+            }
+
+            td {
+              ul {
+                list-style-type: none;
+              }
+            }
+          }
+        }
+      }
+
+      .thumbnail {
+        display: table-cell;
+        padding: 0 0 0 15px;
+        text-align: center;
+        width: 100px;
+        vertical-align: top;
+      }
+    }
+
+    .mod-cards {
+      align-items: stretch;
+      display: flex;
+    }
+
+    .title {
+      padding: 0 15px;
+    }
+  }
+}
+
+.product.modal {
+  .content {
+    display: table;
+
+    .details {
+      display: table-cell;
+      padding: 0 15px 0 10px;
+      text-align: left;
+      vertical-align: top;
+
+      table {
+        tr{
+          th {
+            font-weight: bold;
+            padding: 0 0.5em 0 0;
+            text-align: right;
+            white-space: nowrap;
+            vertical-align: top;
+          }
+
+          td {
+            ul {
+              list-style-type: none;
+            }
+          }
+        }
+      }
+    }
+
+    .thumbnail {
+      display: table-cell;
+      padding: 0 0 0 15px;
+      text-align: center;
+      width: 200px;
+      vertical-align: top;
+    }
+  }
+
+  .modal-inner {
+    align-items : center;
+    display:flex;
+    justify-content : center;
+    margin: auto;
+
+    .card {
+      min-width: 80%;
+    }
+
+    .footer {
+      display: flex;
+
+      .left,.right {
+        padding: 10px;
+        width: 50%;
+      }
+
+      .right {
+        text-align: right;
+      }
+    }
+
+    .header {
+      font-size: 120%;
+      margin: 0 0 15px 0;
+      padding: 15px;
+    }
+  }
+}
