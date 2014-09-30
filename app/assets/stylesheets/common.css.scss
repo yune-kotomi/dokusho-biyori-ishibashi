@@ -18,8 +18,24 @@
     margin: 5px;
     width: 300px;
 
+    .buttons {
+      bottom: 0;
+      margin: 5px;
+      position: absolute;
+      right: 0;
+    }
+
+    .buttons-margin {
+      height: 40px;
+    }
+
+    .card {
+      position: relative;
+    }
+
     .content {
       display: table;
+
 
       .details {
         display: table-cell;
@@ -62,49 +78,13 @@
     }
 
     .title {
-      padding: 0 15px;
+      padding: 10px;
+      width: 300px;
     }
   }
 }
 
 .product.modal {
-  .content {
-    display: table;
-
-    .details {
-      display: table-cell;
-      padding: 0 15px 0 10px;
-      text-align: left;
-      vertical-align: top;
-
-      table {
-        tr{
-          th {
-            font-weight: bold;
-            padding: 0 0.5em 0 0;
-            text-align: right;
-            white-space: nowrap;
-            vertical-align: top;
-          }
-
-          td {
-            ul {
-              list-style-type: none;
-            }
-          }
-        }
-      }
-    }
-
-    .thumbnail {
-      display: table-cell;
-      padding: 0 0 0 15px;
-      text-align: center;
-      width: 200px;
-      vertical-align: top;
-    }
-  }
-
   .modal-inner {
     align-items : center;
     display:flex;
