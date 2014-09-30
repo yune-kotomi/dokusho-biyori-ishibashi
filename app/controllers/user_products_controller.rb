@@ -21,12 +21,15 @@ class UserProductsController < ApplicationController
         end
 
       when 'shelf'
-        @user_product = user_products.where(:type_name => 'shelf').first
-        if @user_product.present?
-          bad_request
-        else
-          tags = JSON.parse(params[:tags])
-          @user_product = @login_user.user_products.create(:type_name => 'shelf', :product_id => @product.id, :tags => tags)
+        UserProduct.transaction do
+          @user_product = user_products.where(:type_name => 'shelf').first
+          if @user_product.present?
+            tags = JSON.parse(params[:tags])
+            @user_product.update_attribute(:tags, tags)
+          else
+            tags = JSON.parse(params[:tags])
+            @user_product = @login_user.user_products.create(:type_name => 'shelf', :product_id => @product.id, :tags => tags)
+          end
         end
 
       else
@@ -49,29 +52,20 @@ class UserProductsController < ApplicationController
     @user_products = @user_products.includes(:product)
   end
 
-  def update
-    @user_product = @login_user.user_products.find(params[:id])
-    if @user_product.type_name == 'shelf'
-      tags = JSON.parse(params[:tags])
-      @user_product.update_attribute(:tags, tags)
-    else
-      bad_request
-    end
-
-  rescue ActiveRecord::RecordNotFound
-    missing
-  end
-
   def destroy
-    @user_product = @login_user.user_products.find(params[:id])
-    case @user_product.type_name
-    when 'shelf'
-      @user_product.destroy
+    UserProduct.transaction do
+      @user_product = @login_user.user_products.where(:product_id => params[:id], :type_name => params[:type_name]).first
+      if @user_product.present?
+        case @user_product.type_name
+        when 'shelf'
+          @user_product.destroy
 
-    when 'ignore'
-      @user_product.update_attribute(:type_name, 'search')
+        when 'ignore'
+          @user_product.update_attribute(:type_name, 'search')
+        end
+      else
+        missing
+      end
     end
-  rescue ActiveRecord::RecordNotFound
-    missing
   end
 end

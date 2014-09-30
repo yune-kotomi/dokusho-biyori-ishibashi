@@ -67,50 +67,23 @@ class UserProductsControllerTest < ActionController::TestCase
     assert_equal ['tag1', 'tag2'], assigns(:user_product).tags
   end
 
-  test "タグ付け済みの商品にはcreateでタグ付け不可" do
+  test "タグ付け済みの商品に対してタグの更新ができる。アクションは新規生成と共通" do
     assert_no_difference('UserProduct.count') do
       post :create,
-        {:product_id => @product1.id, :tags => '["tag1", "tag2"]', :format => :json},
-        {:user_id => @user3.id}
-    end
-    assert_response 400
-  end
-
-  test "タグ付け済みの商品に対してタグの更新ができる" do
-    assert_no_difference('UserProduct.count') do
-      put :update,
-        {:id => @shelf_user_product1.id, :tags => '["tag1", "tag2"]', :format => :json},
+        {:product_id => @shelf_user_product1.product.id, :type_name => 'shelf', :tags => '["tag1", "tag2"]', :format => :json},
         {:user_id => @user3.id}
     end
     assert_response :success
     assert_equal ['tag1', 'tag2'], assigns(:user_product).tags
   end
 
-  test "他人のタグを更新できない" do
-    assert_no_difference('UserProduct.count') do
-      put :update,
-        {:id => @shelf_user_product1.id, :tags => '["tag1", "tag2"]', :format => :json},
-        {:user_id => @user1.id}
-    end
-    assert_response :missing
-  end
-
   test "タグ付け済みの商品を削除できる" do
     assert_difference('UserProduct.count', -1) do
       delete :destroy,
-        {:id => @shelf_user_product1.id, :format => :json},
+        {:id => @shelf_user_product1.product.id, :type_name => 'shelf', :format => :json},
         {:user_id => @user3.id}
     end
     assert_response :success
-  end
-
-  test "他人のタグ付け済みの商品を削除できない" do
-    assert_no_difference('UserProduct.count') do
-      delete :destroy,
-        {:id => @shelf_user_product1.id, :format => :json},
-        {:user_id => @user1.id}
-    end
-    assert_response :missing
   end
 
   test "商品の無視指定ができる" do
@@ -136,19 +109,10 @@ class UserProductsControllerTest < ActionController::TestCase
   test "無視指定を解除できる" do
     assert_no_difference('UserProduct.count') do
       delete :destroy,
-        {:id => @ignore_user_product1.id, :format => :json},
+        {:id => @ignore_user_product1.product.id, :type_name => 'ignore', :format => :json},
         {:user_id => @user3.id}
     end
     assert_response :success
     assert_equal 'search', assigns(:user_product).type_name
-  end
-
-  test "他人の無視設定を解除できない" do
-    assert_no_difference('UserProduct.count') do
-      delete :destroy,
-        {:id => @ignore_user_product1.id, :format => :json},
-        {:user_id => @user1.id}
-    end
-    assert_response :missing
   end
 end
