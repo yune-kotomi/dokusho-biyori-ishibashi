@@ -1,9 +1,23 @@
-.modal {
-  position: fixed !important;
+body {
+  a {
+    color: #5677fc;
+
+    &:hover {
+      color: #91a7ff;
+    }
+  }
 }
 
 .button {
   text-transform: none !important;
+
+  &:hover {
+    background-color: #455ede !important;
+  }
+}
+
+.modal {
+  position: fixed !important;
 }
 
 .product-list {
