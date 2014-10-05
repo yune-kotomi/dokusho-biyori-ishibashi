@@ -1,7 +1,7 @@
 <ul class="product-list">
   <% user_products.each do |user_product| %>
     <% product = user_product.product %>
-    <li>
+    <li id="product_<%= product.id %>">
       <div class="mod mod-cards">
         <div class="card fill-white">
           <div class="title">
@@ -55,7 +55,7 @@
           <% if @user == @login_user %>
             <div class="buttons-margin"></div>
             <div class="buttons">
-              <%= link_to '#', :class => 'button fill-blue text-white ignore', :data => {:ean => product.id} do %>
+              <%= link_to '#', :class => 'button fill-blue text-white ignore', :data => {"product-id" => product.id} do %>
                 <i class="icon icon-trash"></i>
               <% end %>
 
