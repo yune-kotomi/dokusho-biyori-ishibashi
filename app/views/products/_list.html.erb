@@ -52,6 +52,43 @@
             </div>
           </div>
 
+          <ul class="store-link">
+            <% if product.a_url.present? %>
+              <li>
+                <%= link_to product.a_url do %>
+                  <i class="icon icon-cart"></i>
+                  Amazon.co.jp
+                <% end %>
+              </li>
+            <% end %>
+            <% if product.r_url.present? %>
+              <li>
+                <%= link_to product.r_url do %>
+                  <i class="icon icon-cart"></i>
+                  楽天ブックス
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+
+          <% if @user == @login_user %>
+            <div class="tags">
+              <% shelf_item = @shelf_items.find{|item| item.product_id == product.id } %>
+              <% if shelf_item.present? %>
+                <ul>
+                  <% shelf_item.tags.each do |tag| %>
+                    <li>
+                      <%= link_to '' do %>
+                        <i class="icon icon-tag"></i>
+                        <span><%= tag %></span>
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+              <% end %>
+            </div>
+          <% end %>
+
           <% if @user == @login_user %>
             <div class="buttons-margin"></div>
             <div class="buttons">
