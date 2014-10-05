@@ -11,6 +11,7 @@ class UsersController < ApplicationController
 
     @user_products = @user.user_products.
       includes(:product).
+      order('products.release_date desc').
       where(:type_name => 'search').
       offset(40 * (params[:page]|| 0).to_i).
       limit(41)
