@@ -3,3 +3,7 @@ def confirm(message)
     yield
   end
 end
+
+def u(value)
+  `encodeURIComponent(#{value})`
+end

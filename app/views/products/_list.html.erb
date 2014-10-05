@@ -74,8 +74,8 @@
           <% if @user == @login_user %>
             <div class="tags">
               <% shelf_item = @shelf_items.find{|item| item.product_id == product.id } %>
-              <% if shelf_item.present? %>
-                <ul>
+              <ul>
+                <% if shelf_item.present? %>
                   <% shelf_item.tags.each do |tag| %>
                     <li>
                       <%= link_to '' do %>
@@ -84,8 +84,8 @@
                       <% end %>
                     </li>
                   <% end %>
-                </ul>
-              <% end %>
+                <% end %>
+              </ul>
             </div>
           <% end %>
 
@@ -106,6 +106,15 @@
     </li>
   <% end %>
 </ul>
+
+<script id="tags-template" type="text/x-jquery-tmpl">
+  <li>
+    <%= link_to "${link}" do %>
+      <i class="icon icon-tag"></i>
+      <span>${value}</span>
+    <% end %>
+  </li>
+</script>
 
 <% user_products.each do |user_product| %>
   <% product = user_product.product %>

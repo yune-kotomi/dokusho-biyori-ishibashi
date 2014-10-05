@@ -41,11 +41,13 @@ Document.ready? do
 
       form = Element.find('#new_user_product')
       params = {'type_name' => 'shelf', 'product_id' => product_id, 'tags' => tags.to_json, 'format' => 'json'}
-      payload = params.map{|k, v| "#{k}=#{`encodeURIComponent(#{v})`}"}.join('&')
+      payload = params.map{|k, v| "#{k}=#{u(v)}"}.join('&')
 
       HTTP.post(form['action'], :payload => payload) do |response|
         if response.ok?
-          dialog.fade_out
+          # タグ一覧表示を更新
+          tag_list = tags.map{|tag| {'value' => tag, 'link' => "/shelfs/search/3?keyword=%5B#{u(tag)}%5D"} }
+          Element.find('#tags-template').template(tag_list).append_to(Element.find("#product_#{product_id} .tags>ul").empty)
 
           # 新規追加されたタグをボタンとして追加
           exist_tags = dialog.find('.tag-selector>li>span').map{|t| t.text }
@@ -58,6 +60,8 @@ Document.ready? do
             # 今開いているダイアログのタグセレクタでは選択済みになっている必要がある
             dialog.find('.tag-selector>li').each {|t| t.add_class('selected') if t.find('span').text == tag }
           end
+
+          dialog.fade_out
         else
           alert('保存に失敗しました。')
         end
