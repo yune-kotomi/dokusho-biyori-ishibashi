@@ -14,6 +14,11 @@ class UsersController < ApplicationController
       where(:type_name => 'search').
       offset(40 * (params[:page]|| 0).to_i).
       limit(41)
+
+    product_id_list = @user_products.map{|user_product| user_product.product_id }
+    @shelf_items = @user.user_products.
+      where(:type_name => 'shelf').
+      where("product_id in (?)", product_id_list)
   end
 
   def feeds

@@ -55,11 +55,11 @@
           <% if @user == @login_user %>
             <div class="buttons-margin"></div>
             <div class="buttons">
-              <%= link_to '#', :class => 'button fill-blue text-white ignore', :data => {:ean => product.ean} do %>
+              <%= link_to '#', :class => 'button fill-blue text-white ignore', :data => {:ean => product.id} do %>
                 <i class="icon icon-trash"></i>
               <% end %>
 
-              <%= link_to '#', :class => 'button fill-blue text-white tag', :data => {:modal => "product-#{product.ean}"} do %>
+              <%= link_to '#', :class => 'button fill-blue text-white tag', :data => {:modal => "product-#{product.id}"} do %>
                 <i class="icon icon-tag"></i>
               <% end %>
             </div>
@@ -72,7 +72,7 @@
 
 <% user_products.each do |user_product| %>
   <% product = user_product.product %>
-  <div class="product modal" style="display: none" id="product-<%= product.ean %>">
+  <div class="product modal" style="display: none" id="product-<%= product.id %>" data-id="<%= product.id %>">
     <div class="modal-inner">
       <div class="fill-white card">
         <div class="header fill-blue text-white">
@@ -80,6 +80,15 @@
         </div>
 
         <div class="body">
+          <%= form_for UserProduct.new do %>
+            <%
+              shelf_item = @shelf_items.find{|item| item.product_id == product.id }
+              tags = ''
+              tags = "[#{shelf_item.tags.join('][')}]" if shelf_item.present?
+            %>
+            <%= label_tag "tags-#{product.id}", 'タグ' %>
+            <%= text_field_tag 'tags', tags, :id => "tags-#{product.id}", :placeholder => '[今度読む][文庫][注文済み]' %>
+          <% end %>
         </div>
 
         <div class="footer">
@@ -93,7 +102,7 @@
 
           <div class="right">
             <%= link_to "#",
-              :class => 'button fill-blue text-white' do %>
+              :class => 'button fill-blue text-white tags-update' do %>
               <i class="icon icon-checkmark"></i>
               更新する
             <% end %>
