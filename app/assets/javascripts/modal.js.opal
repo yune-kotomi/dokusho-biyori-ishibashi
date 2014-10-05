@@ -10,9 +10,16 @@ Document.ready? do
 
   Element.find('.product.modal .button.close').on('click') do |event|
     button = event.current_target
-    dialog = button.parents.map{|parent| parent if parent.has_class?('modal') }.compact.first
+    dialog = Modal::find_with_child(button)
+    button.parents.map{|parent| parent if parent.has_class?('modal') }.compact.first
     dialog.fade_out
 
     false
+  end
+end
+
+module Modal
+  def self.find_with_child(child_element)
+    child_element.parents.map{|parent| parent if parent.has_class?('modal') }.compact.first
   end
 end

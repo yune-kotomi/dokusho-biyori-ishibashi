@@ -93,8 +93,31 @@
 
     .body {
       padding: 0 10px;
+
+      .tag-selector {
+        margin: 10px 0 0 0;
+
+        li {
+          border-radius: 2px;
+          cursor: pointer;
+          display: inline;
+          margin: 0 2px;
+          padding: 2px 2px 2px 4px;
+
+          i {
+            color: transparent;
+          }
+
+          &.selected {
+            background-color: #d0d9ff;
+            i {
+              color: #424242;
+            }
+          }
+        }
+      }
     }
-    
+
     .card {
       min-width: 80%;
     }
