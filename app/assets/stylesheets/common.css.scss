@@ -20,6 +20,15 @@ body {
   position: fixed !important;
 }
 
+.paginate {
+  display: flex;
+  justify-content: space-between;
+
+  .next,.prev {
+    padding: 10px;
+  }
+}
+
 .product-list {
   align-items: stretch;
   display: flex;
