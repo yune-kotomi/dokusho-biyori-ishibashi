@@ -28,9 +28,17 @@ class Product < ActiveRecord::Base
   # アクセサ
   def authors
     if a_authors_json.present?
-      JSON.parse(a_authors_json)
+      begin
+        JSON.parse(a_authors_json)
+      rescue JSON::ParserError
+        []
+      end
     else
-      JSON.parse(r_authors)
+      begin
+        JSON.parse(r_authors)
+      rescue JSON::ParserError
+        []
+      end
     end
   end
 
