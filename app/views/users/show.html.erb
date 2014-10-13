@@ -1,6 +1,12 @@
 <% @title = "#{@user.nickname}: 発売日一覧" %>
 
-<%= render :partial => 'products/list', :locals => {:login_user => @login_user, :user => @user, :user_products => @user_products[0, 40]} %>
+<%= render :partial => 'products/list', :locals =>
+  {
+    :login_user => @login_user,
+    :user => @user,
+    :user_products => @user_products[0, 40],
+    :shelf_items => @shelf_items
+  } %>
 
 <% pages = pagination(@user_products, params[:page]) %>
 <div class="paginate">

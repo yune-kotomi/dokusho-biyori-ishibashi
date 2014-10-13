@@ -49,12 +49,16 @@ class UserProductsController < ApplicationController
     else
       @user_products = @user.user_products.where(:type_name => 'shelf')
     end
-    @user_products = @user_products.includes(:product)
+    @user_products =
+      @user_products.includes(:product).
+      order('user_products.updated_at desc').
+      offset(40 * (params[:page]|| 0).to_i).
+      limit(41)
   end
 
   def destroy
     UserProduct.transaction do
-      @user_product = @login_user.user_products.where(:product_id => params[:id], :type_name => params[:type_name]).first
+      @user_product = @login_user.user_products.where(:id => params[:id], :type_name => params[:type_name]).first
       if @user_product.present?
         case @user_product.type_name
         when 'shelf'

@@ -1,0 +1,47 @@
+<% @title = "#{@user.nickname}: タグ付けした商品一覧" %>
+
+<div class="tags">
+  <ul>
+    <% @user.tags.to_a.sort{|a, b| b.last <=> a.last}.each do |tag| %>
+      <li class="<%= 'selected' if params[:keyword] == "[#{tag.first}]" %>">
+        <%
+          destination = {:controller => :user_products, :action => :show, :id => @user.id}
+          destination[:keyword] = "[#{tag.first}]" unless params[:keyword] == "[#{tag.first}]"
+        %>
+        <%= link_to destination do %>
+          <i class="icon icon-tag"></i>
+          <span><%= tag.first %></span>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<%= render :partial => 'products/list', :locals =>
+  {
+    :login_user => @login_user,
+    :user => @user,
+    :user_products => @user_products[0, 40],
+    :shelf_items => @user_products
+  } %>
+
+<% pages = pagination(@user_products, params[:page]) %>
+<div class="paginate">
+  <div class="next">
+    <% if pages.key?(:next) %>
+      <%= link_to({:page => pages[:next], :keyword => params[:keyword]}, {:class => 'button fill-blue text-white'}) do %>
+        <i class="icon icon-arrow-left"></i>
+        前へ
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="prev">
+    <% if pages.key?(:prev) %>
+      <%= link_to({:page => pages[:prev], :keyword => params[:keyword]}, {:class => 'button fill-blue text-white'}) do %>
+        <i class="icon icon-arrow-right"></i>
+        次へ
+      <% end %>
+    <% end %>
+  </div>
+</div>

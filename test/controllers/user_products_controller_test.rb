@@ -80,7 +80,7 @@ class UserProductsControllerTest < ActionController::TestCase
   test "タグ付け済みの商品を削除できる" do
     assert_difference('UserProduct.count', -1) do
       delete :destroy,
-        {:id => @shelf_user_product1.product.id, :type_name => 'shelf', :format => :json},
+        {:id => @shelf_user_product1.id, :type_name => 'shelf', :format => :json},
         {:user_id => @user3.id}
     end
     assert_response :success
@@ -109,7 +109,7 @@ class UserProductsControllerTest < ActionController::TestCase
   test "無視指定を解除できる" do
     assert_no_difference('UserProduct.count') do
       delete :destroy,
-        {:id => @ignore_user_product1.product.id, :type_name => 'ignore', :format => :json},
+        {:id => @ignore_user_product1.id, :type_name => 'ignore', :format => :json},
         {:user_id => @user3.id}
     end
     assert_response :success

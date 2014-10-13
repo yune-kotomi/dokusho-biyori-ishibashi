@@ -1,4 +1,7 @@
 Ishibashi::Application.routes.draw do
+  get 'shelfs/show/:id',
+    :controller => :user_products, :action => :show
+
   resources :keywords
   resources :products
   resources :user_products

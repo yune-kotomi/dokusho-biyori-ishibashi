@@ -60,15 +60,19 @@ module ApplicationHelper
       format = '%Y/%m/%d'
     end
 
-    return product.release_date.strftime(format)
+    product.release_date.strftime(format) if product.release_date.present?
   end
 
   def countdown(src)
-    today = Time.now.beginning_of_day
-    days = ((src.beginning_of_day - today)/(3600*24)).ceil
+    if src.present?
+      today = Time.now.beginning_of_day
+      days = ((src.beginning_of_day - today)/(3600*24)).ceil
 
-    if days > 0
-      content_tag(:span, :class => 'countdown') { "あと#{days}日" }
+      if days > 0
+        content_tag(:span, :class => 'countdown') { "あと#{days}日" }
+      else
+        ''
+      end
     else
       ''
     end

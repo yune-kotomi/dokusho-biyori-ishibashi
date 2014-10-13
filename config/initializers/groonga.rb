@@ -10,7 +10,7 @@ def create_groonga_table(table_name)
     "#{table_name}Terms",
     :type => :patricia_trie,
     :normalizer => :NormalizerAuto,
-    :default_tokenizer => "TokenBigram"
+    :default_tokenizer => "TokenBigramSplitSymbolAlphaDigit"
   ) do |table|
     table.index("#{table_name}.text")
   end

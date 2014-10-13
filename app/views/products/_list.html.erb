@@ -73,12 +73,12 @@
 
           <% if @user == @login_user %>
             <div class="tags">
-              <% shelf_item = @shelf_items.find{|item| item.product_id == product.id } %>
+              <% shelf_item = shelf_items.find{|item| item.product_id == product.id } %>
               <ul>
                 <% if shelf_item.present? %>
                   <% shelf_item.tags.each do |tag| %>
                     <li>
-                      <%= link_to '' do %>
+                      <%= link_to :controller => :user_products, :action => :show, :id => @login_user.id, :keyword => "[#{tag}]" do %>
                         <i class="icon icon-tag"></i>
                         <span><%= tag %></span>
                       <% end %>
@@ -92,6 +92,10 @@
           <% if @user == @login_user %>
             <div class="buttons-margin"></div>
             <div class="buttons">
+              <% if shelf_item.present? %>
+                <%= form_for shelf_item do %>
+                <% end %>
+              <% end %>
               <%= link_to '#', :class => 'button fill-blue text-white ignore', :data => {"product-id" => product.id} do %>
                 <i class="icon icon-trash"></i>
               <% end %>
@@ -128,7 +132,7 @@
         <div class="body">
           <%= form_for UserProduct.new do %>
             <%
-              shelf_item = @shelf_items.find{|item| item.product_id == product.id }
+              shelf_item = shelf_items.find{|item| item.product_id == product.id }
               tags = []
               tags = shelf_item.tags if shelf_item.present?
               tags_str = ''

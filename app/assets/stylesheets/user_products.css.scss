@@ -1,3 +1,17 @@
-// Place all the styles related to the user_products controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+body.user_products {
+  &>.tags {
+    padding: 5px;
+    text-align: center;
+
+    ul>li {
+      border-radius: 2px;
+      display: inline;
+      margin: 0 2px;
+      padding: 2px 2px 2px 4px;
+
+      &.selected {
+        background-color: #d0d9ff;
+      }
+    }
+  }
+}
