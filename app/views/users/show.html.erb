@@ -1,29 +1,12 @@
 <% @title = "#{@user.nickname}: 発売日一覧" %>
-<%
-  current_page = params[:page]? params[:page].to_i : 1
-  # 40個以上ある=次のページがある
-  if @user_products.size > 40
-    next_page = true
-    @user_products.pop
-  else
-    next_page = false
-  end
 
-  if current_page > 1
-    prev_page = true
-    prev_page_num = current_page - 1
-    prev_page_num = nil if prev_page_num == 1
-  else
-    prev_page = false
-  end
-%>
+<%= render :partial => 'products/list', :locals => {:login_user => @login_user, :user => @user, :user_products => @user_products[0, 40]} %>
 
-<%= render :partial => 'products/list', :locals => {:login_user => @login_user, :user => @user, :user_products => @user_products} %>
-
+<% pages = pagination(@user_products, params[:page]) %>
 <div class="paginate">
   <div class="next">
-    <% if next_page %>
-      <%= link_to({:page => current_page + 1}, {:class => 'button fill-blue text-white'}) do %>
+    <% if pages.key?(:next) %>
+      <%= link_to({:page => pages[:next]}, {:class => 'button fill-blue text-white'}) do %>
         <i class="icon icon-arrow-left"></i>
         前へ
       <% end %>
@@ -31,8 +14,8 @@
   </div>
 
   <div class="prev">
-    <% if prev_page %>
-      <%= link_to({:page => prev_page_num}, {:class => 'button fill-blue text-white'}) do %>
+    <% if pages.key?(:prev) %>
+      <%= link_to({:page => pages[:prev]}, {:class => 'button fill-blue text-white'}) do %>
         <i class="icon icon-arrow-right"></i>
         次へ
       <% end %>
