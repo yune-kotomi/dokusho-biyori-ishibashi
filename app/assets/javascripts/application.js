@@ -12,9 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.turbolinks
 //= require turbolinks
-// = require opal
-// = require opal-jquery
-// = require libs/Waves-master/dist/waves
-// = require script
+//= require opal
+//= require opal-jquery
+//= require libs/Waves-master/dist/waves
+//= require script
 //= require_tree .
