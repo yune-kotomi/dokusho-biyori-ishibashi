@@ -15,19 +15,64 @@
   </head>
 
   <body class="<%= params[:controller] %>">
-    <div id="header" class="crow">
-      <div class="banner ws-4">
+    <div id="header">
+      <div class="banner">
         <%= link_to image_tag('logo.png', :alt => Ishibashi::Application.config.title), etc_index_path %>
       </div>
 
-      <div class="navigation ws-8">
-        ようこそ <%= link_to_user @login_user %> さん
+      <div class="navigation">
+        <div class="tile fill-blue">
+          <div class="button flat text-white relative top-nav desktop-nav">
+            <span>
+              <% if @login_user.present? %>
+                <i class="icon icon-user"></i>
+                <%= @login_user.nickname %>
+              <% else %>
+                ゲスト
+              <% end %>
+              <i class="icon icon-arrow-down6"></i>
+            </span>
 
-        <% if @login_user.blank? %>
-          <%= link_to "ログイン", :controller => :users, :action => :login %>
-        <% else %>
-          <%= link_to "ログアウト", :controller => :users, :action => :logout %>
-        <% end %>
+            <div class="drop down right card fill-white">
+              <div class="crow up no-gutter keep-alive">
+                <div class="ws-12">
+                  <ul class="unstyled">
+                    <% if @login_user.present? %>
+                      <li>
+                        <%= link_to '発売日一覧',
+                          {
+                            :controller => :users,
+                            :action => :show,
+                            :domain_name => @login_user.domain_name,
+                            :screen_name => @login_user.screen_name
+                          },
+                          :class => 'waves-effect list-item' %>
+                      </li>
+
+                      <li>
+                        <%= link_to '設定',
+                          {:controller => :keywords, :action => :index},
+                          :class => 'waves-effect list-item' %>
+                      </li>
+                    <% end %>
+
+                    <li>
+                      <% if @login_user.blank? %>
+                        <%= link_to "ログイン",
+                          {:controller => :users, :action => :login},
+                          :class => 'waves-effect list-item' %>
+                      <% else %>
+                        <%= link_to "ログアウト",
+                          {:controller => :users, :action => :logout},
+                          :class => 'waves-effect list-item' %>
+                      <% end %>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 

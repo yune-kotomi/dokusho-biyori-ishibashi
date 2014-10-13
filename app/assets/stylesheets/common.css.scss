@@ -5,6 +5,10 @@ body {
     &:hover {
       color: #91a7ff;
     }
+
+    &.list-item:hover:hover {
+      color: #91a7ff;
+    }
   }
 }
 
@@ -182,6 +186,20 @@ body {
       font-size: 120%;
       margin: 0 0 15px 0;
       padding: 15px;
+    }
+  }
+}
+
+#header {
+  display: flex;
+  justify-content: space-between;
+
+  .navigation {
+    padding: 5px;
+
+    .drop.down {
+      width: 200px;
+      z-index: 12;
     }
   }
 }
