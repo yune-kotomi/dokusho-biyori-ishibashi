@@ -12,6 +12,10 @@ body {
   }
 }
 
+input[type="text"]:focus {
+  border-color: #5677fc !important;
+}
+
 .button {
   text-transform: none !important;
 
