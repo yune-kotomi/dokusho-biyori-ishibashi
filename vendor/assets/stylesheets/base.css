@@ -6104,11 +6104,17 @@ a.list-item:hover:hover {
 .onoffswitch .checkbox {
   display: none;
 }
-.onoffswitch .checkbox:checked + .switch .inner {
+.onoffswitch .checkbox + .switch .inner {
   margin-left: -100%;
 }
-.onoffswitch .checkbox:checked + .switch .handle {
+.onoffswitch .checkbox + .switch .handle {
   right: 50%;
+}
+.onoffswitch .checkbox:checked + .switch .inner {
+  margin-left: 0;
+}
+.onoffswitch .checkbox:checked + .switch .handle {
+  right: 0;
 }
 .onoffswitch .switch {
   margin: 0;

@@ -52,5 +52,28 @@ Document.ready? do
       append_keyword(event)
       false
     end
+
+    # ユーザ設定
+    Element.find('#user-settings input[type="checkbox"]').on('change') do |event|
+      form = Element.find('#user-settings')
+      HTTP.post(form['action'], :payload => form.serialize) do |response|
+        if response.ok?
+          # do nothing
+        else
+          alert('設定の変更に失敗しました。')
+        end
+      end
+    end
+
+    Element.find('#user_private').on('change') do |event|
+      # 非公開の場合のみランダムURLのチェックボックスを有効にする
+      if Element.find('#user_private').is(':checked')
+        Element.find('#random-url-container').remove_class('disabled')
+        Element.find('#user_random_url').remove_attr('disabled')
+      else
+        Element.find('#random-url-container').add_class('disabled')
+        Element.find('#user_random_url')['disabled'] = 'disabled'
+      end
+    end
   end
 end

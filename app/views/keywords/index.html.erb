@@ -35,19 +35,19 @@
     <div class="mod mod-cards">
       <div class="card fill-white">
         <h2>その他の設定</h2>
-        <%= form_for :user do |f| %>
+        <%= form_for @login_user, :url => {:controller => :users, :action => :update}, :html => {:id => 'user-settings'} do |f| %>
           <div class="input">
-            <%= f.label :private, 'ユーザページの公開状態' %>
+            <%= f.label :private, 'ユーザページの非公開状態' %>
             <div class="spacer quarter"></div>
             <div class="onoffswitch">
-              <%= f.check_box :private, :class => 'checkbox' %>
+              <%= f.check_box :private, {:class => 'checkbox'} %>
               <%= f.label :private, :class => 'switch', :style => 'width: 12em' do %>
                 <div class="inner">
                   <div class="on">
-                    <div class="value">公開</div>
+                    <div class="value">非公開</div>
                   </div>
                   <div class="off">
-                    <div class="value">非公開</div>
+                    <div class="value">公開</div>
                   </div>
                 </div>
                 <div class="handle"></div>
@@ -58,8 +58,8 @@
           <div class="input">
             <%= f.label :random_url, 'iCalendar,RSSのランダムなURL' %>
             <div class="spacer quarter"></div>
-            <div class="onoffswitch disabled">
-              <%= f.check_box :random_url, :class => 'checkbox' %>
+            <div class="onoffswitch" id="random-url-container">
+              <%= f.check_box :random_url, {:class => 'checkbox'} %>
               <%= f.label :random_url, :class => 'switch', :style => 'width: 12em' do %>
                 <div class="inner">
                   <div class="on">
