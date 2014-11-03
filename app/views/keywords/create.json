@@ -1,0 +1,7 @@
+<%=
+ data = {
+   'list_item' => render(:partial => 'user_keyword.html', :locals => {:user_keyword => @user_keyword}),
+   'modal' => render(:partial => 'user_keyword_modal.html', :locals => {:user_keyword_modal => @user_keyword})
+ }
+ data.to_json.html_safe
+%>

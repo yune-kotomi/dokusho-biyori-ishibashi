@@ -1,113 +1,39 @@
 <ul class="product-list">
   <% user_products.each do |user_product| %>
-    <% product = user_product.product %>
-    <li id="product_<%= product.id %>">
-      <div class="mod mod-cards">
-        <div class="card fill-white">
-          <div class="title">
-            <%= link_to product.title, product_path(:id => product.ean) %>
-          </div>
-
-          <div class="content">
-            <div class="thumbnail">
-              <%= link_to product_path(:id => product.ean) do %>
-                <% if product.image_small.present? %>
-                  <%= image_tag(product.image_small, :alt => product.title) %>
-                <% else %>
-                  <%= image_tag('dummy_small.png', :alt => product.title) %>
-                <% end %>
+    <%= render(:layout => 'products/list_element', :locals => {:list_element => user_product.product}) do %>
+      <% if @user == @login_user %>
+        <div class="tags">
+          <% shelf_item = shelf_items.find{|item| item.product_id == user_product.product.id } %>
+          <ul>
+            <% if shelf_item.present? %>
+              <% shelf_item.tags.each do |tag| %>
+                <li>
+                  <%= link_to :controller => :user_products, :action => :show, :id => @login_user.id, :keyword => "[#{tag}]" do %>
+                    <i class="icon icon-tag"></i>
+                    <span><%= tag %></span>
+                  <% end %>
+                </li>
               <% end %>
-            </div>
-
-            <div class="details">
-              <table>
-                <% if product.authors.present? %>
-                  <tr>
-                    <th><%= author_label product.category %></th>
-                    <td>
-                      <ul>
-                        <% product.authors.each do |author| %>
-                          <li>
-                            <%= link_to author, products_path(:value => author, :category => product.category) %>
-                          </li>
-                        <% end %>
-                      </ul>
-                    </td>
-                  </tr>
-                <% end %>
-
-                <tr>
-                  <th><%= maker_label product.category %></th>
-                  <td><%= product.manufacturer %></td>
-                </tr>
-
-                <tr>
-                  <th>発売日</th>
-                  <td>
-                    <%= display_time product %>
-                    <%= countdown(product.release_date) if product.a_release_date_fixed %>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
-
-          <ul class="store-link">
-            <% if product.a_url.present? %>
-              <li>
-                <%= link_to product.a_url do %>
-                  <i class="icon icon-cart"></i>
-                  Amazon.co.jp
-                <% end %>
-              </li>
-            <% end %>
-            <% if product.r_url.present? %>
-              <li>
-                <%= link_to product.r_url do %>
-                  <i class="icon icon-cart"></i>
-                  楽天ブックス
-                <% end %>
-              </li>
             <% end %>
           </ul>
+        </div>
 
-          <% if @user == @login_user %>
-            <div class="tags">
-              <% shelf_item = shelf_items.find{|item| item.product_id == product.id } %>
-              <ul>
-                <% if shelf_item.present? %>
-                  <% shelf_item.tags.each do |tag| %>
-                    <li>
-                      <%= link_to :controller => :user_products, :action => :show, :id => @login_user.id, :keyword => "[#{tag}]" do %>
-                        <i class="icon icon-tag"></i>
-                        <span><%= tag %></span>
-                      <% end %>
-                    </li>
-                  <% end %>
-                <% end %>
-              </ul>
-            </div>
+        <div class="buttons-margin"></div>
+        <div class="buttons">
+          <% if shelf_item.present? %>
+            <%= form_for shelf_item do %>
+            <% end %>
+          <% end %>
+          <%= link_to '#', :class => 'button fill-blue text-white ignore', :data => {"product-id" => user_product.product.id} do %>
+            <i class="icon icon-trash"></i>
           <% end %>
 
-          <% if @user == @login_user %>
-            <div class="buttons-margin"></div>
-            <div class="buttons">
-              <% if shelf_item.present? %>
-                <%= form_for shelf_item do %>
-                <% end %>
-              <% end %>
-              <%= link_to '#', :class => 'button fill-blue text-white ignore', :data => {"product-id" => product.id} do %>
-                <i class="icon icon-trash"></i>
-              <% end %>
-
-              <%= link_to '#', :class => 'button fill-blue text-white tag', :data => {:modal => "product-#{product.id}"} do %>
-                <i class="icon icon-tag"></i>
-              <% end %>
-            </div>
+          <%= link_to '#', :class => 'button fill-blue text-white tag', :data => {:modal => "product-#{user_product.product.id}"} do %>
+            <i class="icon icon-tag"></i>
           <% end %>
         </div>
-      </div>
-    </li>
+      <% end %>
+    <% end %>
   <% end %>
 </ul>
 

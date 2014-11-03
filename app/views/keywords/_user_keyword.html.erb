@@ -1,0 +1,14 @@
+<li data-id="<%= user_keyword.id %>">
+  <div class="value">
+    <%= link_to '#', :class => 'button text', :data => {:modal => "preview-#{user_keyword.id}"} do %>
+      <i class="icon icon-search"></i>
+      <%= user_keyword.keyword.value %>
+    <% end %>
+  </div>
+
+  <div class="buttons">
+    <%= link_to '#', :class => 'button fill-blue text-white delete', :data => {:id => user_keyword.id} do %>
+      <i class="icon icon-trash"></i>
+    <% end %>
+  </div>
+</li>

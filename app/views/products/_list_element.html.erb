@@ -1,0 +1,74 @@
+<li id="product_<%= list_element.id %>">
+  <div class="mod mod-cards">
+    <div class="card fill-white">
+      <div class="title">
+        <%= link_to list_element.title, product_path(:id => list_element.ean) %>
+      </div>
+
+      <div class="content">
+        <div class="thumbnail">
+          <%= link_to product_path(:id => list_element.ean) do %>
+            <% if list_element.image_small.present? %>
+              <%= image_tag(list_element.image_small, :alt => list_element.title) %>
+            <% else %>
+              <%= image_tag('dummy_small.png', :alt => list_element.title) %>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="details">
+          <table>
+            <% if list_element.authors.present? %>
+              <tr>
+                <th><%= author_label list_element.category %></th>
+                <td>
+                  <ul>
+                    <% list_element.authors.each do |author| %>
+                      <li>
+                        <%= link_to author, products_path(:value => author, :category => list_element.category) %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </td>
+              </tr>
+            <% end %>
+
+            <tr>
+              <th><%= maker_label list_element.category %></th>
+              <td><%= list_element.manufacturer %></td>
+            </tr>
+
+            <tr>
+              <th>発売日</th>
+              <td>
+                <%= display_time list_element %>
+                <%= countdown(list_element.release_date) if list_element.a_release_date_fixed %>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <ul class="store-link">
+        <% if list_element.a_url.present? %>
+          <li>
+            <%= link_to list_element.a_url do %>
+              <i class="icon icon-cart"></i>
+              Amazon.co.jp
+            <% end %>
+          </li>
+        <% end %>
+        <% if list_element.r_url.present? %>
+          <li>
+            <%= link_to list_element.r_url do %>
+              <i class="icon icon-cart"></i>
+              楽天ブックス
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+
+      <%= yield if block_given?%>
+    </div>
+  </div>
+</li>

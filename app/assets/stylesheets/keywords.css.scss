@@ -1,3 +1,57 @@
-// Place all the styles related to the keywords controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+body.keywords {
+  .card-lists {
+    align-items: stretch;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    >li {
+      align-items: stretch;
+      display: flex;
+      min-width: 400px;
+      width: 20%;
+
+      form {
+        display: flex;
+        margin: 10px 0 0 0;
+
+        div.input-field {
+          margin: 0 5px;
+          flex-grow: 1;
+        }
+      }
+
+      .mod-cards {
+        margin: 5px;
+        width: 100%;
+
+        .card {
+          padding: 5px 5px 10px 5px;
+          width: 100%;
+
+          ul.keywords {
+            li {
+              align-items: center;
+              display:flex;
+              justify-content : center;
+              margin: 0 0 5px 0;
+
+              .buttons {
+                margin: 0 10px;
+              }
+
+              .value {
+                overflow: hidden;
+                padding: 10px 5px 0 5px;
+                width: 100%;
+
+                .button.text {
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -20,7 +20,7 @@ class KeywordsControllerTest < ActionController::TestCase
   test "ユーザは自分の持っているキーワードを表示できる" do
     get :index, {}, {:user_id => @user1.id}
     assert_response :success
-    assert_equal @keyword1, assigns(:user_keywords).first.keyword
+    assert_equal @keyword1, assigns(:user_keywords).values.flatten.first.keyword
   end
 
   test "新しいキーワードを追加するとkeywordとuser_keywordを生成する" do
@@ -32,6 +32,7 @@ class KeywordsControllerTest < ActionController::TestCase
       end
     end
     assert_response :success
+    assert_equal ['list_item', 'modal'], JSON.parse(response.body).keys
   end
 
   test "既存のキーワードを追加するとuser_keywordを生成する" do

@@ -4,7 +4,7 @@ class KeywordsController < ApplicationController
   # GET /keywords
   # GET /keywords.json
   def index
-    @user_keywords = @login_user.user_keywords.includes(:keyword)
+    @user_keywords = @login_user.user_keywords.includes(:keyword).group_by{|u_k| u_k.keyword.category}
   end
 
   # POST /keywords

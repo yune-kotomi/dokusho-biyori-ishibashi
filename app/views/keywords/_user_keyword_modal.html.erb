@@ -1,0 +1,26 @@
+<div class="preview modal" style="display: none; z-index: 1000;" id="preview-<%= user_keyword_modal.id %>" data-id="<%= user_keyword_modal.id %>">
+  <div class="modal-inner">
+    <div class="fill-white card">
+      <div class="header fill-blue text-white">
+        <%= user_keyword_modal.keyword.value %>
+      </div>
+
+      <div class="body">
+        <ul class="product-list">
+          <%= render :partial => 'products/list_element.html.erb', :collection => user_keyword_modal.keyword.keyword_products[0, 3].map{|kp| kp.product } %>
+        </ul>
+      </div>
+
+      <div class="footer">
+        <div class="left"></div>
+        <div class="right">
+          <%= link_to "#",
+            :class => 'button fill-blue text-white close' do %>
+            <i class="icon icon-cross"></i>
+            閉じる
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
