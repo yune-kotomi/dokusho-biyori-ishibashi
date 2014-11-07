@@ -45,6 +45,8 @@ GEM
     coffee-script-source (1.7.0)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
+    did_you_mean (0.8.0)
+      interception
     erubis (2.7.0)
     execjs (2.2.0)
     gqtp (1.0.6)
@@ -56,6 +58,7 @@ GEM
     hike (1.2.3)
     i18n (0.6.9)
     icalendar (2.0.1)
+    interception (0.5)
     io-like (0.3.0)
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
@@ -183,6 +186,7 @@ DEPENDENCIES
   amazon-ecs
   autoprefixer-rails
   coffee-rails (~> 4.0.0)
+  did_you_mean
   icalendar
   jbuilder (~> 1.2)
   jquery-rails

@@ -17,6 +17,8 @@ Ishibashi::Application.routes.draw do
 
   get 'users/:action',
     :controller => 'users'
+  patch 'users/update',
+    :to => 'users#update'
 
   get 'users',
     :controller => 'users',

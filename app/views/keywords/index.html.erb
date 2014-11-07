@@ -1,9 +1,93 @@
-<h1>Listing keywords</h1>
+<%
+  @title = "キーワード一覧・編集"
+  categories = {'books' => '本', 'dvd' => 'DVD/ブルーレイ', 'music' => '音楽CD', 'software' => 'PCソフト', 'videogames' => 'TVゲーム'}
+%>
 
-<ul>
-  <% @user_keywords.each do |user_keyword| %>
-  <li>
-    <%= user_keyword.keyword.inspect %>
-  </li>
+<ul class="card-lists">
+  <% categories.each do |id, title| %>
+    <% user_keywords = @user_keywords[id] || [] %>
+    <li id="<%= id %>">
+      <div class="mod mod-cards">
+        <div class="card fill-white">
+          <h2><%= title %></h2>
+          <ul class="keywords">
+            <%= render :partial => 'user_keyword', :collection => user_keywords %>
+          </ul>
+
+          <%= form_for(Keyword.new(:category => id), :format => :json) do |f| %>
+            <div class="input-field">
+              <%= f.hidden_field :category %>
+              <%= f.text_field :value, :placeholder => '検索キーワード' %>
+            </div>
+            <div>
+              <%= link_to '#', :class => 'button fill-blue text-white' do %>
+                <i class="icon icon-add-to-list"></i>
+                追加する
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </li>
   <% end %>
+
+  <li>
+    <div class="mod mod-cards">
+      <div class="card fill-white">
+        <h2>その他の設定</h2>
+        <%= form_for @login_user, :url => {:controller => :users, :action => :update}, :html => {:id => 'user-settings'} do |f| %>
+          <div class="input">
+            <%= f.label :private, 'ユーザページの非公開状態' %>
+            <div class="spacer quarter"></div>
+            <div class="onoffswitch">
+              <%= f.check_box :private, {:class => 'checkbox'} %>
+              <%= f.label :private, :class => 'switch', :style => 'width: 12em' do %>
+                <div class="inner">
+                  <div class="on">
+                    <div class="value">非公開</div>
+                  </div>
+                  <div class="off">
+                    <div class="value">公開</div>
+                  </div>
+                </div>
+                <div class="handle"></div>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="input">
+            <%= f.label :random_url, 'iCalendar,RSSのランダムなURL' %>
+            <div class="spacer quarter"></div>
+            <div class="onoffswitch" id="random-url-container">
+              <%= f.check_box :random_url, {:class => 'checkbox'} %>
+              <%= f.label :random_url, :class => 'switch', :style => 'width: 12em' do %>
+                <div class="inner">
+                  <div class="on">
+                    <div class="value">有効</div>
+                  </div>
+                  <div class="off">
+                    <div class="value">無効</div>
+                  </div>
+                </div>
+                <div class="handle"></div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <div>
+          <%= link_to Ishibashi::Application.config.authentication.edit, :class => 'button fill-blue text-white' do %>
+            <i class="icon icon-vcard"></i>
+            プロフィールの編集
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </li>
 </ul>
+
+<div id="preview-modal-list">
+	<% categories.keys.each do |id| %>
+	  <%= render :partial => 'user_keyword_modal', :collection => (@user_keywords[id] || []) %>
+	<% end %>
+</div>

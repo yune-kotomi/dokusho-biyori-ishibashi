@@ -101,7 +101,10 @@ class UsersController < ApplicationController
   end
 
   def update
-    begin
+    if @login_user.present?
+      @login_user.update(params[:user].permit(:private, :random_url))
+      render :text => ({:status => 'ok'}).to_json
+    else
       data = Ishibashi::Application.config.authentication.updated_profile(params)
       @user = User.where(:kitaguchi_profile_id => data['profile_id']).first
       if @user.present?
@@ -111,9 +114,8 @@ class UsersController < ApplicationController
         )
       end
       render :text => "success"
-
-    rescue Hotarugaike::Profile::InvalidProfileExchangeError
-      forbidden
     end
+  rescue Hotarugaike::Profile::InvalidProfileExchangeError
+    forbidden
   end
 end

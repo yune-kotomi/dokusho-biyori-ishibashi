@@ -153,7 +153,7 @@ class UsersControllerTest < ActionController::TestCase
     assert @response.header['Location'] =~ /logout/
   end
 
-  test "updateは署名が正当ならその内容でuserを更新する" do
+  test "updateは署名が正当ならその内容でuserを更新する(Kitugachi認証サービスからのPOST)" do
     params = {
       'id' => Ishibashi::Application.config.authentication.service_id,
       'profile_id' => @user1.kitaguchi_profile_id,
@@ -171,7 +171,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal 'new nickname', assigns(:user).nickname
   end
 
-  test "updateは署名が不正なら蹴る" do
+  test "updateは署名が不正なら蹴る(Kitugachi認証サービスからのPOST)" do
     params = {
       'id' => Ishibashi::Application.config.authentication.service_id,
       'profile_id' => @user1.kitaguchi_profile_id,
@@ -184,6 +184,13 @@ class UsersControllerTest < ActionController::TestCase
     post :update, params
 
     assert_response :forbidden
+  end
+
+  test "セッションが有効なら署名チェックせずに更新する(設定画面からのPOST)" do
+    params = {:user => {:private => 1}, :format => :json}
+    patch :update, params, {:user_id => @user1.id}
+    assert_response :success
+    assert assigns(:login_user).private
   end
 
   test "公開ユーザの場合、ゲストが表示できる" do
