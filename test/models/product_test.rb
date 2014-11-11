@@ -3,6 +3,7 @@ require 'test_helper'
 class ProductTest < ActiveSupport::TestCase
   setup do
     @product = products(:product1)
+    @product2 = products(:product2)
     @groonga = Groonga['Products']
     @amazon = YAML.load(open('test/fixtures/amazon.txt').read).last.first
     @rakuten_books = YAML.load(open('test/fixtures/rakuten_books.txt').read).last.first
@@ -42,4 +43,8 @@ class ProductTest < ActiveSupport::TestCase
     assert_equal @rakuten_books[:r_title], @product.r_title
   end
 
+  test "関連商品を返す" do
+    related = @product.related_products
+    assert_equal @product2, related.first
+  end
 end

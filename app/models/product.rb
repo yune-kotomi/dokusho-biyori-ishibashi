@@ -54,6 +54,29 @@ class Product < ActiveRecord::Base
     a_image_small || r_image_small
   end
 
+  #関連商品を返す
+  def related_products
+    return @related_products unless @related_products.nil?
+
+    keyword = keyword_products.
+      map {|kp| kp.keyword if kp.keyword.present? }.
+      compact.
+      sort{|a, b| b.user_keywords.count <=> a.user_keywords.count }.
+      first
+
+    if keyword.present?
+      ret = keyword.keyword_products.
+        includes(:product).
+        order("products.release_date desc").
+        limit(5).
+        map {|kp| kp.product unless kp.product == self }.
+        compact[0, 4]
+    end
+
+    @related_products = ret
+    return ret || []
+  end
+
   private
   def serialize_attributes
     self.r_authors = self.r_authors.to_json if self.r_authors.is_a?(Array)
