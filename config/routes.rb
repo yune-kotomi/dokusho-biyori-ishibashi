@@ -3,7 +3,7 @@ Ishibashi::Application.routes.draw do
     :controller => :user_products, :action => :show
 
   resources :keywords
-  resources :products, :only => [:index, :show]
+  resources :products, :only => [:show]
   resources :user_products
 
   get 'users/feeds/:id.:format',
