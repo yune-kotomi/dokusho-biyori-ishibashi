@@ -15,6 +15,7 @@ class Product < ActiveRecord::Base
     end
 
     self.a_authors_json = data[:a_authors].to_json
+    self.category = data[:category]
   end
 
   def update_with_rakuten_books(data = nil)
