@@ -39,3 +39,27 @@ ignore_user_product1:
   product: product2
   type_name: 'ignore'
   tags_json: '[]'
+
+user_product_5_1:
+  user: user5
+  product: product1
+  type_name: 'search'
+  tags_json: '[]'
+
+user_product_5_2:
+  user: user5
+  product: product2
+  type_name: 'search'
+  tags_json: '[]'
+
+user_product_5_1_shelf:
+  user: user5
+  product: product1
+  type_name: 'shelf'
+  tags_json: '[]'
+
+user_product_5_keyword_search1:
+  user: user5
+  product: keyword_search1
+  type_name: 'search'
+  tags_json: '[]'

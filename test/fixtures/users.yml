@@ -10,7 +10,7 @@ one: {}
 two: {}
 #  column: value
 
-user1: 
+user1:
   domain_name: domain_name1
   screen_name: screen_name1
   nickname: nickname1
@@ -20,7 +20,7 @@ user1:
   private: false
   tags: "{}"
 
-user2: 
+user2:
   domain_name: domain_name2
   screen_name: screen_name2
   nickname: nickname2
@@ -30,7 +30,7 @@ user2:
   private: true
   tags: "{}"
 
-user3: 
+user3:
   domain_name: domain_name3
   screen_name: screen_name3
   nickname: nickname3
@@ -41,3 +41,24 @@ user3:
   private: true
   tags: "{}"
 
+user4:
+  domain_name: domain_name4
+  screen_name: screen_name4
+  nickname: nickname4
+  profile_text: profile
+  kitaguchi_profile_id: 4
+  random_url: true
+  random_key: random-key
+  private: true
+  tags: "{}"
+
+user5:
+  domain_name: domain_name5
+  screen_name: screen_name5
+  nickname: nickname5
+  profile_text: profile
+  kitaguchi_profile_id: 5
+  random_url: true
+  random_key: random-key
+  private: true
+  tags: "{}"

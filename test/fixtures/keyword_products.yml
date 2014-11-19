@@ -13,3 +13,11 @@ two:
   keyword: keyword1
   product: product2
 #  column: value
+
+keyword_product_2_1:
+  keyword: keyword2
+  product: product1
+
+keyword_product_2_2:
+  keyword: keyword2
+  product: product2

@@ -16,6 +16,7 @@ class Product < ActiveRecord::Base
 
     self.a_authors_json = data[:a_authors].to_json
     self.category = data[:category]
+    self.ean = data[:ean]
   end
 
   def update_with_rakuten_books(data = nil)
@@ -24,6 +25,8 @@ class Product < ActiveRecord::Base
     ['title', 'authors', 'manufacturer', 'image_medium', 'image_small', 'url', 'release_date'].each do |key|
       self.send("r_#{key}=", data["r_#{key}".to_sym])
     end
+    
+    self.ean = data[:ean]
   end
 
   # アクセサ
