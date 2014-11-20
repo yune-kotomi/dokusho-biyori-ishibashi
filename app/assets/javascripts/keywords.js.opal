@@ -49,7 +49,22 @@ Document.ready? do
 
     # 追加ボタンにイベントハンドラ設定
     Element.find('form.new_keyword .button').on('click') do |event|
-      append_keyword(event)
+      append_keyword(event) unless event.current_target.has_class?('disabled')
+      false
+    end
+
+    # 追加ボタンはキーワードが入力され、重複していない場合のみenable
+    Element.find('input[name="keyword[value]"]').on('keyup') do |event|
+      text_field = event.current_target
+      form = text_field.parent.parent
+      button = form.find('a.button')
+      keywords = form.parent.find('.keywords .value a.button').map{|e| e.text.gsub(/\n/, '').strip }
+      if text_field.value.to_s.strip == '' or keywords.include?(text_field.value)
+        button.add_class('disabled')
+      else
+        button.remove_class('disabled')
+      end
+
       false
     end
 
