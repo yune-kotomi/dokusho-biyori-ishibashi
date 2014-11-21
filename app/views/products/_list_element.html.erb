@@ -25,7 +25,7 @@
                   <ul>
                     <% list_element.authors.each do |author| %>
                       <li>
-                        <%= link_to author, products_path(:value => author, :category => list_element.category) %>
+                        <%= author %>
                       </li>
                     <% end %>
                   </ul>

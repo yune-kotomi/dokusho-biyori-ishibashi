@@ -15,6 +15,8 @@ class Product < ActiveRecord::Base
     end
 
     self.a_authors_json = data[:a_authors].to_json
+    self.category = data[:category]
+    self.ean = data[:ean]
   end
 
   def update_with_rakuten_books(data = nil)
@@ -23,6 +25,8 @@ class Product < ActiveRecord::Base
     ['title', 'authors', 'manufacturer', 'image_medium', 'image_small', 'url', 'release_date'].each do |key|
       self.send("r_#{key}=", data["r_#{key}".to_sym])
     end
+    
+    self.ean = data[:ean]
   end
 
   # アクセサ
@@ -52,6 +56,29 @@ class Product < ActiveRecord::Base
 
   def image_small
     a_image_small || r_image_small
+  end
+
+  #関連商品を返す
+  def related_products
+    return @related_products unless @related_products.nil?
+
+    keyword = keyword_products.
+      map {|kp| kp.keyword if kp.keyword.present? }.
+      compact.
+      sort{|a, b| b.user_keywords.count <=> a.user_keywords.count }.
+      first
+
+    if keyword.present?
+      ret = keyword.keyword_products.
+        includes(:product).
+        order("products.release_date desc").
+        limit(5).
+        map {|kp| kp.product unless kp.product == self }.
+        compact[0, 4]
+    end
+
+    @related_products = ret
+    return ret || []
   end
 
   private

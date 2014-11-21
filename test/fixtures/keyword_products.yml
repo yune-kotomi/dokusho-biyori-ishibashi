@@ -4,8 +4,20 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
+one:
+  keyword: keyword1
+  product: product1
 # column: value
 #
-two: {}
+two:
+  keyword: keyword1
+  product: product2
 #  column: value
+
+keyword_product_2_1:
+  keyword: keyword2
+  product: product1
+
+keyword_product_2_2:
+  keyword: keyword2
+  product: product2

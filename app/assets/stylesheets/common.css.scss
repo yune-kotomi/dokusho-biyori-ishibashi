@@ -31,6 +31,10 @@ input[type="text"]:focus {
   &:hover {
     background-color: #455ede !important;
   }
+
+  &.disabled:hover {
+    background-color: #eee !important;
+  }
 }
 
 .modal {
@@ -128,7 +132,6 @@ div.onoffswitch {
 
     .content {
       display: table;
-
 
       .details {
         display: table-cell;

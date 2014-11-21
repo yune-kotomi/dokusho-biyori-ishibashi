@@ -6,7 +6,8 @@ class ProductsControllerTest < ActionController::TestCase
   end
 
   test "should show product" do
-    get :show, id: @product
+    get :show, id: @product.ean
     assert_response :success
+    assert_equal @product, assigns(:product)
   end
 end

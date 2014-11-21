@@ -52,4 +52,16 @@ class KeywordTest < ActiveSupport::TestCase
     assert_equal 1, pages
     assert_equal @product, products.first
   end
+
+  test "新規保存時にはAmazon検索後Groongaで検索実行、keyword_productsを保存" do
+    value = 'new keyword'
+    category = 'books'
+    mock(AmazonEcs).search(value, category, 1) { @amazon }
+    keyword = Keyword.new(:value => value, :category => category)
+    assert_difference 'Product.count', @amazon.last.size do
+      assert_difference 'KeywordProduct.count', @amazon.last.size do
+        keyword.save
+      end
+    end
+  end
 end

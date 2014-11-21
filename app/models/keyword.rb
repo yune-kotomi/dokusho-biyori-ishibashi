@@ -1,6 +1,7 @@
 class Keyword < ActiveRecord::Base
   has_many :keyword_products
   has_many :user_keywords
+  after_save :initial_search
 
   def amazon_search(page = 1)
     pages = 0
@@ -68,5 +69,14 @@ class Keyword < ActiveRecord::Base
     pages = (ids.size / 20.0).ceil
 
     [pages, products]
+  end
+
+  private
+  def initial_search
+    amazon_search
+    pages, products = search
+    products.each do |product|
+      keyword_products.create(:product_id => product.id)
+    end
   end
 end

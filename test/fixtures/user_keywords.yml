@@ -22,3 +22,6 @@ user_keyword2_2:
   user: user2
   keyword: keyword2
 
+user_keyword_5_2:
+  user: user5
+  keyword: keyword2
