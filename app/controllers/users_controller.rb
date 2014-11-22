@@ -1,10 +1,4 @@
 class UsersController < ApplicationController
-  # GET /users
-  # GET /users.json
-  def index
-    @users = User.all
-  end
-
   def show
     @user = User.where(:domain_name => params[:domain_name], :screen_name => params[:screen_name]).first
     forbidden if @user.private? and @user != @login_user
@@ -45,15 +39,6 @@ class UsersController < ApplicationController
     else
       missing
     end
-  end
-
-  # GET /users/new
-  def new
-    @user = User.new
-  end
-
-  # GET /users/1/edit
-  def edit
   end
 
   def login
