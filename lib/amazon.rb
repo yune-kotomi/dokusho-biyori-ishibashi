@@ -80,10 +80,14 @@ module AmazonEcs
           fixed = false
           release_date += '-01-01'
         end
-
-        release_date = Time.parse(release_date)
-        product[:a_release_date] = release_date
-        product[:a_release_date_fixed] = fixed
+        if release_date.blank?
+          product[:a_release_date] = Time.at(0)
+          product[:a_release_date_fixed] = false
+        else
+          release_date = Time.parse(release_date)
+          product[:a_release_date] = release_date
+          product[:a_release_date_fixed] = fixed
+        end
 
         product[:a_image_medium] = e.get("MediumImage/URL")
         product[:a_image_small] = e.get("SmallImage/URL")

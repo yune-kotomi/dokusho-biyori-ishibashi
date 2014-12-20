@@ -3,6 +3,8 @@ class Keyword < ActiveRecord::Base
   has_many :user_keywords
   after_save :initial_search
 
+  validates :value, :presence => true
+
   def amazon_search(page = 1)
     pages = 0
     results = []
@@ -10,6 +12,8 @@ class Keyword < ActiveRecord::Base
 
     begin
       pages, results = AmazonEcs.search(value, category, page)
+    rescue Amazon::RequestError
+      # do nothing
     rescue => e
       logger.error e
     end
@@ -53,9 +57,16 @@ class Keyword < ActiveRecord::Base
   end
 
   def search(page = 1)
+    # なんかの間違いで空文字列が渡された場合は抜ける
+    return [0, []] if value.blank?
+
     table = Groonga['Products']
 
-    keywords = Shellwords.shellwords(value)
+    begin
+      keywords = Shellwords.shellwords(value)
+    rescue ArgumentError
+      keywords = [value]
+    end
     ids = table.select do |r|
       grn = keywords.map{|keyword| r.text =~ keyword }
       grn.push(r.category == category)

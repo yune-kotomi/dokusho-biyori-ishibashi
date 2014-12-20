@@ -25,7 +25,7 @@ class Product < ActiveRecord::Base
     ['title', 'authors', 'manufacturer', 'image_medium', 'image_small', 'url', 'release_date'].each do |key|
       self.send("r_#{key}=", data["r_#{key}".to_sym])
     end
-    
+
     self.ean = data[:ean]
   end
 
@@ -39,7 +39,7 @@ class Product < ActiveRecord::Base
       end
     else
       begin
-        JSON.parse(r_authors)
+        JSON.parse(r_authors.to_s)
       rescue JSON::ParserError
         []
       end

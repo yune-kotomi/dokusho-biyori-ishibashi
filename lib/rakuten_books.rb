@@ -32,7 +32,7 @@ module RakutenBooks
       "keyword" => keyword,
       "booksGenreId" => Genre[category]}).each do |key, value|
 
-      params.push "#{key}=#{CGI::escape value}"
+      params.push("#{key}=#{CGI::escape value}") unless value.nil?
     end
     request_url = "http://api.rakuten.co.jp/rws/2.0/json?#{params.join "&"}"
 
