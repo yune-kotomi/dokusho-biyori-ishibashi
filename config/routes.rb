@@ -4,6 +4,9 @@ Ishibashi::Application.routes.draw do
 
   resources :keywords
   resources :products, :only => [:show]
+  get 'products/to_amazon/:id' => 'products#to_amazon'
+  get 'products/to_rakuten/:id' => 'products#to_rakuten'
+
   resources :user_products
 
   get 'users/feeds/:id.:format',

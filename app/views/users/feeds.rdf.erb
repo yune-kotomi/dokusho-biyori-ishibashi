@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rdf:RDF
+	xmlns="http://purl.org/rss/1.0/"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:hatena="http://www.hatena.ne.jp/info/xmlns#"
+	xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/"
+	xmlns:openSearch="http://a9.com/-/spec/opensearchrss/1.0/"
+	xml:lang="ja">
+<channel rdf:about="<%= "#{@user.nickname}: 発売日一覧: #{Ishibashi::Application.config.title}" %>">
+	<title><%= "#{@user.nickname}: 発売日一覧: #{Ishibashi::Application.config.title}" %></title>
+	<link><%= url_for :action => :show,
+	 :domain_name => @user.domain_name,
+	 :screen_name => @user.screen_name,
+	 :only_path => false if params[:controller] == 'users' %><%=
+	 url_for :action => :show,
+	   :id => @user.id,
+  	 :only_path => false unless params[:controller] == 'users' %></link>
+	<description><%= "#{@title}: #{Ishibashi::Application.config.title}" %></description>
+	<items>
+	<rdf:Seq>
+	  <% @user_products.map{|up| up.product }.each do |product| %>
+      <rdf:li rdf:resource="<%= url_for(
+          :controller => :products,
+          :action => :show,
+          :id => product.ean,
+          :only_path => false
+        ) %>" />
+    <% end %>
+	</rdf:Seq>
+	</items>
+</channel>
+
+<% @user_products.map{|up| up.product }.each do |product| %>
+  <item rdf:about="<%= url_for(
+      :controller => :products,
+      :action => :show,
+      :id => product.ean,
+      :only_path => false
+    ) %>">
+  	<title><%= product.title %></title>
+  	<link><%= url_for(
+        :controller => :products,
+        :action => :show,
+        :id => product.ean,
+        :only_path => false
+      ) %></link>
+  	<description><![CDATA[<%= product.title %>]]></description>
+  	<content:encoded><![CDATA[<%=render :partial => 'products/list_element.html.erb',
+        :locals => {:list_element => product} %>]]></content:encoded>
+  	<dc:date><%= product.release_date.iso8601 %></dc:date>
+  	<hatena:imageurlsmall><%= product.image_small %></hatena:imageurlsmall>
+  </item>
+<% end %>
+</rdf:RDF>

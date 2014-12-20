@@ -1,4 +1,7 @@
 <% @title = "#{@user.nickname}: 発売日一覧" %>
+<% content_for :head do %>
+  <link rel="alternate" type="application/rss+xml" title="<%= @title %>: <%= Ishibashi::Application.config.title %>" href="<%= url_for :action => :feeds, :id => @user.id, :format => :rdf %>" />
+<% end %>
 
 <%= render :partial => 'products/list', :locals =>
   {
@@ -27,4 +30,25 @@
       <% end %>
     <% end %>
   </div>
+</div>
+
+<div class="feeds">
+  <%= link_to({:action => :feeds, :id => @user.id, :format => :rdf}) do %>
+    <i class="icon icon-rss"></i> RSSフィード
+  <% end %>
+
+  <a href='http://cloud.feedly.com/#subscription%2Ffeed%2Fhttp%3A%2F%2F<%= u url_for(:action => :feeds, :id => @user.id, :format => :rdf, :only_path => false) %>'  target='blank'>
+    <i class="icon feedly"><%= image_tag('feedly-icon.svg') %></i>
+    Feedlyで見る
+  </a>
+
+  <%= link_to :action => :feeds, :id => @user.id, :format => :ics, :only_path => false, :protocol => 'webcal' do %>
+    <i class="icon icon-calendar"></i>
+    iCalendar
+  <% end %>
+
+  <%= link_to "http://www.google.com/calendar/render?cid=#{u url_for(:action => :feeds, :id => @user.id, :format => :ics, :only_path => false)}", 'target' => '_blank' do %>
+    <i class="icon icon-calendar"></i>
+    Googleカレンダーで見る
+  <% end %>
 </div>

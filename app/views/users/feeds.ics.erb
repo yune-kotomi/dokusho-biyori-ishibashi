@@ -1,0 +1,69 @@
+<%
+  cal = Icalendar::Calendar.new
+
+  #アイテムの投入
+  @user_products.map{|up| up.product}.each do |product|
+    #時刻
+    start_date = Time.at(product.release_date.to_i)
+    end_date = Time.at(start_date.to_i + 24*3600)
+
+    #タイトル
+    title = product.title
+    title += "(発売日未確定)" unless product.a_release_date_fixed
+
+    #リンク先
+    detail_url = url_for(
+      :controller => :products,
+      :action => :show,
+      :id => product.ean,
+      :only_path => false
+    )
+
+    #解説文
+    product_desc = []
+    product_desc.push("#{author_label(product.category)}: #{product.authors.join('/')}") unless product.authors.empty?
+    product_desc.push("#{maker_label(product.category)}: #{product.manufacturer}")
+
+    url = url_for(
+      :controller => :products,
+      :action => :to_amazon,
+      :id => product.ean,
+      :only_path => false
+    )
+    product_desc.push("Amazon.co.jp: #{url}") unless product.a_title.nil?
+
+    url = url_for(
+      :controller => :products,
+      :action => :to_rakuten,
+      :id => product.ean,
+      :only_path => false
+    )
+    product_desc.push("楽天ブックス: #{url}") unless product.r_title.nil?
+
+    product_desc = product_desc.join('\n')
+
+    cal.event do |event|
+      event.dtstart =  Date.new(start_date.year, start_date.month, start_date.day)
+      event.dtend = Date.new(end_date.year, end_date.month, end_date.day)
+      event.summary = title
+      event.url = detail_url
+      event.description = product_desc
+    end
+  end
+
+  cal.timezone do |t|
+    t.tzid = "Asia/Sapporo"
+
+    t.standard do |s|
+      s.tzoffsetfrom = "+0900"
+      s.tzoffsetto   = "+0900"
+      s.tzname       = "JST"
+      s.dtstart      = "19700101T000000"
+    end
+  end
+
+  cal.append_custom_property('X-WR-CALNAME',
+    "#{@user.nickname}: 発売日一覧:  #{Ishibashi::Application.config.title}")
+
+  cal.publish
+%><%= cal.to_ical %>

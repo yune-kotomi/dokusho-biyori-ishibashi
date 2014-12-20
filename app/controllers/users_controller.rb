@@ -1,3 +1,5 @@
+Mime::Type.register "application/rdf+xml", :rdf
+
 class UsersController < ApplicationController
   def show
     @user = User.where(:domain_name => params[:domain_name], :screen_name => params[:screen_name]).first
@@ -28,14 +30,19 @@ class UsersController < ApplicationController
       if @user.private
         if @user.random_url == false or @user.random_key != params[:id]
           forbidden
+          return
         end
       end
 
       @user_products = @user.user_products.
         includes(:product).
         where(:type_name => 'search').
-        offset(40 * (params[:page]|| 0).to_i).
-        limit(41)
+        limit(100)
+
+      respond_to do |format|
+        format.rdf
+        format.ics
+      end
     else
       missing
     end

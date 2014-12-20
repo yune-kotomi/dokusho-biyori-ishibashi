@@ -5,4 +5,14 @@ class ProductsController < ApplicationController
   def show
     @product = Product.where(:ean => params[:id]).first
   end
+
+  def to_amazon
+    show
+    redirect_to @product.a_url
+  end
+
+  def to_rakuten
+    show
+    redirect_to @product.r_url
+  end
 end

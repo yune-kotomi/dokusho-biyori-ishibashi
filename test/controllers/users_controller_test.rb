@@ -1,5 +1,6 @@
 # coding: utf-8
 require 'test_helper'
+require 'rss'
 
 class UsersControllerTest < ActionController::TestCase
   def sign(message)
@@ -249,5 +250,34 @@ class UsersControllerTest < ActionController::TestCase
     get :feeds,
       {:id => @user3.id, :format => :rdf}
     assert_response :forbidden
+  end
+
+  test "feeds/:id.icsはvalidなiCalendarを返す" do
+    get :feeds,
+      {:id => @user1.id, :format => :ics}
+
+    assert_response :success
+    assert_nothing_raised RuntimeError do
+      ics = Icalendar.parse(@response.body)
+      assert_not_nil ics.first
+
+      titles = @user1.user_products.where(:type_name => 'search').map{|up| up.product.title}.sort
+      assert_equal titles, ics.first.events.map{|event| event.summary}.sort
+    end
+  end
+
+  test "feeds/:id.rdfはvalidなRSSを返す" do
+    get :feeds,
+      {:id => @user1.id, :format => :rdf}
+
+    assert_response :success
+    assert_nothing_raised RSS::NotWellFormedError do
+      rss = RSS::Parser.parse(@response.body)
+      assert_not_nil rss
+      assert_equal "#{@user1.nickname}: 発売日一覧: #{Ishibashi::Application.config.title}", rss.channel.about
+      assert_equal @user1.user_products.where(:type_name => 'search').count, rss.items.size
+      titles = @user1.user_products.where(:type_name => 'search').map{|up| up.product.title}.sort
+      assert_equal titles, rss.items.map{|item| item.description }.sort
+    end
   end
 end

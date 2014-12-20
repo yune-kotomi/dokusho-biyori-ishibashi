@@ -22,11 +22,11 @@ keyword_search1:
   r_manufacturer:
   r_image_medium:
   r_image_small:
-  r_url:
+  r_url: http://example.com/keyword-search1-r
   r_release_date:
 
-  title:
-  release_date:
+  title: keyword-search1
+  release_date: 2014-05-27 00:00:00 +09:00
 
 keyword_search2:
   ean: 0000000000002
@@ -73,8 +73,8 @@ product1:
   r_url:
   r_release_date:
 
-  title:
-  release_date:
+  title: product1
+  release_date: 2014-05-27 00:00:00 +09:00
 
 product2:
   ean: 1000000000002
@@ -98,4 +98,4 @@ product2:
   r_release_date:
 
   title:
-  release_date:
+  release_date: 2014-05-27 00:00:00 +09:00

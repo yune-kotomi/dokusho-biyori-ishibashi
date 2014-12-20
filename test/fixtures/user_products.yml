@@ -10,6 +10,12 @@ user_product1:
   type_name: shelf
   tags_json: "[]"
 
+user_product1_1:
+  user: user1
+  product: keyword_search1
+  type_name: search
+  tags_json: "[]"
+
 user_product2:
   user: user2
   product: keyword_search1
