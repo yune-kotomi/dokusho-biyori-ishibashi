@@ -89,6 +89,14 @@ User.all.each do |user|
   end
 end
 
+# 孤立した商品を削除
+Product.transaction do
+  Product.
+    where('(select count(id) from user_products where product_id = products.id)=0').
+    where('(select count(id) from keyword_products where product_id = products.id)=0').
+    limit(2000).each {|product| product.destroy }
+end
+
 # 発売日が未確定で自動検索にて更新されなかった商品情報を更新
 products = Product.
   where(:a_release_date_fixed => false).

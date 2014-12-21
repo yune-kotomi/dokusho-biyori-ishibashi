@@ -10,23 +10,27 @@ class Product < ActiveRecord::Base
   def update_with_amazon(data = nil)
     data = AmazonEcs.get(self.ean) if data.nil?
 
-    ['title', 'manufacturer', 'image_medium', 'image_small', 'url', 'release_date', 'release_date_fixed'].each do |key|
-      self.send("a_#{key}=", data["a_#{key}".to_sym])
-    end
+    if data.present?
+      ['title', 'manufacturer', 'image_medium', 'image_small', 'url', 'release_date', 'release_date_fixed'].each do |key|
+        self.send("a_#{key}=", data["a_#{key}".to_sym])
+      end
 
-    self.a_authors_json = data[:a_authors].to_json
-    self.category = data[:category]
-    self.ean = data[:ean]
+      self.a_authors_json = data[:a_authors].to_json
+      self.category = data[:category]
+      self.ean = data[:ean]
+    end
   end
 
   def update_with_rakuten_books(data = nil)
     data = RakutenBooks.get(self.ean) if data.nil?
 
-    ['title', 'authors', 'manufacturer', 'image_medium', 'image_small', 'url', 'release_date'].each do |key|
-      self.send("r_#{key}=", data["r_#{key}".to_sym])
-    end
+    if data.present?
+      ['title', 'authors', 'manufacturer', 'image_medium', 'image_small', 'url', 'release_date'].each do |key|
+        self.send("r_#{key}=", data["r_#{key}".to_sym])
+      end
 
-    self.ean = data[:ean]
+      self.ean = data[:ean]
+    end
   end
 
   # アクセサ

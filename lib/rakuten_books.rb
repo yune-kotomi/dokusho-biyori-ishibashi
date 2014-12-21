@@ -21,6 +21,9 @@ module RakutenBooks
 
   #キーワード商品検索
   def self.search(keyword, category, page = 1)
+    # 空キーワードなら抜ける
+    return [0, []] if keyword.blank?
+    
     params = []
     ({"developerId" => Ishibashi::Application.config.rakuten[:developer_id],
       "affiliateId" => Ishibashi::Application.config.rakuten[:affiliate_id],

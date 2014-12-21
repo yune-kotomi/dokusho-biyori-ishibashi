@@ -26,6 +26,9 @@ module AmazonEcs
 
   #キーワード商品検索
   def self.search(keyword, category, page = 1)
+    # 空キーワードなら抜ける
+    return [0, []] if keyword.blank?
+
     category = category.capitalize
     category = "DVD" if category == "Dvd"
     category = "VideoGames" if category == "Videogames"
