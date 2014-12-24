@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="600"
+   height="120"
+   id="svg4186"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="/home/user/dev/dokusho-ishibashi/app/assets/images/logo.png"
+   inkscape:export-xdpi="45"
+   inkscape:export-ydpi="45">
+  <defs
+     id="defs4188">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="4.453805 : -14.601233 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="604.4538 : -14.601233 : 1"
+       inkscape:persp3d-origin="304.4538 : -34.601233 : 1"
+       id="perspective4712" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.8466609"
+     inkscape:cx="129.29709"
+     inkscape:cy="67.472167"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer12"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
+     inkscape:window-x="1280"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata4191">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer12"
+     inkscape:label="レイヤー"
+     style="display:none">
+    <rect
+       style="fill:none;stroke:#bbbcde;stroke-width:1.01277697;stroke-opacity:1"
+       id="rect5098"
+       width="118.98723"
+       height="118.98722"
+       x="0.50638849"
+       y="0.5063895" />
+  </g>
+  <g
+     inkscape:label="レイヤー 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-932.36218)">
+    <rect
+       style="fill:none;stroke:#bbbcde;stroke-width:1.79999995;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect4749"
+       width="61.460831"
+       height="61.460831"
+       x="-98.595154"
+       y="945.94818"
+       transform="matrix(0.9931049,-0.11722906,0.11722906,0.9931049,0,0)" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#bbbcde;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 21.650849,944.23393 c -0.267784,-1.77755 3.144809,-2.15272 3.475424,-0.41025 l 1.435871,12.16397 c 0.21681,1.68128 -3.343833,1.99148 -3.475424,0.41025 z"
+       id="rect4753"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       sodipodi:nodetypes="ccccc"
+       inkscape:connector-curvature="0"
+       id="path4756"
+       d="m 61.075138,939.58016 c -0.267785,-1.77756 3.144809,-2.15273 3.475424,-0.41025 l 1.435873,12.16397 c 0.216808,1.68129 -3.343833,1.99149 -3.475425,0.41026 z"
+       style="fill:#ffffff;fill-opacity:1;stroke:#bbbcde;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#bbbcde;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 51.315443,959.68296 -17.968311,73.74964 55.696077,13.5616 17.939881,-73.77815 c -18.557586,-4.504 -37.113415,-9.01509 -55.667647,-13.53309 z m 46.456044,11.2871 10.462553,-14.32916 -7.96064,-5.82838 -12.879181,17.65562"
+       id="rect4742"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccc" />
+    <path
+       style="fill:#bbbcde;fill-opacity:1;stroke:none"
+       d="m 87.938927,968.57401 12.321793,-17.44766 7.68879,5.52017 -10.448874,14.29327 z"
+       id="path4784"
+       inkscape:connector-curvature="0" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer11"
+     inkscape:label="文字"
+     sodipodi:insensitive="true">
+    <text
+       xml:space="preserve"
+       style="font-size:116.2374115px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:'TakaoEx明朝';-inkscape-font-specification:'TakaoEx明朝'"
+       x="160.34814"
+       y="81.965759"
+       id="text3833"
+       sodipodi:linespacing="125%"
+       transform="scale(0.8295364,1.2054926)"><tspan
+         sodipodi:role="line"
+         id="tspan3835"
+         x="160.34814"
+         y="81.965759"
+         style="font-size:55.79394531px;font-weight:normal;letter-spacing:24.29342842px;fill:#000000;fill-opacity:1;-inkscape-font-specification:'TakaoEx明朝'">読 書 び よ り</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:17.3815136px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:'TakaoEx明朝';-inkscape-font-specification:'TakaoEx明朝'"
+       x="134.18878"
+       y="28.341251"
+       id="text3837"
+       sodipodi:linespacing="125%"
+       transform="scale(0.94407757,1.059235)"><tspan
+         sodipodi:role="line"
+         id="tspan3839"
+         x="134.18878"
+         y="28.341251"
+         style="letter-spacing:12.98335743px;fill:#000000;fill-opacity:1">読み続けるための発売日カレンダー</tspan></text>
+  </g>
+</svg>
