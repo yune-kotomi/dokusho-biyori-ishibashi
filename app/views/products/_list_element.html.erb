@@ -2,12 +2,12 @@
   <div class="mod mod-cards">
     <div class="card fill-white">
       <div class="title">
-        <%= link_to list_element.title, product_path(:id => list_element.ean, :only_path => false) %>
+        <%= link_to list_element.title, product_url(:id => list_element.ean) %>
       </div>
 
       <div class="content">
         <div class="thumbnail">
-          <%= link_to product_path(:id => list_element.ean, :only_path => false) do %>
+          <%= link_to product_url(:id => list_element.ean) do %>
             <% if list_element.image_small.present? %>
               <%= image_tag(list_element.image_small, :alt => list_element.title) %>
             <% else %>

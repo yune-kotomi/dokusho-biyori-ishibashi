@@ -2,7 +2,7 @@
 
 <div class="tags">
   <ul>
-    <% @user.tags.to_a.sort{|a, b| b.last <=> a.last}.each do |tag| %>
+    <% @user.tag_table.to_a.sort{|a, b| b.last <=> a.last}.each do |tag| %>
       <li class="<%= 'selected' if params[:keyword] == "[#{tag.first}]" %>">
         <%
           destination = {:controller => :user_products, :action => :show, :id => @user.id}

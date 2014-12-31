@@ -67,7 +67,7 @@
             <%= label_tag "tags-#{product.id}", 'タグ' %>
             <%= text_field_tag 'tags', tags_str, :id => "tags-#{product.id}", :placeholder => '[今度読む][文庫][注文済み]' %>
             <ul class="tag-selector">
-              <% @user.tags.to_a.sort{|a,b| b.last <=> a.last }.map{|e| e.first }[0, 20].each do |tag| %>
+              <% @user.tag_table.to_a.sort{|a,b| b.last <=> a.last }.map{|e| e.first }[0, 20].each do |tag| %>
                 <li class="<%= 'selected' if tags.include?(tag) %>">
                   <i class="icon icon-tag"></i>
                   <span><%= tag %></span>

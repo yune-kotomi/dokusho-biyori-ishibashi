@@ -66,10 +66,6 @@ class UsersController < ApplicationController
         @user.screen_name = user_data['screen_name']
         @user.save
 
-        # デフォルト出演者を投入
-        cast = @user.casts.build
-        cast.update_attribute(:character_id, Ishibashi::Application.config.default_character_id)
-
       else
         @user.update_attributes(
           :nickname => user_data['nickname'],

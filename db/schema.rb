@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20141220124917) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "keyword_products", force: true do |t|
+  create_table "keyword_products", force: :cascade do |t|
     t.integer  "keyword_id"
     t.integer  "product_id"
     t.datetime "created_at"
@@ -25,16 +25,16 @@ ActiveRecord::Schema.define(version: 20141220124917) do
 
   add_index "keyword_products", ["product_id"], name: "index_keyword_products_on_product_id", using: :btree
 
-  create_table "keywords", force: true do |t|
-    t.string   "value"
-    t.string   "category"
+  create_table "keywords", force: :cascade do |t|
+    t.string   "value",      limit: 255
+    t.string   "category",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "products", force: true do |t|
-    t.string   "ean"
-    t.string   "category"
+  create_table "products", force: :cascade do |t|
+    t.string   "ean",                  limit: 255
+    t.string   "category",             limit: 255
     t.text     "a_title"
     t.text     "a_authors_json"
     t.text     "a_manufacturer"
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20141220124917) do
     t.text     "a_image_small"
     t.text     "a_url"
     t.datetime "a_release_date"
-    t.boolean  "a_release_date_fixed", default: true
+    t.boolean  "a_release_date_fixed",             default: true
     t.text     "r_title"
     t.text     "r_authors"
     t.text     "r_manufacturer"
@@ -58,34 +58,34 @@ ActiveRecord::Schema.define(version: 20141220124917) do
 
   add_index "products", ["ean"], name: "products_ean", using: :btree
 
-  create_table "user_keywords", force: true do |t|
+  create_table "user_keywords", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "keyword_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "user_products", force: true do |t|
+  create_table "user_products", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "product_id"
-    t.string   "type_name",  default: "search"
-    t.text     "tags_json",  default: "[]"
+    t.string   "type_name",  limit: 255, default: "search"
+    t.text     "tags_json",              default: "[]"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "user_products", ["product_id"], name: "index_user_products_on_product_id", using: :btree
 
-  create_table "users", force: true do |t|
-    t.string   "domain_name"
-    t.string   "screen_name"
-    t.string   "nickname"
+  create_table "users", force: :cascade do |t|
+    t.string   "domain_name",          limit: 255
+    t.string   "screen_name",          limit: 255
+    t.string   "nickname",             limit: 255
     t.text     "profile_text"
     t.integer  "kitaguchi_profile_id"
-    t.boolean  "random_url",           default: false
-    t.string   "random_key"
+    t.boolean  "random_url",                       default: false
+    t.string   "random_key",           limit: 255
     t.boolean  "private"
-    t.text     "tags",                 default: "{}"
+    t.text     "tags",                             default: "{}"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,22 +1,21 @@
 class User < ActiveRecord::Base
   has_many :user_keywords
   has_many :user_products
-  
+
   before_save :manage_key
-  before_save :tags_to_json
-  
-  def tags
-    if attributes['tags'].is_a?(String)
-      JSON.parse(attributes['tags'])
-    else
-      attributes['tags']
-    end
+
+  def tag_table
+    JSON.parse(self.tags)
   end
-  
+
+  def tag_table=(value)
+    self.tags = value.to_json
+  end
+
   # tagsテーブルを更新する
   def update_tags(added, removed)
-    current = tags
-    
+    current = tag_table
+
     added.each do |tag|
       if current[tag].present?
         current[tag] += 1
@@ -24,7 +23,7 @@ class User < ActiveRecord::Base
         current[tag] = 1
       end
     end
-    
+
     removed.each do |tag|
       if current[tag].present?
         if current[tag] == 1
@@ -34,14 +33,14 @@ class User < ActiveRecord::Base
         end
       end
     end
-    
-    self.tags = current
+
+    self.tag_table = current
   end
-  
+
   def search_user_products(keyword)
     UserProduct.search(:text => keyword, :user_id => self.id)
   end
-  
+
   private
   def manage_key
     if self.changes.keys.include?('random_url')
@@ -51,14 +50,10 @@ class User < ActiveRecord::Base
         self.random_key = nil
       end
     end
-    
+
     if self.changes.keys.include?('private') and !private
       self.random_url = false
       self.random_key = nil
     end
-  end
-  
-  def tags_to_json
-    self.tags = tags.to_json
   end
 end
