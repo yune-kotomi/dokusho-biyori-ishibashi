@@ -17,7 +17,7 @@
   <body class="<%= params[:controller] %>" data-user-id="<%= @login_user.id if @login_user.present? %>">
     <div id="header">
       <div class="banner">
-        <%= link_to image_tag('logo.png', :alt => Ishibashi::Application.config.title), etc_index_path %>
+        <%= link_to image_tag('logo.png', :alt => Ishibashi::Application.config.title), root_path %>
       </div>
 
       <div class="navigation">
