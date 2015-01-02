@@ -22,6 +22,7 @@ Ishibashi::Application.routes.draw do
     :controller => 'users'
   patch 'users/update',
     :to => 'users#update'
+  post 'users/update', :to => 'users#update'
 
   get 'users',
     :controller => 'users',

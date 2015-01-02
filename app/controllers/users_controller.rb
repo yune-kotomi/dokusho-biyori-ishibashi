@@ -1,6 +1,8 @@
 Mime::Type.register "application/rdf+xml", :rdf
 
 class UsersController < ApplicationController
+  protect_from_forgery :except => :update
+
   def show
     @user = User.where(:domain_name => params[:domain_name], :screen_name => params[:screen_name]).first
     forbidden if @user.private? and @user != @login_user
@@ -89,7 +91,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @login_user.present?
+    if @login_user.present? && verify_authenticity_token.nil?
       @login_user.update(params[:user].permit(:private, :random_url))
       render :text => ({:status => 'ok'}).to_json
     else
