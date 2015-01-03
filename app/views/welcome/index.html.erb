@@ -1,3 +1,74 @@
-<h1>Welcome#index</h1>
-<p>Find me in app/views/welcome/index.html.erb</p>
-<%= link_to 'login', :controller => :users, :action => :login %>
+<% @title = "読み続けるための発売日カレンダー" %>
+
+<ul class="introduction">
+  <li>
+    <div class="mod mod-cards">
+      <div class="card fill-white">
+        <div class="image">
+          <%= image_tag 'keywords.png' %>
+        </div>
+        <div class="description">
+          お気に入り作家の新作を見逃したくない貴方に。<br>
+          「読書びより」は、登録されたキーワードを元に自動で検索し、
+          新刊を探します。
+        </div>
+      </div>
+    </div>
+  </li>
+
+  <li>
+    <div class="mod mod-cards">
+      <div class="card fill-white">
+        <div class="image">
+          <%= image_tag 'feeds.png' %>
+        </div>
+        <div class="description">
+          新刊の情報は、様々な方法で受け取れます。<br>
+          本サービスの発売日一覧画面はもちろん、
+          GoogleカレンダーやFeedlyなどと連動できるように
+          iCalendarデータやRSSフィードも用意しています。
+        </div>
+      </div>
+    </div>
+  </li>
+
+  <li>
+    <div class="mod mod-cards">
+      <div class="card fill-white">
+        <div class="image">
+          <%= image_tag 'openid.png' %>
+        </div>
+        <div class="description">
+          ご利用は無料です。<br>
+          面倒なID/パスワードも必要ありません。
+          GoogleアカウントやはてなIDなど、
+          他サービスのアカウントで簡単に始められます。
+        </div>
+      </div>
+    </div>
+  </li>
+</ul>
+
+<div class="menu">
+  <% if @login_user.present? %>
+    <%= link_to({
+      :controller => :users,
+      :action => :show,
+      :domain_name => @login_user.domain_name,
+      :screen_name => @login_user.screen_name
+    },
+    :class => 'button fill-blue text-white') do %>
+      <i class="icon icon-user"></i>
+      <%= @login_user.nickname %> さんの発売日一覧へ
+    <% end %>
+  <% else %>
+    <%= link_to({
+      :controller => :users,
+      :action => :login
+    },
+    :class => 'button fill-blue text-white') do %>
+      <i class="icon icon-login"></i>
+      ログイン
+    <% end %>
+  <% end %>
+</div>

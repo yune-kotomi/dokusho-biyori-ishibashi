@@ -1,3 +1,31 @@
 // Place all the styles related to the welcome controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+body.welcome {
+  ul.introduction {
+    li {
+      margin: 0 20px 10px 20px;
+
+      .card {
+        display: table;
+        width: 100%;
+
+        .image,.description {
+          display: table-cell;
+          padding: 10px;
+          vertical-align: top;
+          width: 50%;
+        }
+
+        .image {
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  .menu {
+    padding: 20px;
+    text-align: center;
+  }
+}
