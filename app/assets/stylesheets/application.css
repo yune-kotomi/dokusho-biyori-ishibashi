@@ -11,6 +11,7 @@
  *= require _reset
  *= require_self
  *= require_tree .
+ *= require libs/Waves-master/dist/waves
  *= require base
  *= require crow
  *= require icomoon/style
