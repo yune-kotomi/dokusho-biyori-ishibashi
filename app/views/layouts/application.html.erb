@@ -39,38 +39,48 @@
                   <ul class="unstyled">
                     <% if @login_user.present? %>
                       <li>
-                        <%= link_to '発売日一覧',
-                          {
+                        <%= link_to({
                             :controller => :users,
                             :action => :show,
                             :domain_name => @login_user.domain_name,
                             :screen_name => @login_user.screen_name
                           },
-                          :class => 'waves-effect list-item' %>
+                          :class => 'waves-effect list-item') do %>
+                          <i class="icon icon-calendar"></i>
+                          発売日一覧
+                        <% end %>
                       </li>
 
                       <li>
-                        <%= link_to '設定',
-                          {:controller => :keywords, :action => :index},
-                          :class => 'waves-effect list-item' %>
+                        <%= link_to({:controller => :keywords, :action => :index},
+                          :class => 'waves-effect list-item') do %>
+                          <i class="icon icon-cog"></i>
+                          設定
+                        <% end %>
                       </li>
 
                       <li>
-                        <%= link_to 'タグ付けした商品一覧',
-                          {:controller => :user_products, :action => :show, :id => @login_user.id},
-                          :class => 'waves-effect list-item' %>
+                        <%= link_to({:controller => :user_products, :action => :show, :id => @login_user.id},
+                          :class => 'waves-effect list-item') do %>
+                          <i class="icon icon-tag"></i>
+                          タグ付けした商品一覧
+                        <% end %>
                       </li>
                     <% end %>
 
                     <li>
                       <% if @login_user.blank? %>
-                        <%= link_to "ログイン",
-                          {:controller => :users, :action => :login},
-                          :class => 'waves-effect list-item' %>
+                        <%= link_to({:controller => :users, :action => :login},
+                          :class => 'waves-effect list-item') do %>
+                          <i class="icon icon-login"></i>
+                          ログイン
+                        <% end %>
                       <% else %>
-                        <%= link_to "ログアウト",
-                          {:controller => :users, :action => :logout},
-                          :class => 'waves-effect list-item' %>
+                        <%= link_to({:controller => :users, :action => :logout},
+                          :class => 'waves-effect list-item') do %>
+                          <i class="icon icon-logout"></i>
+                          ログアウト
+                        <% end %>
                       <% end %>
                     </li>
                   </ul>
