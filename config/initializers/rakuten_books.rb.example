@@ -1,4 +1,4 @@
-Ishibashi::Application.config.rakuten = {
-  :developer_id => '',
-  :affiliate_id => ''
-}
+RakutenWebService.configuration do |c|
+  c.application_id = ""
+  c.affiliate_id = ""
+end

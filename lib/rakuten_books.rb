@@ -23,75 +23,68 @@ module RakutenBooks
   def self.search(keyword, category, page = 1)
     # 空キーワードなら抜ける
     return [0, []] if keyword.blank?
-    
-    params = []
-    ({"developerId" => Ishibashi::Application.config.rakuten[:developer_id],
-      "affiliateId" => Ishibashi::Application.config.rakuten[:affiliate_id],
-      "operation" => "BooksTotalSearch",
-      "version" => "2009-04-15",
-      "sort" => "-releaseDate",
-      "outOfStockFlag" => "1",
-      "field" => "0",
-      "keyword" => keyword,
-      "booksGenreId" => Genre[category]}).each do |key, value|
-
-      params.push("#{key}=#{CGI::escape value}") unless value.nil?
-    end
-    request_url = "http://api.rakuten.co.jp/rws/2.0/json?#{params.join "&"}"
-
-    if defined?(OpenURI)
-      #puts request_url
-      src = open(request_url).read
-    else
-      src = AppEngine::URLFetch.fetch(request_url).body
-    end
-
-    data = JSON.parse src
 
     ret = []
     total_result = 0
-    #データ存在チェック
-    if data["Header"]["Status"] == "Success"
-      #パッキング
-      total_result = data["Body"]["BooksTotalSearch"]["pageCount"]
-      data["Body"]["BooksTotalSearch"]["Items"]["Item"].each do |item|
-        ean = item["jan"]
-        ean = item["isbn"] if ean == ""
 
-        manufacturer = item["publisherName"]
-        manufacturer = item["label"] if manufacturer == ""
+    begin
+      result = RakutenWebService::Books::Total.search(
+        :keyword => keyword,
+        :books_genre_id => Genre[category],
+        :page => page
+      ).order(:release_date => 'desc')
+
+      total_result = result.count
+      result.first(30).each do |item|
+        ean = item["jan"]
+        ean = item["isbn"] if ean.blank?
+
+        manufacturer = item["publisher_name"]
+        manufacturer = item["label"] if manufacturer.blank?
 
         author = item["author"]
-        author = item["artistName"] if author == ""
+        author = item["artistName"] if author.blank?
 
-        authors = [author] unless author.empty?
-        authors = nil if author.empty?
-
-        if item["mediumImageUrl"] == "http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/noimage_01.gif?_ex=120x120"
-          item.delete("mediumImageUrl")
+        if author.blank?
+          authors = nil
+        else
+          authors = author.split('/')
         end
 
-        if item["smallImageUrl"] == "http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/noimage_01.gif?_ex=64x64"
-          item.delete("smallImageUrl")
-        end
+        medium_image_url = item['medium_image_url']
+        medium_image_url = nil if medium_image_url == "http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/noimage_01.gif?_ex=120x120"
+
+        small_image_url = item['small_image_url']
+        small_image_url = nil if small_image_url == "http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/noimage_01.gif?_ex=64x64"
 
         begin
-          release_date = Time.parse(item["salesDate"])
+          release_date = item['sales_date'].
+            split(//).
+            map{|c| c.match(/[0-9]/) ? c : '-'}.
+            join.
+            sub(/\-$/, '')
+          release_date += '-01' if release_date.split('-').size == 2
+          release_date = Time.parse(release_date)
+
           ret.push(
             :ean => ean,
             :r_title => item["title"],
-            :r_url => item["affiliateUrl"],
+            :r_url => item["affiliate_url"],
             :r_manufacturer => manufacturer,
             :r_release_date => release_date,
-            :r_image_medium => item["mediumImageUrl"],
-            :r_image_small => item["smallImageUrl"],
+            :r_image_medium => medium_image_url,
+            :r_image_small => small_image_url,
             :r_authors => authors
           )
-        rescue ArgumentError
+        rescue ArgumentError => e
           # do nothing
           # 発売日が不正
+          Rails.logger.debug item['sales_date']
+          Rails.logger.debug e.inspect
         end
       end
+    rescue => e
+      Rails.logger.error e.inspect
     end
 
     return total_result, ret
