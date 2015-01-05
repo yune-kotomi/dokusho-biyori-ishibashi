@@ -6,6 +6,7 @@ class Product < ActiveRecord::Base
   before_save :serialize_attributes
   before_save :merge_data
   after_save :save_to_fts
+  after_destroy :remove_from_fts
 
   def update_with_amazon(data = nil)
     data = AmazonEcs.get(self.ean) if data.nil?
@@ -118,6 +119,12 @@ class Product < ActiveRecord::Base
     else
       table.add(self.id.to_s, :text => fulltext, :category => category)
     end
+  end
+
+  def remove_from_fts
+    table = Groonga['Products']
+    record = table[self.id.to_s]
+    record.delete if record.present?
   end
 
   def fulltext
