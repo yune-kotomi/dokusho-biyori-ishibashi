@@ -49,10 +49,11 @@ class UserProductsController < ApplicationController
     else
       @user_products = @user.user_products.where(:type_name => 'shelf')
     end
+
     @user_products =
       @user_products.includes(:product).
       order('user_products.updated_at desc').
-      offset(40 * (params[:page]|| 0).to_i).
+      offset(offset).
       limit(41)
   end
 
