@@ -35,11 +35,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.8466609"
-     inkscape:cx="129.29709"
-     inkscape:cy="67.472167"
+     inkscape:zoom="3.732132"
+     inkscape:cx="30.086867"
+     inkscape:cy="74.269049"
      inkscape:document-units="px"
-     inkscape:current-layer="layer12"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1056"
@@ -75,9 +75,10 @@
      inkscape:label="レイヤー 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-932.36218)">
+     transform="translate(0,-932.36218)"
+     style="display:inline">
     <rect
-       style="fill:none;stroke:#bbbcde;stroke-width:1.79999995;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#ffffff;stroke:#bbbcde;stroke-width:1.79999994999999990;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;fill-opacity:1"
        id="rect4749"
        width="61.460831"
        height="61.460831"
