@@ -38,13 +38,11 @@ input[type="text"]:focus,textarea:focus {
 }
 
 .modal {
-  position: fixed !important;
-
   .modal-inner {
-    align-items : center;
     display:flex;
     justify-content : center;
     margin: auto;
+    bottom: auto !important;
 
     .body {
       padding: 0 10px;

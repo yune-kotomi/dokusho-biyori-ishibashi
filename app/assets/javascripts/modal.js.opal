@@ -13,6 +13,15 @@ module Modal
     element.on('click') do |event|
       id = event.current_target['data-modal']
       dialog = Element.find("##{id}")
+
+      overlay_height = [
+        Element.find('body').outer_height,
+        Element.find('html').outer_height
+      ].max
+      position = Window.scroll_top + 20
+      dialog.css("height", "#{overlay_height}px")
+      dialog.find('.modal-inner').css('top', "#{position}px")
+
       dialog.fade_in
 
       false
