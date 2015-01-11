@@ -2,7 +2,14 @@ Document.ready? do
   if Element.find('body.keywords').size > 0
     def append_keyword(event)
       form = event.current_target.parents.map{|parent| parent if parent.has_class?('new_keyword')}.compact.first
+      # 通信中はボタンをdisableにする
+      button = event.current_target
+      button.add_class('disabled')
+
       HTTP.post(form['action'], :payload => form.serialize) do |response|
+        # 通信終了したのでボタンを元に戻す
+        button.remove_class('disabled')
+
         if response.ok?
           data = response.json
           # リストにキーワード追加
@@ -21,6 +28,7 @@ Document.ready? do
           end
           # フォームクリア
           form.find('input[type="text"]').value = ''
+
         else
           alert('追加に失敗しました。')
         end
