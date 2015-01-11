@@ -28,7 +28,7 @@ Document.ready? do
           end
           # フォームクリア
           form.find('input[type="text"]').value = ''
-
+          button.add_class('disabled')
         else
           alert('追加に失敗しました。')
         end
