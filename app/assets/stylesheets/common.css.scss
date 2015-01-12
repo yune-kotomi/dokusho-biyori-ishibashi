@@ -134,8 +134,20 @@
 }
 
 #header {
-  display: flex;
-  justify-content: space-between;
+  @media (min-width: 400px) {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 400px) {
+    .banner {
+      text-align: center;
+    }
+    
+    .navigation {
+      text-align: right;
+    }
+  }
 
   .navigation {
     padding: 5px;
