@@ -94,6 +94,10 @@
         display: inline;
         margin: 0 2px;
         padding: 2px 2px 2px 4px;
+
+        a {
+          white-space: nowrap;
+        }
       }
     }
 
@@ -116,6 +120,7 @@
           display: inline;
           margin: 0 2px;
           padding: 2px 2px 2px 4px;
+          white-space: nowrap;
 
           i {
             color: transparent;
@@ -143,7 +148,7 @@
     .banner {
       text-align: center;
     }
-    
+
     .navigation {
       text-align: right;
     }

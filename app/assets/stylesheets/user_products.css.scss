@@ -12,6 +12,10 @@ body.user_products {
       &.selected {
         background-color: #d0d9ff;
       }
+
+      a {
+        white-space: nowrap;
+      }
     }
   }
 }
