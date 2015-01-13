@@ -50,7 +50,7 @@
   	<content:encoded><![CDATA[<%=render :partial => 'products/list_element.html.erb',
         :locals => {:list_element => product} %>]]></content:encoded>
   	<dc:date><%= product.release_date.iso8601 %></dc:date>
-  	<hatena:imageurlsmall><%= product.image_small %></hatena:imageurlsmall>
+  	<hatena:imageurlsmall><%= product.image_small || URI.join(root_url, image_path('dummy_small.png')) %></hatena:imageurlsmall>
   </item>
 <% end %>
 </rdf:RDF>
