@@ -3,7 +3,7 @@ Document.ready? do
     def append_keyword(event)
       form = event.current_target.parents.map{|parent| parent if parent.has_class?('new_keyword')}.compact.first
       # 通信中はボタンをdisableにする
-      button = event.current_target
+      button = form.find('.button')
       button.add_class('disabled')
 
       HTTP.post(form['action'], :payload => form.serialize) do |response|
@@ -61,6 +61,11 @@ Document.ready? do
       false
     end
 
+    # textfieldでエンター
+    Element.find('input[name="keyword[value]"]').on('keypress') do |event|
+      false if event.which == 13
+    end
+
     # 追加ボタンはキーワードが入力され、重複していない場合のみenable
     Element.find('input[name="keyword[value]"]').on('keyup') do |event|
       text_field = event.current_target
@@ -71,6 +76,10 @@ Document.ready? do
         button.add_class('disabled')
       else
         button.remove_class('disabled')
+      end
+
+      if event.which == 13
+        append_keyword(event) unless event.current_target.has_class?('disabled')
       end
 
       false
