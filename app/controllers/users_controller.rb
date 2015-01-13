@@ -38,6 +38,7 @@ class UsersController < ApplicationController
 
       @user_products = @user.user_products.
         includes(:product).
+        order('products.release_date desc').
         where(:type_name => 'search').
         limit(100)
 
