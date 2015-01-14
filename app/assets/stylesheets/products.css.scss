@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 body.products {
   >.details {
-    @media (min-width: 400px) {
+    @media (min-width: 720px) {
       display: flex;
     }
 
@@ -14,7 +14,9 @@ body.products {
         width: 100%;
 
         .content {
-          display: flex;
+          @media (min-width: 400px) {
+            display: flex;
+          }
 
           .thumbnail {
             text-align: center;
@@ -59,7 +61,7 @@ body.products {
     }
 
     >div,>ul {
-      @media (min-width: 400px) {
+      @media (min-width: 720px) {
         width: 50%;
       }
     }
