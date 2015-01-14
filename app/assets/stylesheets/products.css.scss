@@ -3,7 +3,9 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 body.products {
   >.details {
-    display: flex;
+    @media (min-width: 400px) {
+      display: flex;
+    }
 
     >div {
       padding: 10px;
@@ -57,7 +59,9 @@ body.products {
     }
 
     >div,>ul {
-      width: 50%;
+      @media (min-width: 400px) {
+        width: 50%;
+      }
     }
   }
 }
