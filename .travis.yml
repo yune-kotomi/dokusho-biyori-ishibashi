@@ -1,0 +1,15 @@
+language: ruby
+rvm:
+  - 2.2.0
+before_script:
+  - psql -c 'create database kiyoshikojin_test;' -U postgres
+  - cp config/database.yml.travis config/database.yml
+  - cp config/initializers/kitaguchi.rb.example config/initializers/kitaguchi.rb
+before_install:
+  - curl --silent --location https://github.com/groonga/groonga/raw/master/data/travis/setup.sh | sh
+cache: bundler
+addons:
+  postgresql: "9.3"
+notifications:
+  email:
+    - yune.kotomi+github@gmail.com
