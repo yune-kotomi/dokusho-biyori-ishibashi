@@ -18,7 +18,7 @@ module Modal
         Element.find('body').outer_height,
         Element.find('html').outer_height
       ].max
-      position = Window.scroll_top + 20
+      position = Element.find('document,body').scroll_top + 20
       dialog.css("height", "#{overlay_height}px")
       dialog.find('.modal-inner').css('top', "#{position}px")
 
