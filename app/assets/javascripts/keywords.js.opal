@@ -63,23 +63,26 @@ Document.ready? do
 
     # textfieldでエンター
     Element.find('input[name="keyword[value]"]').on('keypress') do |event|
-      false if event.which == 13
+      if event.which == 13
+        append_keyword(event) unless event.current_target.has_class?('disabled')
+        false
+      end
     end
 
     # 追加ボタンはキーワードが入力され、重複していない場合のみenable
     Element.find('input[name="keyword[value]"]').on('keyup') do |event|
-      text_field = event.current_target
-      form = text_field.parent.parent
-      button = form.find('a.button')
-      keywords = form.parent.find('.keywords .value a.button').map{|e| e.text.gsub(/\n/, '').strip }
-      if text_field.value.to_s.strip == '' or keywords.include?(text_field.value)
-        button.add_class('disabled')
-      else
-        button.remove_class('disabled')
-      end
-
-      if event.which == 13
-        append_keyword(event) unless event.current_target.has_class?('disabled')
+      unless event.which == 13
+        text_field = event.current_target
+        form = text_field.parent.parent
+        button = form.find('a.button')
+        keywords = form.parent.find('.keywords .value a.button').map{|e| e.text.gsub(/\n/, '').strip }
+        if text_field.value.to_s.strip == '' or keywords.include?(text_field.value)
+          button.add_class('disabled')
+          event.current_target.add_class('disabled')
+        else
+          button.remove_class('disabled')
+          event.current_target.remove_class('disabled')
+        end
       end
 
       false
