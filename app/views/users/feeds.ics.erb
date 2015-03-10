@@ -43,6 +43,7 @@
     product_desc = product_desc.join('\n')
 
     cal.event do |event|
+      event.uid = "dokusho-#{product.id}@#{request.domain}"
       event.dtstart = Icalendar::Values::Date.new(start_date.strftime('%Y%m%d'))
       event.dtend = Icalendar::Values::Date.new(end_date.strftime('%Y%m%d'))
       event.summary = title
