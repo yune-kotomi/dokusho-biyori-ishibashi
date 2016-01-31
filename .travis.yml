@@ -1,7 +1,7 @@
 language: ruby
 sudo: required
 rvm:
-  - 2.2.0
+  - 2.3.0
 before_script:
   - psql -c 'create database kiyoshikojin_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
