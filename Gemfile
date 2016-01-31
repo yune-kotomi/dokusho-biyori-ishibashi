@@ -42,7 +42,6 @@ end
 group :development, :test do
   gem 'pry'
   gem 'pry-doc'
-  gem 'did_you_mean'
 end
 
 gem 'opal-rails'
