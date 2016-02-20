@@ -72,3 +72,11 @@
     <% end %>
   <% end %>
 </div>
+
+<% content_for(:head) do %>
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@yumenosoranet">
+  <meta name="twitter:title" content="<%= @title %> <%= Ishibashi::Application.config.title %>">
+  <meta name="twitter:description" content="登録したキーワードでの自動検索で、あなただけの発売日カレンダーを。">
+  <meta name="twitter:image" content="<%= root_url %>apple-touch-icon-180x180.png">
+<% end %>
