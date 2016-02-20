@@ -59,8 +59,8 @@ product1:
   a_title: product1
   a_authors_json: '["author-2"]'
   a_manufacturer: manufacturer-2
-  a_image_medium: image-medium.jpg
-  a_image_small: image-small.jpg
+  a_image_medium: http://ecx.images-amazon.com/images/I/image-medium.jpg
+  a_image_small: http://ecx.images-amazon.com/images/I/image-small.jpg
   a_url: http://example.com/product1
   a_release_date: 2014-05-27 00:00:00 +09:00
   a_release_date_fixed: true
@@ -83,8 +83,8 @@ product2:
   a_title: product2
   a_authors_json: '["author-2"]'
   a_manufacturer: manufacturer-2
-  a_image_medium: image-medium.jpg
-  a_image_small: image-small.jpg
+  a_image_medium:
+  a_image_small:
   a_url: http://example.com/product1
   a_release_date: 2014-05-27 00:00:00 +09:00
   a_release_date_fixed: true
@@ -92,8 +92,8 @@ product2:
   r_title:
   r_authors:
   r_manufacturer:
-  r_image_medium:
-  r_image_small:
+  r_image_medium: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/image-medium.jpg
+  r_image_small: http://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/image-small.jpg
   r_url:
   r_release_date:
 

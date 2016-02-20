@@ -56,11 +56,15 @@ class Product < ActiveRecord::Base
   end
 
   def image_medium
-    a_image_medium || r_image_medium
+    uri = a_image_medium || r_image_medium
+    uri.sub('ecx.images-amazon.com', 'images-na.ssl-images-amazon.com').
+      sub('http://', 'https://') if uri
   end
 
   def image_small
-    a_image_small || r_image_small
+    uri = a_image_small || r_image_small
+    uri.sub('ecx.images-amazon.com', 'images-na.ssl-images-amazon.com').
+      sub('http://', 'https://') if uri
   end
 
   #関連商品を返す

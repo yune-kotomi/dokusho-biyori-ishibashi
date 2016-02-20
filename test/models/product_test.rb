@@ -50,4 +50,22 @@ class ProductTest < ActiveSupport::TestCase
     related = @product.related_products
     assert_equal @product2, related.first
   end
+
+  test 'Amazon画像のSSL化' do
+    uri = URI(@product.image_small)
+    assert_equal 'https', uri.scheme
+    assert_equal 'images-na.ssl-images-amazon.com', uri.host
+
+    uri = URI(@product.image_medium)
+    assert_equal 'https', uri.scheme
+    assert_equal 'images-na.ssl-images-amazon.com', uri.host
+  end
+
+  test '楽天ブックス画像のSSL化' do
+    uri = URI(@product2.image_small)
+    assert_equal 'https', uri.scheme
+
+    uri = URI(@product2.image_medium)
+    assert_equal 'https', uri.scheme
+  end
 end
