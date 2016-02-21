@@ -47,6 +47,7 @@ end
 
 gem 'opal-rails'
 
+gem 'exception_notification'
 gem 'uuidtools'
 gem 'icalendar'
 gem 'rroonga'
