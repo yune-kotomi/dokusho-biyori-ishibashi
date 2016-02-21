@@ -21,5 +21,4 @@ config/initializers/amazon_ecs.rb
 config/initializers/rakuten_books.rb
 config/initializers/kitaguchi.rb
 db/groonga/
-config/log4r.yml
-
+config/initializers/exception_notification.rb

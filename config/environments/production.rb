@@ -1,17 +1,3 @@
-require 'log4r'
-require 'log4r/configurator'
-require 'log4r/yamlconfigurator'
-require "log4r/outputter/emailoutputter"
-require 'tlsmail'
-
-module Log4r
-  class Logger
-    def formatter
-      @outputters.map{|outputter| outputter.formatter}.first
-    end
-  end
-end
-
 Ishibashi::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -89,7 +75,5 @@ Ishibashi::Application.configure do
   # Disable automatic flushing of the log to improve performance.
   # config.autoflush_log = false
 
-  Net::SMTP.enable_tls(OpenSSL::SSL::VERIFY_NONE)
-  Log4r::YamlConfigurator.load_yaml_file("#{::Rails.root.to_s}/config/log4r.yml")
-  config.logger = Log4r::Logger["production_logger"]
+  config.log_formatter = ::Logger::Formatter.new
 end

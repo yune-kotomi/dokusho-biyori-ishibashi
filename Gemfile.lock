@@ -86,7 +86,6 @@ GEM
       turbolinks
     json (1.8.3)
     libv8 (3.16.14.13)
-    log4r (1.1.10)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -192,7 +191,6 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.2)
-    tlsmail (0.0.1)
     turbolinks (2.5.3)
       coffee-rails
     tzinfo (1.2.2)
@@ -216,7 +214,6 @@ DEPENDENCIES
   icalendar
   jquery-rails
   jquery-turbolinks
-  log4r
   opal-rails
   pg
   pry
@@ -228,7 +225,6 @@ DEPENDENCIES
   sass-rails (~> 5.0.0)
   sdoc
   therubyracer
-  tlsmail
   turbolinks
   uglifier (>= 1.3.0)
   uuidtools

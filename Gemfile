@@ -47,10 +47,8 @@ end
 
 gem 'opal-rails'
 
-gem 'log4r'
 gem 'uuidtools'
 gem 'icalendar'
-gem 'tlsmail'
 gem 'rroonga'
 gem 'amazon-ecs'
 gem 'rakuten_web_service'
