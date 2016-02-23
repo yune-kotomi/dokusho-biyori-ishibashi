@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
   def manage_key
     if self.changes.keys.include?('random_url')
       if random_url
-        self.random_key = UUIDTools::UUID.random_create.to_s
+        self.random_key = SecureRandom.hex(30)
       else
         self.random_key = nil
       end
