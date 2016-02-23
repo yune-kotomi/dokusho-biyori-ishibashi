@@ -31,6 +31,7 @@ class Product < ActiveRecord::Base
       end
 
       self.ean = data[:ean]
+      self.category = data[:category]
     end
   end
 

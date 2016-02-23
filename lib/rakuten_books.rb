@@ -68,6 +68,7 @@ module RakutenBooks
 
           ret.push(
             :ean => ean,
+            :category => category,
             :r_title => item["title"],
             :r_url => item["affiliate_url"],
             :r_manufacturer => manufacturer,
