@@ -6,7 +6,12 @@ class User < ActiveRecord::Base
 
   # tagsテーブルを更新する
   def update_tags(added, removed)
-    current = tags
+    # マイグレーション時の互換処理
+    if tags.is_a?(String)
+      current = JSON.parse(tags)
+    else
+      current = tags
+    end
 
     added.each do |tag|
       if current[tag].present?
@@ -26,7 +31,11 @@ class User < ActiveRecord::Base
       end
     end
 
-    self.tags = current
+    self.tags = current.to_json
+    if tags.is_a?(String)
+    else
+      self.tags = current
+    end
   end
 
   def search_user_products(keyword)
