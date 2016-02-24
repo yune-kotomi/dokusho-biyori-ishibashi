@@ -4,17 +4,9 @@ class User < ActiveRecord::Base
 
   before_save :manage_key
 
-  def tag_table
-    JSON.parse(self.tags)
-  end
-
-  def tag_table=(value)
-    self.tags = value.to_json
-  end
-
   # tagsテーブルを更新する
   def update_tags(added, removed)
-    current = tag_table
+    current = tags
 
     added.each do |tag|
       if current[tag].present?
@@ -34,7 +26,7 @@ class User < ActiveRecord::Base
       end
     end
 
-    self.tag_table = current
+    self.tags = current
   end
 
   def search_user_products(keyword)

@@ -44,10 +44,10 @@ class UserProductsController < ApplicationController
       forbidden unless @user == @login_user
     end
 
+    @user_products = @user.user_products.where(:type_name => 'shelf')
     if params[:keyword].present?
-      @user_products = UserProduct.search({:text => params[:keyword], :user_id => @user.id})
-    else
-      @user_products = @user.user_products.where(:type_name => 'shelf')
+      keywords = Shellwords.shellwords(params[:keyword])
+      @user_products = @user_products.where('user_products.tags @> ARRAY[?]::varchar[]', keywords)
     end
 
     @user_products =

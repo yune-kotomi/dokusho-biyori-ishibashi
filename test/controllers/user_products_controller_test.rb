@@ -12,12 +12,6 @@ class UserProductsControllerTest < ActionController::TestCase
 
     @shelf_user_product1 = user_products(:shelf_user_product1)
     @ignore_user_product1 = user_products(:ignore_user_product1)
-
-    UserProduct.all.each {|user_product| user_product.send(:save_to_fts) }
-  end
-
-  teardown do
-    Groonga['UserProducts'].each { |record| record.delete }
   end
 
   test "タグ付け済みの商品一覧を返す" do

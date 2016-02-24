@@ -8,64 +8,64 @@ user_product1:
   user: user1
   product: keyword_search1
   type_name: shelf
-  tags_json: "[]"
+  tags: "{}"
 
 user_product1_1:
   user: user1
   product: keyword_search1
   type_name: search
-  tags_json: "[]"
+  tags: "{}"
 
 user_product2:
   user: user2
   product: keyword_search1
   type_name: shelf
-  tags_json: '["search1","search2"]'
+  tags: '{search1, search2}'
 
 user_product3:
   user: user2
   product: product1
   type_name: shelf
-  tags_json: '["search3","search2"]'
+  tags: '{search3, search2}'
 
 search_user_product1:
   user: user3
   product: product1
   type_name: 'search'
-  tags_json: '[]'
+  tags: "{}"
 
 shelf_user_product1:
   user: user3
   product: product1
   type_name: 'shelf'
-  tags_json: '[]'
+  tags: "{}"
 
 ignore_user_product1:
   user: user3
   product: product2
   type_name: 'ignore'
-  tags_json: '[]'
+  tags: "{}"
 
 user_product_5_1:
   user: user5
   product: product1
   type_name: 'search'
-  tags_json: '[]'
+  tags: "{}"
 
 user_product_5_2:
   user: user5
   product: product2
   type_name: 'search'
-  tags_json: '[]'
+  tags: "{}"
 
 user_product_5_1_shelf:
   user: user5
   product: product1
   type_name: 'shelf'
-  tags_json: '[]'
+  tags: "{}"
 
 user_product_5_keyword_search1:
   user: user5
   product: keyword_search1
   type_name: 'search'
-  tags_json: '[]'
+  tags: "{}"

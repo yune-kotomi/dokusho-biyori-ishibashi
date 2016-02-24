@@ -2,11 +2,11 @@
 
 <div class="tags">
   <ul>
-    <% @user.tag_table.to_a.sort{|a, b| b.last <=> a.last}.each do |tag| %>
-      <li class="<%= 'selected' if params[:keyword] == "[#{tag.first}]" %>">
+    <% @user.tags.to_a.sort{|a, b| b.last <=> a.last}.each do |tag| %>
+      <li class="<%= 'selected' if params[:keyword] == tag.first %>">
         <%
           destination = {:controller => :user_products, :action => :show, :id => @user.id}
-          destination[:keyword] = "[#{tag.first}]" unless params[:keyword] == "[#{tag.first}]"
+          destination[:keyword] = tag.first unless params[:keyword] == tag.first
         %>
         <%= link_to destination do %>
           <i class="icon icon-tag"></i>

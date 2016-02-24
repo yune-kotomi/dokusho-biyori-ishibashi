@@ -9,7 +9,7 @@ keyword_search1:
   category: books
 
   a_title: keyword-search1
-  a_authors_json: '["author-1"]'
+  a_authors: '{author-1}'
   a_manufacturer: manufacturer-1
   a_image_medium: image-medium.jpg
   a_image_small: image-small.jpg
@@ -25,7 +25,6 @@ keyword_search1:
   r_url: http://example.com/keyword-search1-r
   r_release_date:
 
-  title: keyword-search1
   release_date: 2014-05-27 00:00:00 +09:00
 
 keyword_search2:
@@ -33,7 +32,7 @@ keyword_search2:
   category: books
 
   a_title: keyword-search2
-  a_authors_json: '["author-2"]'
+  a_authors: '{author-2}'
   a_manufacturer: manufacturer-2
   a_image_medium: image-medium.jpg
   a_image_small: image-small.jpg
@@ -49,7 +48,6 @@ keyword_search2:
   r_url:
   r_release_date:
 
-  title:
   release_date:
 
 product1:
@@ -57,7 +55,7 @@ product1:
   category: books
 
   a_title: product1
-  a_authors_json: '["author-2"]'
+  a_authors: '{author-2}'
   a_manufacturer: manufacturer-2
   a_image_medium: http://ecx.images-amazon.com/images/I/image-medium.jpg
   a_image_small: http://ecx.images-amazon.com/images/I/image-small.jpg
@@ -73,7 +71,6 @@ product1:
   r_url:
   r_release_date:
 
-  title: product1
   release_date: 2014-05-27 00:00:00 +09:00
 
 product2:
@@ -81,7 +78,7 @@ product2:
   category: books
 
   a_title: product2
-  a_authors_json: '["author-2"]'
+  a_authors: '{author-2}'
   a_manufacturer: manufacturer-2
   a_image_medium:
   a_image_small:
@@ -97,5 +94,4 @@ product2:
   r_url:
   r_release_date:
 
-  title:
   release_date: 2014-05-27 00:00:00 +09:00

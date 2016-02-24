@@ -3,10 +3,7 @@ class Product < ActiveRecord::Base
   has_many :keyword_products
   has_many :user_products
 
-  before_save :serialize_attributes
   before_save :merge_data
-  after_save :save_to_fts
-  after_destroy :remove_from_fts
 
   def update_with_amazon(data = nil)
     data = AmazonEcs.get(self.ean) if data.nil?
@@ -16,7 +13,7 @@ class Product < ActiveRecord::Base
         self.send("a_#{key}=", data["a_#{key}".to_sym])
       end
 
-      self.a_authors_json = data[:a_authors].to_json
+      self.a_authors = data[:a_authors]
       self.category = data[:category]
       self.ean = data[:ean]
     end
@@ -37,23 +34,19 @@ class Product < ActiveRecord::Base
 
   # アクセサ
   def authors
-    if a_authors_json.present?
-      begin
-        JSON.parse(a_authors_json)
-      rescue JSON::ParserError
-        []
-      end
+    if a_authors.present?
+      a_authors
     else
-      begin
-        JSON.parse(r_authors.to_s)
-      rescue JSON::ParserError
-        []
-      end
+      r_authors
     end
   end
 
   def manufacturer
     a_manufacturer || r_manufacturer
+  end
+
+  def title
+    a_title || r_title
   end
 
   def image_medium
@@ -92,14 +85,8 @@ class Product < ActiveRecord::Base
   end
 
   private
-  def serialize_attributes
-    self.r_authors = self.r_authors.to_json if self.r_authors.is_a?(Array)
-  end
-
-  # タイトル、発売日をマージする
+  # 発売日をマージする
   def merge_data
-    self.title = a_title || r_title
-
     if a_release_date.present?
       if a_release_date_fixed
         self.release_date = a_release_date
@@ -113,26 +100,5 @@ class Product < ActiveRecord::Base
     else
       self.release_date = r_release_date
     end
-  end
-
-  def save_to_fts
-    table = Groonga['Products']
-    record = table[self.id.to_s]
-    if record.present?
-      record['text'] = fulltext
-      record['category'] = category
-    else
-      table.add(self.id.to_s, :text => fulltext, :category => category)
-    end
-  end
-
-  def remove_from_fts
-    table = Groonga['Products']
-    record = table[self.id.to_s]
-    record.delete if record.present?
-  end
-
-  def fulltext
-    [title, authors.join("\n"), manufacturer].join("\n")
   end
 end

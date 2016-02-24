@@ -1,4 +1,6 @@
 class Keyword < ActiveRecord::Base
+  FTS_TARGETS = [:title, :authors, :manufacturer].flat_map{|s| ["a_#{s}", "r_#{s}"] }.map(&:to_sym)
+
   has_many :keyword_products
   has_many :user_keywords
   after_save :initial_search
@@ -60,24 +62,21 @@ class Keyword < ActiveRecord::Base
     # なんかの間違いで空文字列が渡された場合は抜ける
     return [0, []] if value.blank?
 
-    table = Groonga['Products']
-
+    # クエリ組み立て
     begin
       keywords = Shellwords.shellwords(value)
     rescue ArgumentError
       keywords = [value]
     end
-    ids = table.select do |r|
-      grn = keywords.map{|keyword| r.text =~ keyword }
-      grn.push(r.category == category)
-      grn
-    end.collect{|r| r.key.key }
+    query = FTS_TARGETS.
+      map{|c| keywords.map{ "#{c} %% ?" }.join(' AND ') }.
+      map{|q| "(#{q})" }.join(' OR ')
 
-    products = Product.where(:id => ids).
-      order('release_date desc').
+    products = Product.where([query, keywords * FTS_TARGETS.size].flatten)
+    pages = (products.count / 20.0).ceil
+    products = products.order('release_date desc').
       offset((page - 1) * 20).
       limit(20)
-    pages = (ids.size / 20.0).ceil
 
     [pages, products]
   end

@@ -40,13 +40,12 @@ GEM
     amazon-ecs (2.4.0)
       nokogiri (~> 1.4)
       ruby-hmac (~> 0.3)
-    archive-zip (0.8.0)
-      io-like (~> 0.3.0)
     arel (6.0.3)
     autoprefixer-rails (6.3.1)
       execjs
       json
     builder (3.2.2)
+    charlock_holmes (0.7.3)
     coderay (1.1.0)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
@@ -69,17 +68,10 @@ GEM
       faraday (>= 0.7.4, < 0.10)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
-    gqtp (1.0.6)
-    groonga-client (0.1.9)
-      gqtp (>= 1.0.4)
-      groonga-command (>= 1.0.8)
-    groonga-command (1.1.5)
-      json
     hashdiff (0.2.3)
     hike (1.2.3)
     i18n (0.7.0)
     icalendar (2.3.0)
-    io-like (0.3.0)
     jquery-rails (4.1.0)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
@@ -120,7 +112,7 @@ GEM
     opal-rspec (0.4.3)
       opal (>= 0.7.0, < 0.9)
     pg (0.18.4)
-    pkg-config (1.1.7)
+    pg_array_parser (0.0.9)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -162,11 +154,6 @@ GEM
     rdoc (4.2.1)
     ref (2.0.0)
     rr (1.1.2)
-    rroonga (5.1.1)
-      archive-zip
-      groonga-client (>= 0.0.3)
-      json
-      pkg-config
     ruby-hmac (0.4.0)
     safe_yaml (1.0.4)
     sass (3.4.21)
@@ -214,18 +201,19 @@ PLATFORMS
 DEPENDENCIES
   amazon-ecs
   autoprefixer-rails
+  charlock_holmes
   exception_notification
   icalendar
   jquery-rails
   jquery-turbolinks
   opal-rails
   pg
+  pg_array_parser
   pry
   pry-doc
   rails (~> 4.2.0)
   rakuten_web_service
   rr
-  rroonga
   sass-rails (~> 5.0.0)
   sdoc
   therubyracer

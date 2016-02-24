@@ -8,11 +8,7 @@ class KeywordTest < ActiveSupport::TestCase
     @rakuten_books = YAML.load(open('test/fixtures/rakuten_books.txt').read)
 
     @product = products(:keyword_search1)
-    @product.send(:save_to_fts)
-  end
-
-  teardown do
-    Groonga['Products'].each { |record| record.delete }
+    Product.all.each(&:save)
   end
 
   test "Amazonで検索後結果を保存して返す" do

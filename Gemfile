@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '~> 4.2.0'
 
 gem 'pg'
+gem 'pg_array_parser'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.0'
@@ -50,7 +51,8 @@ gem 'opal-rails'
 gem 'exception_notification'
 gem 'uuidtools'
 gem 'icalendar'
-gem 'rroonga'
 gem 'amazon-ecs'
 gem 'rakuten_web_service'
 gem 'autoprefixer-rails'
+
+gem 'charlock_holmes'
