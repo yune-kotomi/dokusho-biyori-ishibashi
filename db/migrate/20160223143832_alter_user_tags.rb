@@ -6,7 +6,7 @@ class AlterUserTags < ActiveRecord::Migration
         add_column :users, :tags, :jsonb
 
         User.all.each do |user|
-          user.update_attribute(:tags, JSON.parse(user.tags_old))
+          user.update_attribute(:tags, user.tags_old)
         end
 
         remove_column :users, :tags_old
