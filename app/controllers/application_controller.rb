@@ -24,13 +24,4 @@ class ApplicationController < ActionController::Base
   def bad_request
     render :text => 'Bad Request', :status => 400
   end
-
-  def offset
-    offset = 0
-    if params[:page].present?
-      offset = (params[:page].to_i - 1) * 40
-    end
-
-    offset
-  end
 end

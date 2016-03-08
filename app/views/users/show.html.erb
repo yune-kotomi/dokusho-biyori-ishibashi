@@ -7,30 +7,11 @@
   {
     :login_user => @login_user,
     :user => @user,
-    :user_products => @user_products[0, 40],
+    :user_products => @user_products,
     :shelf_items => @shelf_items
   } %>
 
-<% pages = pagination(@user_products, params[:page]) %>
-<div class="paginate">
-  <div class="next">
-    <% if pages.key?(:next) %>
-      <%= link_to({:page => pages[:next]}, {:class => 'button fill-blue text-white'}) do %>
-        <i class="icon icon-arrow-left"></i>
-        前へ
-      <% end %>
-    <% end %>
-  </div>
-
-  <div class="prev">
-    <% if pages.key?(:prev) %>
-      <%= link_to({:page => pages[:prev]}, {:class => 'button fill-blue text-white'}) do %>
-        <i class="icon icon-arrow-right"></i>
-        次へ
-      <% end %>
-    <% end %>
-  </div>
-</div>
+<%= paginate(@user_products) %>
 
 <div class="feeds">
   <%= link_to(rss_feed_url(@user)) do %>

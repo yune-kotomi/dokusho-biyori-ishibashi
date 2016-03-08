@@ -56,3 +56,4 @@ gem 'rakuten_web_service'
 gem 'autoprefixer-rails'
 
 gem 'charlock_holmes'
+gem 'kaminari'

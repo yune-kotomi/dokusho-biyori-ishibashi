@@ -11,8 +11,7 @@ class UsersController < ApplicationController
       includes(:product).
       order('products.release_date desc').
       where(:type_name => 'search').
-      offset(offset).
-      limit(41)
+      page(params[:page])
 
     product_id_list = @user_products.map{|user_product| user_product.product_id }
     @shelf_items = @user.user_products.

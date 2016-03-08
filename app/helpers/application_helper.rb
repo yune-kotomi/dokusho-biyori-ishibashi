@@ -77,26 +77,4 @@ module ApplicationHelper
       ''
     end
   end
-
-  def pagination(collection, page_param)
-    current_page = if page_param.present?
-      page_param.to_i
-    else
-      1
-    end
-    result = {}
-
-    # 40個以上ある=次のページがある
-    if collection.size > 40
-      result[:next] = current_page + 1
-    end
-
-    if current_page > 1
-      prev_page = current_page - 1
-      prev_page = nil if prev_page == 1
-      result[:prev] = prev_page
-    end
-
-    result
-  end
 end

@@ -53,8 +53,7 @@ class UserProductsController < ApplicationController
     @user_products =
       @user_products.includes(:product).
       order('user_products.updated_at desc').
-      offset(offset).
-      limit(41)
+      page(params[:page])
   end
 
   def destroy
