@@ -1,4 +1,6 @@
 Ishibashi::Application.routes.draw do
+  get 'kitaguchi', :to => 'kitaguchi#index'
+
   get 'shelfs/show/:id',
     :controller => :user_products, :action => :show
 
