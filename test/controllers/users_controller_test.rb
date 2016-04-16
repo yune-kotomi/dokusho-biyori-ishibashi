@@ -3,14 +3,6 @@ require 'test_helper'
 require 'rss'
 
 class UsersControllerTest < ActionController::TestCase
-  def sign(message)
-    OpenSSL::HMAC::hexdigest(
-      OpenSSL::Digest::SHA256.new,
-      Ishibashi::Application.config.authentication.key,
-      message
-    )
-  end
-
   setup do
     WebMock.reset!
     @user1 = users(:user1)
@@ -27,20 +19,10 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_equal Ishibashi::Application.config.authentication.service_id,
       params['id'].first.to_i
-
-    signature = sign([params['id'].first, params['timestamp'].first, 'authenticate'].join)
-    assert_equal params['signature'].first, signature
+    assert params['token'].first.present?
   end
 
   test "login_completeは認証情報を取得し、問題なければユーザを生成する" do
-    t = Time.now
-    params = {
-      :id => Ishibashi::Application.config.authentication.service_id,
-      :key => 'key',
-      :timestamp => t.to_i
-    }
-    params[:signature] = sign([params[:id], params[:key], params[:timestamp], 'deliver'].join)
-
     new_user = {
       :profile_id => 0,
       :domain_name => 'www.example.com',
@@ -48,55 +30,54 @@ class UsersControllerTest < ActionController::TestCase
       :nickname => 'nickname',
       :profile_text => 'profile',
       :openid_url => 'http://www.example.com/screen_name',
-      :timestamp => Time.now.to_i
+      :exp => 5.minutes.from_now.to_i
     }
-    new_user[:signature] = sign(
-      [
-        Ishibashi::Application.config.authentication.service_id, new_user[:profile_id],
-        new_user[:domain_name], new_user[:screen_name], new_user[:nickname],
-        new_user[:profile_text], new_user[:openid_url], new_user[:timestamp],
-        'retrieved'
-      ].join
+
+    WebMock.stub_request(:get, /#{Ishibashi::Application.config.authentication.entry_point}\/retrieve\?.*/).to_return(
+      :body => JWT.encode(new_user, Ishibashi::Application.config.authentication.key)
     )
 
-    WebMock.stub_request(:get, /http:\/\/kitaguchi.yumenosora.net\/profile\/retrieve\?.*/).to_return(
-      :body => new_user.to_json
-    )
+    payload = {'key' => 'auth key', 'exp' => 5.minutes.from_now.to_i}
+    token = JWT.encode(payload, Ishibashi::Application.config.authentication.key)
+    assert_difference 'User.count' do
+      get :login_complete,
+        :id => Ishibashi::Application.config.authentication.service_id,
+        :token => token
+    end
+    assert_redirected_to :controller => :users,
+      :action => :show,
+      :domain_name => new_user[:domain_name],
+      :screen_name => new_user[:screen_name]
+    assert_not_nil assigns(:user)
+    assert_equal assigns(:user).id, session[:user_id]
   end
 
   test "login_completeは既存ユーザをログインさせる" do
-    t = Time.now
-    params = {
-      :id => Ishibashi::Application.config.authentication.service_id,
-      :key => 'key',
-      :timestamp => t.to_i
-    }
-    params[:signature] = sign([params[:id], params[:key], params[:timestamp], 'deliver'].join)
-
-    user_data = {
+    new_user = {
       :profile_id => @user1.kitaguchi_profile_id,
       :domain_name => @user1.domain_name,
       :screen_name => @user1.screen_name,
       :nickname => @user1.nickname,
       :profile_text => @user1.profile_text,
-      :openid_url => 'http://example.com/screen_name'
+      :openid_url => 'http://example.com/screen_name',
+      :exp => 5.minutes.from_now.to_i
     }
-    user_data[:signature] = sign(
-      [
-        Ishibashi::Application.config.authentication.service_id, user_data[:profile_id],
-        user_data[:domain_name], user_data[:screen_name], user_data[:nickname],
-        user_data[:profile_text], user_data[:openid_url], user_data[:timestamp],
-        'retrieved'
-      ].join
-    )
+
     WebMock.stub_request(:get, /#{Ishibashi::Application.config.authentication.entry_point}\/retrieve\?.*/).to_return(
-      :body => user_data.to_json
+      :body => JWT.encode(new_user, Ishibashi::Application.config.authentication.key)
     )
 
+    payload = {'key' => 'auth key', 'exp' => 5.minutes.from_now.to_i}
+    token = JWT.encode(payload, Ishibashi::Application.config.authentication.key)
     assert_no_difference  'User.count' do
-      get :login_complete, params
+      get :login_complete,
+        :id => Ishibashi::Application.config.authentication.service_id,
+        :token => token
     end
-    assert_redirected_to :controller => :users, :action => :show, :domain_name => @user1.domain_name, :screen_name => @user1.screen_name
+    assert_redirected_to :controller => :users,
+      :action => :show,
+      :domain_name => @user1.domain_name,
+      :screen_name => @user1.screen_name
     assert_not_nil assigns(:user)
     assert_equal @user1.id, session[:user_id]
 
@@ -104,44 +85,21 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "login_completeに不正な署名が来たら蹴る" do
-    t = Time.now
-    params = {
-      :id => Ishibashi::Application.config.authentication.service_id,
-      :key => 'key',
-      :timestamp => t.to_i,
-      :signature => 'invalid'
-    }
-
-    get :login_complete, params
+    get :login_complete, :id => Ishibashi::Application.config.authentication.service_id
     assert_response :forbidden
   end
 
   test "login_completeは引き渡された認証情報が不正なら蹴る" do
-    t = Time.now
-    params = {
-      :id => Ishibashi::Application.config.authentication.service_id,
-      :key => 'key',
-      :timestamp => t.to_i
-    }
-    params[:signature] = sign([params[:id], params[:key], params[:timestamp], 'deliver'].join)
-
-    new_user = {
-      :profile_id => 0,
-      :domain_name => 'www.example.com',
-      :screen_name => 'screen_name',
-      :nickname => 'nickname',
-      :profile_text => 'profile',
-      :openid_url => 'http://www.example.com/screen_name',
-      :timestamp => Time.now.to_i
-    }
-    new_user[:signature] = 'invalid signature'
-
     WebMock.stub_request(:get, /#{Ishibashi::Application.config.authentication.entry_point}\/retrieve\?.*/).to_return(
-      :body => new_user.to_json
+      :body => 'invalid data'
     )
 
+    payload = {'key' => 'auth key', 'exp' => 5.minutes.from_now.to_i}
+    token = JWT.encode(payload, Ishibashi::Application.config.authentication.key)
     assert_no_difference  'User.count' do
-      get :login_complete, params
+      get :login_complete,
+        :id => Ishibashi::Application.config.authentication.service_id,
+        :token => token
     end
     assert_response :forbidden
 
@@ -155,17 +113,15 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "updateは署名が正当ならその内容でuserを更新する(Kitugachi認証サービスからのPOST)" do
-    params = {
+    payload = {
       'id' => Ishibashi::Application.config.authentication.service_id,
       'profile_id' => @user1.kitaguchi_profile_id,
       'nickname' => 'new nickname',
       'profile_text' => 'new profile text',
-      'timestamp' => Time.now.to_i
+      'exp' => 5.minutes.from_now.to_i
     }
-    message = [params['id'], params['profile_id'], params['nickname'], params['profile_text'], params['timestamp'], 'update'].join
-    params['signature'] = sign(message)
 
-    post :update, params
+    post :update, :token => JWT.encode(payload, Ishibashi::Application.config.authentication.key)
 
     assert_response :success
     assert_not_nil assigns(:user)
@@ -173,16 +129,15 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "updateは署名が不正なら蹴る(Kitugachi認証サービスからのPOST)" do
-    params = {
+    payload = {
       'id' => Ishibashi::Application.config.authentication.service_id,
       'profile_id' => @user1.kitaguchi_profile_id,
       'nickname' => 'new nickname',
       'profile_text' => 'new profile text',
-      'timestamp' => Time.now.to_i,
-      'signature' => 'invalid'
+      'exp' => 5.minutes.from_now.to_i
     }
 
-    post :update, params
+    post :update, :token => JWT.encode(payload, 'wrong key')
 
     assert_response :forbidden
   end

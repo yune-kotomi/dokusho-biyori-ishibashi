@@ -56,7 +56,7 @@ class UsersController < ApplicationController
 
   def login_complete
     begin
-      user_data = Ishibashi::Application.config.authentication.retrieve(params[:key], params[:timestamp], params[:signature])
+      user_data = Ishibashi::Application.config.authentication.retrieve(params[:token])
       @user = User.where(:kitaguchi_profile_id => user_data['profile_id']).first
       if @user.nil?
         @user = User.new(
@@ -78,7 +78,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to :controller => :users, :action => :show, :domain_name => @user.domain_name, :screen_name => @user.screen_name
 
-    rescue Hotarugaike::Profile::InvalidProfileExchangeError
+    rescue Hotarugaike::Profile::Client::InvalidProfileExchangeError
       flash[:notice] = "ログインできませんでした"
       forbidden
     end
@@ -95,17 +95,17 @@ class UsersController < ApplicationController
       @login_user.update(params[:user].permit(:private, :random_url))
       render :text => ({:status => 'ok'}).to_json
     else
-      data = Ishibashi::Application.config.authentication.updated_profile(params)
+      data = Ishibashi::Application.config.authentication.updated_profile(params[:token])
       @user = User.where(:kitaguchi_profile_id => data['profile_id']).first
       if @user.present?
         @user.update_attributes(
-          :nickname => data[:nickname],
-          :profile_text => data[:profile_text]
+          :nickname => data['nickname'],
+          :profile_text => data['profile_text']
         )
       end
       render :text => "success"
     end
-  rescue Hotarugaike::Profile::InvalidProfileExchangeError
+  rescue Hotarugaike::Profile::Client::InvalidProfileExchangeError
     forbidden
   end
 end
