@@ -21,7 +21,7 @@
 
     #解説文
     product_desc = []
-    product_desc.push("#{author_label(product.category)}: #{product.authors.join('/')}") unless product.authors.empty?
+    product_desc.push("#{author_label(product.category)}: #{product.authors.join('/')}") unless product.authors.blank?
     product_desc.push("#{maker_label(product.category)}: #{product.manufacturer}")
 
     url = url_for(
