@@ -65,9 +65,26 @@
   </div>
 </div>
 
-<div>
-  <h3>関連商品</h3>
-  <ul class="product-list">
-    <%= render :partial => 'products/list_element', :collection => @product.related_products %>
-  </ul>
-</div>
+<% if @products.present? %>
+  <div>
+    <ul class="product-list">
+      <%= render :partial => 'products/list_element', :collection => @products %>
+    </ul>
+  </div>
+  <% @title += ' ほか' %>
+<% else %>
+  <div>
+    <h3>関連商品</h3>
+    <ul class="product-list">
+      <%= render :partial => 'products/list_element', :collection => @product.related_products %>
+    </ul>
+  </div>
+<% end %>
+
+<% content_for(:head) do %>
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@yumenosoranet">
+  <meta name="twitter:title" content="<%= @title %>: <%= Ishibashi::Application.config.title %>">
+  <meta name="twitter:description" content="<%= @product.title %> は<%= display_time @product %> 発売です。">
+  <meta name="twitter:image" content="<%= @product.image_medium || asset_url('dummy_medium.png') %>">
+<% end %>
