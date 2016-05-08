@@ -1,5 +1,6 @@
 class Keyword < ActiveRecord::Base
-  FTS_TARGETS = [:title, :authors, :manufacturer].flat_map{|s| ["a_#{s}", "r_#{s}"] }.map(&:to_sym)
+  # a_authors, r_authorsを同時にwhere句に入れるとフルスキャンになるので一時的に無効化する
+  FTS_TARGETS = [:title, :authors, :manufacturer].flat_map{|s| ["a_#{s}", "r_#{s}"] }.map(&:to_sym).reject{|s| s == :r_authors }
 
   has_many :keyword_products
   has_many :user_keywords
@@ -68,11 +69,11 @@ class Keyword < ActiveRecord::Base
     rescue ArgumentError
       keywords = [value]
     end
-    query = FTS_TARGETS.
-      map{|c| keywords.map{ "#{c} %% ?" }.join(' AND ') }.
-      map{|q| "(#{q})" }.join(' OR ')
+    # キーワードをGroongaのクエリ用にエスケープ
+    keywords = keywords.map {|k| k.split(//).map{|c| ({'"' => '\\"', '\\' => '\\\\'})[c] || c }.join }
+    query = FTS_TARGETS.map{|c| "#{c} @@ ?" }.join(' OR ')
 
-    products = Product.where([query, keywords * FTS_TARGETS.size].flatten)
+    products = Product.where([query, [keywords.map{|k| "\"#{k}\"" }.join(' ')] * FTS_TARGETS.size].flatten)
     pages = (products.count / 20.0).ceil
     products = products.order('release_date desc').
       offset((page - 1) * 20).
