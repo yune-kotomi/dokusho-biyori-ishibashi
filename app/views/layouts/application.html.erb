@@ -47,7 +47,7 @@
             <!-- <img src="http://placehold.it/48x48" class="avatar"> -->
             <div class="username">ゲスト</div>
           <% else %>
-            <%= image_tag @login_user.profile_image, :class => 'avater' if false && @login_user.profile_image.present? %>
+            <%= image_tag @login_user.profile_image, :class => 'avater' if @login_user.profile_image.present? %>
             <div class="username"><%= @login_user.nickname %></div>
           <% end %>
         </header>
