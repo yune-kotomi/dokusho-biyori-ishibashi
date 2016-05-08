@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160223143832) do
+ActiveRecord::Schema.define(version: 20160508070550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,8 +54,8 @@ ActiveRecord::Schema.define(version: 20160223143832) do
     t.datetime "release_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "a_authors",                           array: true
-    t.string   "r_authors",                           array: true
+    t.text     "a_authors",                           array: true
+    t.text     "r_authors",                           array: true
   end
 
   add_index "products", ["a_authors"], name: "index_products_on_a_authors", using: :pgroonga
