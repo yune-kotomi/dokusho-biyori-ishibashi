@@ -1,14 +1,11 @@
 <li data-id="<%= user_keyword.id %>">
   <div class="value">
-    <%= link_to '#', :class => 'button text', :data => {:modal => "preview-#{user_keyword.id}"} do %>
-      <i class="icon icon-search"></i>
-      <%= user_keyword.keyword.value %>
-    <% end %>
+    <%= user_keyword.keyword.value %>
   </div>
 
   <div class="buttons">
-    <%= link_to '#', :class => 'button fill-blue text-white delete', :data => {:id => user_keyword.id} do %>
-      <i class="icon icon-trash"></i>
-    <% end %>
+    <button class="mdl-button mdl-js-button mdl-button--icon delete" data-id="<%= user_keyword.id %>">
+      <i class="material-icons">delete</i>
+    </button>
   </div>
 </li>

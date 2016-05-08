@@ -1,0 +1,23 @@
+@import "material/color-definitions";
+
+$color-primary: "181,184,232" !default;
+$color-primary-dark: "126,128,162" !default;
+$color-accent: "232,181,184" !default;
+
+$color-primary-contrast: $color-black !default;
+$color-accent-contrast: $color-black !default;
+
+$text-link-color: unquote("rgb(#{$color-black})") !default;
+
+.mdl-button {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+@import "material";
+
+@import "common";
+@import "users";
+@import "welcome";
+@import "user_products";
+@import "keywords";
+@import "products";

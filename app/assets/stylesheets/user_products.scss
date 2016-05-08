@@ -1,0 +1,22 @@
+body.user_products {
+  .page-content>.tags {
+    padding: 5px;
+    text-align: center;
+
+    &>ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0;
+      li {
+        cursor: pointer;
+        list-style-type: none;
+        margin: 0 4px 0 0;
+
+        &.selected>a {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

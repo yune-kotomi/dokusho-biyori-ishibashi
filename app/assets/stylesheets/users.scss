@@ -1,0 +1,18 @@
+body.users {
+  .feeds {
+    padding: 10px;
+    text-align: right;
+
+    .icon.feedly>img {
+      height: 24px;
+    }
+
+    a {
+      text-decoration: none;
+      white-space: nowrap;
+      i {
+        vertical-align: middle;
+      }
+    }
+  }
+}

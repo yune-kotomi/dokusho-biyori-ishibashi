@@ -77,4 +77,16 @@ module ApplicationHelper
       ''
     end
   end
+
+  def srcset(asset, range)
+    ext = File.extname(asset)
+    base = File.basename(asset, ext)
+
+    range.
+      reject{|i| i == 1 }.
+      map{|i| ["#{base}@#{i}x#{ext}", "#{i}x"] }.to_h.
+      tap{|t| t[asset] = '1x' }.
+      map{|k, v| "#{asset_path(k)} #{v}" }.
+      join(', ')
+  end
 end
