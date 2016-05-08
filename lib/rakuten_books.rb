@@ -35,7 +35,9 @@ module RakutenBooks
       ).order(:release_date => 'desc')
 
       total_result = result.count
-      result.first(30).each do |item|
+      # ジャンルID 001025 = コミックセット は弾く
+      # ジャンル変更がないか時々チェックすること
+      result.first(30).reject{|i| i['booksGenreId'] == '001025' }.each do |item|
         ean = item["jan"]
         ean = item["isbn"] if ean.blank?
 
