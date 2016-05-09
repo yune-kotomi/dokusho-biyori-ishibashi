@@ -70,10 +70,13 @@ class Keyword < ActiveRecord::Base
       keywords = [value]
     end
     # キーワードをGroongaのクエリ用にエスケープ
-    keywords = keywords.map {|k| k.split(//).map{|c| ({'"' => '\\"', '\\' => '\\\\'})[c] || c }.join }
-    query = FTS_TARGETS.map{|c| "#{c} @@ ?" }.join(' OR ')
+    keywords = keywords.map {|k| k.split(//).map{|c| ({'"' => '\\"', '\\' => '\\\\'})[c] || c }.join }.map{|k| "\"#{k}\"" }
 
-    products = Product.where([query, [keywords.map{|k| "\"#{k}\"" }.join(' ')] * FTS_TARGETS.size].flatten)
+    query = keywords.
+      map{|k| FTS_TARGETS.map{|c| "#{c} @@ ?" }.join(' OR ') }.
+      map{|s| "(#{s})" }.join(' AND ')
+    products = Product.where([query, keywords.map{|k| [k] * FTS_TARGETS.size }].flatten)
+
     pages = (products.count / 20.0).ceil
     products = products.order('release_date desc').
       offset((page - 1) * 20).
