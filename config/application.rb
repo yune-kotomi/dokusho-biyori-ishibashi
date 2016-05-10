@@ -21,6 +21,7 @@ module Ishibashi
     # config.i18n.default_locale = :de
 
     config.title = '読書びより'
+    config.active_record.schema_format = :sql
   end
 end
 
