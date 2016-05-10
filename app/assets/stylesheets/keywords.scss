@@ -1,0 +1,59 @@
+body.keywords {
+  .keyword-fields {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 5px;
+
+    >li {
+      list-style-type: none;
+      min-width: 300px;
+
+      .keywords {
+        padding: 5px;
+
+        >li {
+          display: flex;
+
+          .buttons {
+            width: 32px;
+          }
+
+          .value {
+            flex: 1;
+            line-height: 32px;
+          }
+        }
+      }
+
+      form {
+        display: flex;
+
+        .buttons {
+          margin-top: 16px;
+          width: 32px;
+        }
+
+        .mdl-textfield {
+          flex: 1;
+        }
+      }
+    }
+  }
+
+  #user-settings {
+    &>div {
+      display: flex;
+      padding: 10px;
+
+      .mdl-switch {
+        margin-left: 10px;
+        width: 48px;
+      }
+    }
+  }
+
+  h2 {
+    margin-left: 10px;
+  }
+}

@@ -61,7 +61,8 @@ class UsersController < ApplicationController
       if @user.nil?
         @user = User.new(
           :nickname => user_data['nickname'],
-          :profile_text => user_data['profile_text']
+          :profile_text => user_data['profile_text'],
+          :profile_image => user_data['profile_image']
         )
         @user.kitaguchi_profile_id = user_data['profile_id']
         @user.domain_name = user_data['domain_name']
@@ -71,7 +72,8 @@ class UsersController < ApplicationController
       else
         @user.update_attributes(
           :nickname => user_data['nickname'],
-          :profile_text => user_data['profile_text']
+          :profile_text => user_data['profile_text'],
+          :profile_image => user_data['profile_image']
         )
       end
 

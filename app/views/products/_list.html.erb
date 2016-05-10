@@ -24,13 +24,13 @@
             <%= form_for shelf_item do %>
             <% end %>
           <% end %>
-          <%= link_to '#', :class => 'button fill-blue text-white ignore', :data => {"product-id" => user_product.product.id} do %>
-            <i class="icon icon-trash"></i>
-          <% end %>
+          <button class="mdl-button mdl-js-button mdl-button--icon ignore button" data-product-id="<%= user_product.product.id %>">
+            <i class="material-icons">delete</i>
+          </button>
 
-          <%= link_to '#', :class => 'button fill-blue text-white tag', :data => {:modal => "product-#{user_product.product.id}"} do %>
-            <i class="icon icon-tag"></i>
-          <% end %>
+          <button class="mdl-button mdl-js-button mdl-button--icon tag button" data-modal="product-<%= user_product.product.id %>">
+            <i class="material-icons">bookmark</i>
+          </button>
         </div>
       <% end %>
     <% end %>
@@ -40,7 +40,6 @@
 <script id="tags-template" type="text/x-jquery-tmpl">
   <li>
     <%= link_to "${link}" do %>
-      <i class="icon icon-tag"></i>
       <span>${value}</span>
     <% end %>
   </li>
@@ -48,60 +47,40 @@
 
 <% user_products.each do |user_product| %>
   <% product = user_product.product %>
-  <div class="product modal" style="display: none" id="product-<%= product.id %>" data-id="<%= product.id %>">
-    <div class="modal-inner">
-      <div class="fill-white card">
-        <div class="header fill-blue text-white">
-          <%= product.title %>
+  <dialog class="product modal mdl-dialog" id="product-<%= product.id %>" data-id="<%= product.id %>">
+    <h4 class="mdl-dialog__title"><%= product.title %></h4>
+    <div class="mdl-dialog__content">
+      <%= form_for UserProduct.new do %>
+        <%
+          shelf_item = shelf_items.find{|item| item.product_id == product.id }
+          tags = []
+          tags = shelf_item.tags if shelf_item.present?
+          tags_str = ''
+          tags_str = "[#{tags.join('][')}]" unless tags.blank?
+        %>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <%= text_field_tag 'tags', tags_str, :id => "tags-#{product.id}", :class => 'mdl-textfield__input' %>
+          <%= label_tag "tags-#{product.id}", 'タグ', :class => 'mdl-textfield__label' %>
         </div>
-
-        <div class="body">
-          <%= form_for UserProduct.new do %>
-            <%
-              shelf_item = shelf_items.find{|item| item.product_id == product.id }
-              tags = []
-              tags = shelf_item.tags if shelf_item.present?
-              tags_str = ''
-              tags_str = "[#{tags.join('][')}]" unless tags.blank?
-            %>
-            <%= label_tag "tags-#{product.id}", 'タグ' %>
-            <%= text_field_tag 'tags', tags_str, :id => "tags-#{product.id}", :placeholder => '[今度読む][文庫][注文済み]' %>
-            <ul class="tag-selector">
-              <% @user.tags.to_a.sort{|a,b| b.last <=> a.last }.map{|e| e.first }[0, 20].each do |tag| %>
-                <li class="<%= 'selected' if tags.include?(tag) %>">
-                  <i class="icon icon-tag"></i>
-                  <span><%= tag %></span>
-                </li>
-              <% end %>
-            </ul>
+        <ul class="tag-selector">
+          <% @user.tags.to_a.sort{|a,b| b.last <=> a.last }.map{|e| e.first }[0, 20].each do |tag| %>
+            <li class="<%= 'selected' if tags.include?(tag) %>">
+              <span><%= tag %></span>
+            </li>
           <% end %>
-        </div>
-
-        <div class="footer">
-          <div class="left">
-            <%= link_to "#",
-              :class => 'button fill-blue text-white close' do %>
-              <i class="icon icon-cross"></i>
-              閉じる
-            <% end %>
-          </div>
-
-          <div class="right">
-            <%= link_to "#",
-              :class => 'button fill-blue text-white tags-update' do %>
-              <i class="icon icon-checkmark"></i>
-              更新する
-            <% end %>
-          </div>
-        </div>
-      </div>
+        </ul>
+      <% end %>
     </div>
-  </div>
+
+    <div class="mdl-dialog__actions">
+      <button type="button" class="mdl-button button close tags-update">更新</button>
+      <button type="button" class="mdl-button close">キャンセル</button>
+    </div>
+  </dialog>
 <% end %>
 
 <script id="tag-selector-template" type="text/x-jquery-tmpl">
   <li>
-    <i class="icon icon-tag"></i>
     <span>${value}</span>
   </li>
 </script>

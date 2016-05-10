@@ -7,8 +7,8 @@
     paginator:     the paginator that renders the pagination tags inside
 -%>
 <%= paginator.render do -%>
-  <div class="paginate">
-    <%= next_page_tag unless current_page.last? %>
-    <%= prev_page_tag unless current_page.first? %>
+  <div class="pagination">
+    <div class="prev"><%= prev_page_tag unless current_page.first? %></div>
+    <div class="next"><%= next_page_tag unless current_page.last? %></div>
   </div>
 <% end -%>

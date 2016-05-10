@@ -6,11 +6,8 @@
     per_page:      number of items to fetch per page
     remote:        data-remote
 -%>
-<div class="next">
-  <% unless current_page.last? %>
-    <%= link_to(url, {:class => 'button fill-blue text-white'}) do %>
-      <i class="icon icon-arrow-left"></i>
-      前へ
-    <% end %>
-  <% end %>
-</div>
+<%= link_to url, :rel => 'next', :class => 'waves-effect btn-flat' do %>
+  <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+    <i class="material-icons">arrow_forward</i>
+  </button>
+<% end unless current_page.last? %>

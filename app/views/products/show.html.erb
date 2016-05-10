@@ -1,79 +1,90 @@
 <% @title = @product.title %>
-<div class="details">
-  <div>
-    <div class="mod mod-cards">
-      <div class="card fill-white">
-        <div class="title">
-          <%= link_to @product.title, product_path(:id => @product.ean) %>
-        </div>
 
-        <div class="content">
-          <div class="thumbnail">
-            <%= link_to product_path(:id => @product.ean) do %>
-              <% if @product.image_small.present? %>
-                <%= image_tag(@product.image_medium, :alt => @product.title) %>
-              <% else %>
-                <%= image_tag('dummy_medium.png', :alt => @product.title) %>
-              <% end %>
-            <% end %>
-          </div>
-
-          <div class="details">
-            <table>
-              <% if @product.authors.present? %>
-                <tr>
-                  <th><%= author_label @product.category %></th>
-                  <td>
-                    <ul>
-                      <% @product.authors.each do |author| %>
-                        <li>
-                          <%= author %>
-                        </li>
-                      <% end %>
-                    </ul>
-                  </td>
-                </tr>
-              <% end %>
-
-              <tr>
-                <th><%= maker_label @product.category %></th>
-                <td><%= @product.manufacturer %></td>
-              </tr>
-
-              <tr>
-                <th>発売日</th>
-                <td>
-                  <%= display_time @product %>
-                  <%= countdown(@product.release_date) if @product.a_release_date_fixed %>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-
-        <ul class="store-link">
-          <% if @product.a_url.present? %>
-            <li>
-              <%= link_to @product.a_url do %>
-                <i class="icon icon-cart"></i>
-                Amazon.co.jp
-              <% end %>
-            </li>
-          <% end %>
-          <% if @product.r_url.present? %>
-            <li>
-              <%= link_to @product.r_url do %>
-                <i class="icon icon-cart"></i>
-                楽天ブックス
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
+<div class="primary-product">
+  <div class="thumbnail">
+    <%= link_to product_path(:id => @product.ean) do %>
+      <% if @product.image_small.present? %>
+        <%= image_tag(@product.image_medium, :alt => @product.title) %>
+      <% else %>
+        <%= image_tag('dummy_medium.png', :alt => @product.title) %>
+      <% end %>
+    <% end %>
   </div>
 
-  <ul class="product-list">
-    <%= render :partial => 'products/list_element', :collection => @product.related_products %>
-  </ul>
+  <div class="details">
+    <h2><%= link_to @product.title, product_path(:id => @product.ean) %></h2>
+
+    <table>
+      <% if @product.authors.present? %>
+        <tr>
+          <th><%= author_label @product.category %></th>
+          <td>
+            <ul class="authors">
+              <% @product.authors.each do |author| %>
+                <li>
+                  <%= author %>
+                </li>
+              <% end %>
+            </ul>
+          </td>
+        </tr>
+      <% end %>
+
+      <tr>
+        <th><%= maker_label @product.category %></th>
+        <td><%= @product.manufacturer %></td>
+      </tr>
+
+      <tr>
+        <th>発売日</th>
+        <td>
+          <%= display_time @product %>
+          <%= countdown(@product.release_date) if @product.a_release_date_fixed %>
+        </td>
+      </tr>
+    </table>
+
+    <ul class="store-link">
+      <% if @product.a_url.present? %>
+        <li>
+          <%= link_to @product.a_url do %>
+            <i class="icon icon-cart"></i>
+            Amazon.co.jp
+          <% end %>
+        </li>
+      <% end %>
+      <% if @product.r_url.present? %>
+        <li>
+          <%= link_to @product.r_url do %>
+            <i class="icon icon-cart"></i>
+            楽天ブックス
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 </div>
+
+<% if @products.present? %>
+  <div>
+    <ul class="product-list">
+      <%= render :partial => 'products/list_element', :collection => @products %>
+    </ul>
+  </div>
+  <% @title += ' ほか' %>
+<% else %>
+  <div>
+    <h3>関連商品</h3>
+    <ul class="product-list">
+      <%= render :partial => 'products/list_element', :collection => @product.related_products %>
+    </ul>
+  </div>
+<% end %>
+
+<% content_for(:head) do %>
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@yumenosoranet">
+  <meta name="twitter:title" content="<%= @title %>: <%= Ishibashi::Application.config.title %>">
+  <meta name="twitter:description" content="<%= @product.title %> は<%= display_time @product %> 発売です。">
+  <meta name="twitter:image" content="<%= @product.image_medium || asset_url('dummy_medium.png') %>">
+<% end %>

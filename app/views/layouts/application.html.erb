@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0" />
-
-    <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
-    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-    <%= csrf_meta_tags %>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
 
     <title><%= @title %>: <%= Ishibashi::Application.config.title %></title>
 
-    <%= yield(:head) %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <%= yield :head %>
 
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
@@ -32,115 +30,86 @@
   </head>
 
   <body class="<%= params[:controller] %>" data-user-id="<%= @login_user.id if @login_user.present? %>">
-    <div id="header">
-      <div class="banner">
-        <%= link_to image_tag('logo.png', :alt => Ishibashi::Application.config.title, :srcset => "#{asset_path('logo@2x.png')} 2x, #{asset_path('logo@3x.png')} 3x"), root_path %>
-      </div>
-
-      <div class="navigation">
-        <div class="tile fill-blue">
-          <div class="button flat text-white relative top-nav">
-            <span>
-              <% if @login_user.present? %>
-                <i class="icon icon-user"></i>
-                <%= @login_user.nickname %>
-              <% else %>
-                ゲスト
-              <% end %>
-              <i class="icon icon-arrow-down6"></i>
-            </span>
-
-            <div class="drop down right card fill-white">
-              <div class="crow up no-gutter keep-alive">
-                <div class="ws-12">
-                  <ul class="unstyled">
-                    <% if @login_user.present? %>
-                      <li>
-                        <%= link_to({
-                            :controller => :users,
-                            :action => :show,
-                            :domain_name => @login_user.domain_name,
-                            :screen_name => @login_user.screen_name
-                          },
-                          :class => 'waves-effect list-item') do %>
-                          <i class="icon icon-calendar"></i>
-                          発売日一覧
-                        <% end %>
-                      </li>
-
-                      <li>
-                        <%= link_to({:controller => :keywords, :action => :index},
-                          :class => 'waves-effect list-item') do %>
-                          <i class="icon icon-cog"></i>
-                          設定
-                        <% end %>
-                      </li>
-
-                      <li>
-                        <%= link_to({:controller => :user_products, :action => :show, :id => @login_user.id},
-                          :class => 'waves-effect list-item') do %>
-                          <i class="icon icon-tag"></i>
-                          タグ付けした商品一覧
-                        <% end %>
-                      </li>
-                    <% end %>
-
-                    <li>
-                      <% if @login_user.blank? %>
-                        <%= link_to({:controller => :users, :action => :login},
-                          :class => 'waves-effect list-item') do %>
-                          <i class="icon icon-login"></i>
-                          ログイン
-                        <% end %>
-                      <% else %>
-                        <%= link_to({:controller => :users, :action => :logout},
-                          :class => 'waves-effect list-item') do %>
-                          <i class="icon icon-logout"></i>
-                          ログアウト
-                        <% end %>
-                      <% end %>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+    <!-- Always shows a header, even in smaller screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title"><%= @title %></span>
+          <!-- Add spacer, to align navigation to the right -->
+          <div class="mdl-layout-spacer"></div>
         </div>
-      </div>
-    </div>
+      </header>
 
-    <%= yield %>
-
-    <div id="footer">
-      <div id="banners" class="crow">
-        <div>
-          <a href="https://www.amazon.com/"><img src="https://d0.awsstatic.com/logos/aws/powered-by-amazon-web-services.jpg" alt="powered by amazon web services." /></a>
-
-          <!-- Rakuten Web Services Attribution Snippet FROM HERE -->
-          <a href="http://webservice.rakuten.co.jp/" target="_blank"><img src="https://webservice.rakuten.co.jp/img/credit/200709/credit_7052.gif" border="0" alt="楽天ウェブサービスセンター" title="楽天ウェブサービスセンター" width="70" height="52"/></a>
-          <!-- Rakuten Web Services Attribution Snippet TO HERE -->
-
-          <a href="//ame.yumenosora.net/"><img src="//ame.yumenosora.net/images/presented_by/banner234x60.png" srcset="//ame.yumenosora.net/images/presented_by/banner234x60@2x.png 2x, //ame.yumenosora.net/images/presented_by/banner234x60@3x.png 3x" alt="presented by 雨上がりの青空を探して"></a>
-        </div>
-
-        <div>
-          <%= link_to "https://twitter.com/yumenosoranet", :class => 'button fill-blue text-white' do %>
-            <i class="icon icon-twitter"></i>
-            @yumenosoranet
+      <div class="mdl-layout__drawer">
+        <header class="drawer-header">
+          <% if @login_user.blank? %>
+            <!-- <img src="http://placehold.it/48x48" class="avatar"> -->
+            <div class="username">ゲスト</div>
+          <% else %>
+            <%= image_tag @login_user.profile_image, :class => 'avater' if @login_user.profile_image.present? %>
+            <div class="username"><%= @login_user.nickname %></div>
           <% end %>
-        </div>
+        </header>
+
+        <nav class="mdl-navigation">
+          <%= yield :navigation1 %>
+
+          <% if @login_user.blank? %>
+            <%= link_to({:controller => :users, :action => :login}, :class => 'mdl-navigation__link') do %>
+              <i class="material-icons">person</i>
+              ユーザ登録/ログイン
+            <% end %>
+          <% else %>
+            <%= link_to({
+                :controller => :users,
+                :action => :show,
+                :domain_name => @login_user.domain_name,
+                :screen_name => @login_user.screen_name
+              },
+              :class => 'mdl-navigation__link') do %>
+              <i class="material-icons">event</i>
+              発売日一覧
+            <% end %>
+
+            <%= link_to({:controller => :user_products, :action => :show, :id => @login_user.id},
+              :class => 'mdl-navigation__link') do %>
+              <i class="material-icons">bookmark</i>
+              タグ付けした商品一覧
+            <% end %>
+
+            <%= yield :navigation2 %>
+            <hr>
+
+            <%= link_to({:controller => :keywords, :action => :index},
+              :class => 'mdl-navigation__link') do %>
+              <i class="material-icons">settings</i>
+              設定
+            <% end %>
+
+            <%= link_to Ishibashi::Application.config.authentication.edit, :class => 'mdl-navigation__link' do %>
+              <i class="material-icons">settings</i>
+              プロフィール編集
+            <% end %>
+
+            <%= link_to({:controller => :users, :action => :logout}, :class => 'mdl-navigation__link') do %>
+              <i class="material-icons">person_outline</i>
+              ログアウト
+            <% end %>
+          <% end %>
+
+          <%= yield :navigation %>
+        </nav>
       </div>
 
-      <div id="github" class="crow">
-        <div>
-          このサービスのソースコードは
-          <%= link_to "https://github.com/yune-kotomi/dokusho-biyori-ishibashi" do %>
-            <i class="icon icon-github2"></i>
-            yune-kotomi/dokusho-biyori-ishibashi
-          <% end %>
-          で入手できます。
-        </div>
-      </div>
+      <main class="mdl-layout__content">
+        <div class="page-content"><%= yield %></div>
+        <%= render :partial => 'layouts/footer', :locals => {:size => 'mini'} %>
+      </main>
+
+      <%= render :partial => 'layouts/footer', :locals => {:size => 'mega'} %>
+
+      <%= yield :bottom %>
     </div>
   </body>
 </html>

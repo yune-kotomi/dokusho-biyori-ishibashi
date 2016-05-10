@@ -3,6 +3,9 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
+    if params[:ean].present?
+      @products = Product.where(:ean => params[:ean])
+    end
     @product = Product.where(:ean => params[:id]).first
   end
 

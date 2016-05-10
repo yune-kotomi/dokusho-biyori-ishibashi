@@ -1,76 +1,76 @@
-<% @title = "読み続けるための発売日カレンダー" %>
+<% @title = "読み続けるための発売日カレンダー 『読書びより』" %>
+<div style="text-align: right;font-size: 10px">
+  <div class="key-visual">
+    <picture>
+      <source
+        media="(min-width: 480px) and (max-width: 1200px)"
+        srcset="<%= srcset 'key_visual_summer.medium.png', (1..2) %>">
+      <%= image_tag 'key_visual_summer.small.png',
+        :alt => '誰かが紡いだ言葉を、追いかけ続けるんだ。',
+        :srcset => srcset('key_visual_summer.small.png', (1..3)) %>
+    </picture>
+  </div>
+  Illustration: <%= link_to '北原佳砂乃', 'https://twitter.com/kasano_kitahara' %>&nbsp;
+</div>
 
-<ul class="introduction">
-  <li>
-    <div class="mod mod-cards">
-      <div class="card fill-white">
-        <div class="image">
-          <%= image_tag 'keywords.png' %>
-        </div>
-        <div class="description">
-          お気に入り作家の新作を見逃したくない貴方に。<br>
-          「読書びより」は、登録されたキーワードを元に自動で検索し、
-          新刊を探します。
-        </div>
-      </div>
-    </div>
-  </li>
+<div class="login">
+  <div class="logo">
+    <%= image_tag 'logo.png',
+      :alt => @title,
+      :srcset => srcset('logo.png', (1..3)) %>
+  </div>
 
-  <li>
-    <div class="mod mod-cards">
-      <div class="card fill-white">
-        <div class="image">
-          <%= image_tag 'feeds.png' %>
-        </div>
-        <div class="description">
-          新刊の情報は、様々な方法で受け取れます。<br>
-          本サービスの発売日一覧画面はもちろん、
-          GoogleカレンダーやFeedlyなどと連動できるように
-          iCalendarデータやRSSフィードも用意しています。
-        </div>
-      </div>
-    </div>
-  </li>
+  <div class="buttons">
+    <%= link_to({:controller => :users, :action => :login}, :class => 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent') do %>
+      <i class="material-icons">person</i>
+      使いはじめる
+    <% end if @login_user.blank? %>
 
-  <li>
-    <div class="mod mod-cards">
-      <div class="card fill-white">
-        <div class="image">
-          <%= image_tag 'openid.png' %>
-        </div>
-        <div class="description">
-          ご利用は無料です。<br>
-          面倒なID/パスワードも必要ありません。
-          GoogleアカウントやはてなIDなど、
-          他サービスのアカウントで簡単に始められます。
-        </div>
-      </div>
-    </div>
-  </li>
-</ul>
-
-<div class="menu">
-  <% if @login_user.present? %>
     <%= link_to({
-      :controller => :users,
-      :action => :show,
-      :domain_name => @login_user.domain_name,
-      :screen_name => @login_user.screen_name
-    },
-    :class => 'button fill-blue text-white') do %>
-      <i class="icon icon-user"></i>
-      <%= @login_user.nickname %> さんの発売日一覧へ
-    <% end %>
-  <% else %>
-    <%= link_to({
-      :controller => :users,
-      :action => :login
-    },
-    :class => 'button fill-blue text-white') do %>
-      <i class="icon icon-login"></i>
-      ログイン
-    <% end %>
-  <% end %>
+        :controller => :users,
+        :action => :show,
+        :domain_name => @login_user.domain_name,
+        :screen_name => @login_user.screen_name
+      },
+      :class => 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent') do %>
+      <i class="material-icons">event</i>
+      発売日一覧
+    <% end if @login_user.present? %>
+  </div>
+</div>
+
+<div class="introduction">
+  <ol>
+    <li>
+      <h4>自動更新される発売日カレンダーで、買い忘れとおさらば。</h4>
+      <div>
+        好きな作品や作家の名前などを登録しておくと、新刊情報が自動で更新される発売日カレンダーです。
+      </div>
+      <div>
+
+      </div>
+    </li>
+    <li>
+      <h4>新刊情報は、お好みの形で。</h4>
+      <div>
+        新刊の情報は、様々な方法で受け取れます。
+      </div>
+      <div>
+        本サービスの発売日一覧画面はもちろん、
+        GoogleカレンダーやFeedlyなどと連動できるように
+        iCalendarデータやRSSフィードも用意しています。
+      </div>
+    </li>
+    <li>
+      <h4>パスワードも不要、気軽に使えます。</h4>
+      <div>
+        面倒なユーザID、パスワードの管理は必要ありません。
+      </div>
+      <div>
+        いつものGoogleアカウントやはてなIDなどを使って、簡単に使い始められます。
+      </div>
+    </li>
+  </ol>
 </div>
 
 <% content_for(:head) do %>

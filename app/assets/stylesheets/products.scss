@@ -1,0 +1,56 @@
+// Place all the styles related to the products controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+body.products {
+  .page-content {
+    &>div,&>ul {
+      padding: 10px;
+    }
+    @media (min-width: $grid-tablet-breakpoint) {
+      display: flex;
+      &>div,&>ul {
+        width: 50%;
+      }
+    }
+
+    .primary-product {
+      display: flex;
+
+      .authors,.store-link,.tags>ul {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0;
+        margin: 0;
+        li {
+          list-style-type: none;
+          margin: 0 4px 0 0;
+        }
+      }
+
+      .details {
+        flex: 1;
+      }
+
+      .thumbnail {
+        margin-right: 10px;
+      }
+
+      h2 {
+        font-size: 140%;
+        margin: 10px;
+      }
+
+      table {
+        th {
+          text-align: right;
+          white-space: nowrap;
+        }
+      }
+    }
+
+    h3 {
+      font-size: 140%;
+      margin: 10px;
+    }
+  }
+}

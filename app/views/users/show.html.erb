@@ -15,7 +15,8 @@
 
 <div class="feeds">
   <%= link_to(rss_feed_url(@user)) do %>
-    <i class="icon icon-rss"></i> RSSフィード
+    <i class="material-icons">rss_feed</i>
+    RSSフィード
   <% end %>
 
   <a href='http://cloud.feedly.com/#subscription%2Ffeed%2Fhttp%3A%2F%2F<%= u rss_feed_url(@user) %>'  target='blank'>
@@ -24,12 +25,12 @@
   </a>
 
   <%= link_to ics_feed_url(@user, 'webcal') do %>
-    <i class="icon icon-calendar"></i>
+    <i class="material-icons">event</i>
     iCalendar
   <% end %>
 
   <%= link_to "http://www.google.com/calendar/render?cid=#{u ics_feed_url(@user)}", 'target' => '_blank' do %>
-    <i class="icon icon-calendar"></i>
+    <i class="material-icons">event</i>
     Googleカレンダーで見る
   <% end %>
 </div>

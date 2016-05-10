@@ -1,31 +1,87 @@
-// Place all the styles related to the welcome controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
 body.welcome {
-  ul.introduction {
-    li {
-      margin: 0 20px 10px 20px;
-
-      .card {
-        display: table;
-        width: 100%;
-
-        .image,.description {
-          display: table-cell;
-          padding: 10px;
-          vertical-align: top;
-          width: 50%;
-        }
-
-        .image {
-          text-align: center;
-        }
-      }
+  /*
+  Android Chrome用hack
+  common.scssも参照すること
+  */
+  @media (max-width: $grid-tablet-breakpoint) {
+    .mdl-layout__content {
+        margin-top: 0;
+    }
+    .is-small-screen .mdl-layout__content {
+        margin-top: 0;
     }
   }
 
-  .menu {
-    padding: 20px;
-    text-align: center;
+  .page-content {
+    max-width: 1920px;
+    margin: auto;
+
+    .key-visual {
+      background-image: none;
+      width: 100%;
+
+      @media (min-width: 1200px) {
+        background-image: image-url("key_visual_summer.large.png");
+        background-position: center;
+        background-size: auto;
+        background-repeat: no-repeat;
+        height: 850px;
+      }
+
+      @media (min-width: 1200px) and (-webkit-min-device-pixel-ratio: 2),
+       (min-width: 1200px) and (min--moz-device-pixel-ratio: 2),
+       (min-width: 1200px) and (-o-min-device-pixel-ratio: 2/1),
+       (min-width: 1200px) and (min-device-pixel-ratio: 2),
+       (min-width: 1200px) and (min-resolution: 192dpi),
+       (min-width: 1200px) and (min-resolution: 2dppx) {
+        background-image: image-url("key_visual_summer.large@2x.png");
+        background-size: auto 850px;
+      }
+
+      img {
+        width: 100%;
+        @media (min-width: 1200px) {
+          display: none;
+        }
+      }
+    }
+
+    .introduction {
+      ol {
+        margin-right: 1em;
+
+        li {
+          list-style-type: none;
+          &>div {
+            font-family: "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", serif;
+          }
+        }
+      }
+    }
+
+    .login {
+      margin: 0 auto 2em;
+      max-width: 800px;
+
+      @media (min-width: 756px) {
+        display: flex;
+      }
+
+      .logo {
+        text-align: center;
+        @media (max-width: 456px) {
+          img {
+            margin-bottom: 1em;
+            width: 100%;
+          }
+        }
+      }
+
+      .buttons {
+        flex: 1;
+        text-align: center;
+        padding-top: 42px;
+      }
+    }
   }
 }

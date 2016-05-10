@@ -56,6 +56,7 @@ gem 'icalendar'
 gem 'amazon-ecs'
 gem 'rakuten_web_service'
 gem 'autoprefixer-rails'
+gem 'material_design_lite-sass'
 
 gem 'charlock_holmes'
 gem 'kaminari'
