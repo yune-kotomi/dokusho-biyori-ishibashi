@@ -44,6 +44,7 @@ GEM
     autoprefixer-rails (6.3.6)
       execjs
     builder (3.2.2)
+    cabocha (0.69.1)
     charlock_holmes (0.7.3)
     coderay (1.1.1)
     coffee-rails (4.1.1)
@@ -209,6 +210,7 @@ PLATFORMS
 DEPENDENCIES
   amazon-ecs
   autoprefixer-rails
+  cabocha
   charlock_holmes
   exception_notification
   icalendar

@@ -60,3 +60,5 @@ gem 'material_design_lite-sass'
 
 gem 'charlock_holmes'
 gem 'kaminari'
+
+gem 'cabocha'
