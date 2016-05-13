@@ -40,7 +40,15 @@ module CaboChaWrapper
     end
 
     def inspect
-      "Chunk: #{@tokens.map(&:surface)}"
+      "Chunk: #{surfaces}"
+    end
+
+    def features
+      @tokens.flat_map(&:features)
+    end
+
+    def surfaces
+      @tokens.map(&:surface)
     end
   end
 
