@@ -28,54 +28,75 @@ class BotKeyword < ActiveRecord::Base
     keyword_last = tree.chunks.find{|c| c.link == release }
     # キーワードを含むフレーズ
     keyword_phrase = tree.chunks[0, keyword_last.index + 1]
+    keywords, remains = extract_keywords(keyword_phrase.flat_map(&:tokens))
+
     # 末尾の助詞を除いたものがキーワード
     # 全チャンクから助詞を除いたもの、でないのは文になっているタイトルを保持するため。例: 言の葉の庭
-    keyword_phrase.map do |chunk|
-      if chunk == keyword_last
-        chunk.tokens.map{|t| t.surface unless t == chunk.tokens.last || t.features.first == '助詞' }
-      else
-        chunk.tokens.map(&:surface)
-      end
-    end.join
+    remain_keywords = remains.reject{|t| t == remains.last && t.features.first == '助詞' }.map(&:surface).join
+
+    [keywords.flat_map(&:elements).join(' '), remain_keywords].reject(&:'blank?').join(' ')
+  end
+
+  def extract_keywords(tokens)
+    candicates = tokens.size.times.map do |i|
+      str = tokens[0, i+1].map(&:surface).join
+      KeywordCandicate.where('value %% ?', str)
+    end.reject{|c| c.blank? }
+
+    if candicates.present?
+      keyword = candicates.last.last
+      next_tokens = tokens.reject{|t| keyword.value.include?(t.surface) }
+      next_tokens.shift if next_tokens.first.features.first == '助詞'
+      keywords, remains = extract_keywords(next_tokens)
+      [[keyword, keywords].compact.flatten, remains]
+    else
+      [[], tokens]
+    end
   end
 
   def parse_notify_at(tree)
     # 指示を示すチャンクを探す
     order = tree.chunks.find{|c| (c.features & ORDER).present? }
-    order_for = tree.chunks.find{|c| c.link == order }
+    if order.present?
+      order_for = tree.chunks.reverse.find{|c| c.link == order }
 
-    case
-    when (order_for.features & (BEFORE + AFTER)).present?
-      # ○日前/後が指定されている。当日通知の変形
-      num = order_for.surfaces.join
-      CHINESE_NUM.each_with_index{|c, i| num.gsub!(c, i.to_s) }
-      WIDE_NUM.each_with_index{|c, i| num.gsub!(c, i.to_s) }
+      case
+      when (order_for.features & (BEFORE + AFTER)).present?
+        # ○日前/後が指定されている。当日通知の変形
+        num = order_for.surfaces.join
+        CHINESE_NUM.each_with_index{|c, i| num.gsub!(c, i.to_s) }
+        WIDE_NUM.each_with_index{|c, i| num.gsub!(c, i.to_s) }
 
-      num = num.to_i
-      num = num * -1 if (order_for.features & AFTER).present?
+        num = num.to_i
+        num = num * -1 if (order_for.features & AFTER).present?
 
-      num
+        num
 
-    when (order_for.surfaces & RELEASE).present?, (order_for.surfaces & DATE).present?
-      # 指示の対象は発売日そのもの
-      case order_for.tokens.last.surface # 末尾の助詞
-      when 'に', 'で'
-        # 当日通知
-        0
-      when 'を', 'も', 'やら', 'とか', 'だの', 'くらい'
-        # 情報通知
-        nil
-      end
+      when (order_for.surfaces & RELEASE).present?, (order_for.surfaces & DATE).present?
+        # 指示の対象は発売日そのもの
+        case order_for.tokens.last.surface # 末尾の助詞
+        when 'に', 'で'
+          # 当日通知
+          0
+        when 'を', 'も', 'やら', 'とか', 'だの', 'くらい'
+          # 情報通知
+          nil
+        end
 
-    when (order_for.features & BECOME).present?
-      if (tree.chunks.find{|c| c.link == order_for }.surfaces & RELEASE).present?
-        0
+      when (order_for.features & BECOME).present?
+        if (tree.chunks.find{|c| c.link == order_for }.surfaces & RELEASE).present?
+          0
+        else
+          self.uncertain = true
+        end
+
       else
         self.uncertain = true
+        nil
       end
-
     else
       self.uncertain = true
+      nil
     end
   end
 end

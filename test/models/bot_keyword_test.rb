@@ -5,8 +5,7 @@ class BotKeywordTest < ActiveSupport::TestCase
     'ゆゆ式の発売日を教えて。',
     'ゆゆ式の発売日が知りたい',
     'ゆゆ式の新刊を通知',
-    'ゆゆ式の最新刊が出る日を知らせて。',
-    'ゆゆ式の発売日'
+    'ゆゆ式の最新刊が出る日を知らせて。'
   ].each do |message|
     test "#{message}: 単一キーワードによる情報通知" do
       k = BotKeyword.new(:notify_at => 365)
@@ -54,5 +53,38 @@ class BotKeywordTest < ActiveSupport::TestCase
       assert_equal i * -1, k.notify_at
       assert !k.uncertain
     end
+  end
+
+  test '複数キーワードによる要求' do
+    message = '成瀬ちさとの東雲侑子は短編小説をあいしているの発売日を教えて。'
+
+    k = BotKeyword.new(:notify_at => 365)
+    k.parse(message)
+
+    assert_equal '成瀬 ちさと 東雲侑子は短編小説をあいしている', k.keyword
+    assert k.notify_at.nil?
+    assert !k.uncertain
+  end
+
+  test '未知と既知のキーワードの組み合わせ' do
+    message = '三上小又のゆゆ式の発売日を教えて。'
+
+    k = BotKeyword.new(:notify_at => 365)
+    k.parse(message)
+
+    assert_equal '三上 小又 ゆゆ式', k.keyword
+    assert k.notify_at.nil?
+    assert !k.uncertain
+  end
+
+  test 'キーワードのみによる要求' do
+    message = 'ゆゆ式'
+
+    k = BotKeyword.new(:notify_at => 365)
+    k.parse(message)
+
+    assert_equal 'ゆゆ式', k.keyword
+    assert k.notify_at.nil?
+    assert k.uncertain
   end
 end
