@@ -1,22 +1,14 @@
 language: ruby
 sudo: required
-dist: trusty
 rvm:
   - 2.3.0
 before_script:
   - psql -c 'create database kiyoshikojin_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
   - cp config/initializers/kitaguchi.rb.example config/initializers/kitaguchi.rb
+  - cp config/initializers/yahoo.rb.example config/initializers/yahoo.rb
 before_install:
-  - echo '/usr/local/lib' | sudo tee -a /etc/ld.so.conf
-  - echo '/usr/lib' | sudo tee -a /etc/ld.so.conf
-  - sudo apt-get install -y mecab libmecab-dev mecab-utils mecab-ipadic-utf8
   - curl --silent --location https://github.com/pgroonga/pgroonga/raw/master/data/travis/setup.sh | sh
-  - wget --no-check-certificate https://dokusho.yumenosora.net/CRF++-0.58.tar.gz && tar xf CRF++-0.58.tar.gz && cd CRF++-0.58 && ./configure && make && sudo make  install && cd ../
-  - sudo ldconfig
-  - wget --no-check-certificate https://dokusho.yumenosora.net/cabocha-0.69.tar.bz2 && tar xf cabocha-0.69.tar.bz2 && cd cabocha-0.69 && ./configure  --with-charset=utf8 --enable-utf8-only && make && sudo make install && cd ../
-  - sudo ldconfig /usr/local/lib
-  - sudo ldconfig /usr/lib
 cache: bundler
 addons:
   postgresql: "9.4"
