@@ -26,4 +26,5 @@ Ishibashi::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+  config.bot_user_id = 239
 end

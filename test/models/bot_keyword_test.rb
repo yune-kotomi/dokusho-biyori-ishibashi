@@ -1,6 +1,15 @@
 require 'test_helper'
+require 'minitest/mock'
 
 class BotKeywordTest < ActiveSupport::TestCase
+  setup do
+    @amazon = YAML.load(open('test/fixtures/amazon.txt').read)
+
+    bot_user = User.new
+    bot_user.save
+    Ishibashi::Application.config.bot_user_id = bot_user.id
+  end
+
   [
     'コトノバドライブの発売日を教えて。',
     'コトノバドライブの発売日が知りたい',
@@ -11,7 +20,9 @@ class BotKeywordTest < ActiveSupport::TestCase
       mock_yahoo_da('APPID', message)
 
       k = BotKeyword.new(:notify_at => 365)
-      k.parse(message)
+      AmazonEcs.stub(:search, [0, []]) do
+        k.parse(message)
+      end
 
       assert_equal 'コトノバドライブ', k.keyword
       assert k.notify_at.nil?
@@ -29,7 +40,9 @@ class BotKeywordTest < ActiveSupport::TestCase
       mock_yahoo_da('APPID', message)
 
       k = BotKeyword.new(:notify_at => 365)
-      k.parse(message)
+      AmazonEcs.stub(:search, [0, []]) do
+        k.parse(message)
+      end
 
       assert_equal 'コトノバドライブ', k.keyword
       assert_equal 0, k.notify_at
@@ -43,7 +56,9 @@ class BotKeywordTest < ActiveSupport::TestCase
       mock_yahoo_da('APPID', message)
 
       k = BotKeyword.new(:notify_at => 365)
-      k.parse(message)
+      AmazonEcs.stub(:search, [0, []]) do
+        k.parse(message)
+      end
 
       assert_equal 'コトノバドライブ', k.keyword
       assert_equal i, k.notify_at
@@ -55,7 +70,9 @@ class BotKeywordTest < ActiveSupport::TestCase
       mock_yahoo_da('APPID', m)
 
       k = BotKeyword.new(:notify_at => 365)
-      k.parse(m)
+      AmazonEcs.stub(:search, [0, []]) do
+        k.parse(m)
+      end
 
       assert_equal 'コトノバドライブ', k.keyword
       assert_equal i * -1, k.notify_at
@@ -68,11 +85,19 @@ class BotKeywordTest < ActiveSupport::TestCase
     mock_yahoo_da('APPID', message)
 
     k = BotKeyword.new(:notify_at => 365)
-    k.parse(message)
+    assert_difference 'Keyword.count' do
+      assert_difference 'UserKeyword.count' do
+        AmazonEcs.stub(:search, [0, []]) do
+          k.parse(message)
+        end
+      end
+    end
 
-    assert_equal '成瀬 ちさと 東雲侑子は短編小説をあいしている', k.keyword
+    expected = '成瀬 ちさと 東雲侑子は短編小説をあいしている'
+    assert_equal expected, k.keyword
     assert k.notify_at.nil?
     assert !k.uncertain
+    assert_equal expected, UserKeyword.find(k.user_keyword_id).keyword.value
   end
 
   test '未知と既知のキーワードの組み合わせ' do
@@ -80,7 +105,9 @@ class BotKeywordTest < ActiveSupport::TestCase
     mock_yahoo_da('APPID', message)
 
     k = BotKeyword.new(:notify_at => 365)
-    k.parse(message)
+    AmazonEcs.stub(:search, [0, []]) do
+      k.parse(message)
+    end
 
     assert_equal '三上 小又 ゆゆ式', k.keyword
     assert k.notify_at.nil?
@@ -92,7 +119,13 @@ class BotKeywordTest < ActiveSupport::TestCase
     mock_yahoo_da('APPID', message)
 
     k = BotKeyword.new(:notify_at => 365)
-    k.parse(message)
+    assert_no_difference 'Keyword.count' do
+      assert_difference 'UserKeyword.count' do
+        AmazonEcs.stub(:search, [0, []]) do
+          k.parse(message)
+        end
+      end
+    end
 
     assert_equal 'ゆゆ式', k.keyword
     assert k.notify_at.nil?

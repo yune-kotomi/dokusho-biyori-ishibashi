@@ -18,6 +18,21 @@ class BotKeyword < ActiveRecord::Base
 
     @keyword = parse_keyword(tree)
     self.notify_at = parse_notify_at(tree)
+
+    # bot用ユーザのキーワードとして登録する
+    bot_user = User.find(Ishibashi::Application.config.bot_user_id)
+    Keyword.transaction do
+      keyword = Keyword.where(:value => @keyword, :category => 'books').first
+      if keyword.blank?
+        keyword = Keyword.new(:value => @keyword, :category => 'books')
+        keyword.save
+      end
+      user_keyword = keyword.user_keywords.where(:user_id => bot_user.id).first
+      if user_keyword.blank?
+        user_keyword = keyword.user_keywords.create(:user_id => bot_user.id)
+      end
+      self.user_keyword_id = user_keyword.id
+    end
   end
 
   private
