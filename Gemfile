@@ -40,7 +40,6 @@ end
 # gem 'debugger', group: [:development, :test]
 group :test do
   gem 'webmock'
-  gem 'rr', :require => false
 end
 
 group :development, :test do

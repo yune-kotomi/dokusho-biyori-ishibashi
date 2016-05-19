@@ -162,7 +162,6 @@ GEM
     rdoc (4.2.2)
       json (~> 1.4)
     ref (2.0.0)
-    rr (1.1.2)
     ruby-hmac (0.4.0)
     safe_yaml (1.0.4)
     sass (3.4.22)
@@ -224,7 +223,6 @@ DEPENDENCIES
   pry-doc
   rails (~> 4.2.0)
   rakuten_web_service
-  rr
   sass-rails (~> 5.0.0)
   sdoc
   therubyracer

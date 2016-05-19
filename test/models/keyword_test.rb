@@ -12,12 +12,13 @@ class KeywordTest < ActiveSupport::TestCase
   end
 
   test "Amazonで検索後結果を保存して返す" do
-    mock(AmazonEcs).search(@keyword.value, @keyword.category, 1) { @amazon }
     pages = 0
     products = []
 
     assert_difference 'Product.count', @amazon.last.size do
-      pages, products = @keyword.amazon_search
+      AmazonEcs.stub(:search, @amazon) do
+        pages, products = @keyword.amazon_search
+      end
     end
 
     assert_equal @amazon.first, pages
@@ -25,12 +26,13 @@ class KeywordTest < ActiveSupport::TestCase
   end
 
   test "楽天ブックスで検索後結果を保存して返す" do
-    mock(RakutenBooks).search(@keyword.value, @keyword.category, 1) { @rakuten_books }
     pages = 0
     products = []
 
     assert_difference 'Product.count', @rakuten_books.last.size do
-      pages, products = @keyword.rakuten_search
+      RakutenBooks.stub(:search, @rakuten_books) do
+        pages, products = @keyword.rakuten_search
+      end
     end
 
     assert_equal @rakuten_books.first, pages
@@ -52,11 +54,12 @@ class KeywordTest < ActiveSupport::TestCase
   test "新規保存時にはAmazon検索後Groongaで検索実行、keyword_productsを保存" do
     value = 'new keyword'
     category = 'books'
-    mock(AmazonEcs).search(value, category, 1) { @amazon }
     keyword = Keyword.new(:value => value, :category => category)
     assert_difference 'Product.count', @amazon.last.size do
       assert_difference 'KeywordProduct.count', @amazon.last.size do
-        keyword.save
+        AmazonEcs.stub(:search, @amazon) do
+          keyword.save
+        end
       end
     end
   end
