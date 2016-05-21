@@ -49,7 +49,7 @@ class BotKeywordTest < ActiveSupport::TestCase
     end
   end
 
-  (1..9).each do |i|
+  (1..7).each do |i|
     message = "コトノバドライブの発売日の#{i}日前に教えて。"
     test message do
       mock_yahoo_da('APPID', message)
@@ -77,6 +77,32 @@ class BotKeywordTest < ActiveSupport::TestCase
       assert_equal i * -1, k.notify_at
       assert !k.uncertain
     end
+  end
+
+  test '発売日周辺の通知は前後7日間に限定' do
+    message = "コトノバドライブの発売日の8日前に教えて。"
+    mock_yahoo_da('APPID', message)
+
+    k = BotKeyword.new(:notify_at => 365)
+    AmazonEcs.stub(:search, [0, []]) do
+      k.parse(message)
+    end
+
+    assert_equal 'コトノバドライブ', k.keyword
+    assert_equal 7, k.notify_at
+    assert !k.uncertain
+
+    message = "コトノバドライブの発売日の8日後に通知。"
+    mock_yahoo_da('APPID', message)
+
+    k = BotKeyword.new(:notify_at => 365)
+    AmazonEcs.stub(:search, [0, []]) do
+      k.parse(message)
+    end
+
+    assert_equal 'コトノバドライブ', k.keyword
+    assert_equal -7, k.notify_at
+    assert !k.uncertain
   end
 
   test '複数キーワードによる要求' do

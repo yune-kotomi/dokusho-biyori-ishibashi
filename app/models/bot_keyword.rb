@@ -119,6 +119,7 @@ class BotKeyword < ActiveRecord::Base
         WIDE_NUM.each_with_index{|c, i| num.gsub!(c, i.to_s) }
 
         num = num.to_i
+        num = 7 if num > 7
         num = num * -1 if (order_for.features & AFTER).present?
 
         num
