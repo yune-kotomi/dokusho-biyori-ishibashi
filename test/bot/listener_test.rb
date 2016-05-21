@@ -7,6 +7,7 @@ class DokushoBiyoriBotListenerTest < ActiveSupport::TestCase
 
     rest = MiniTest::Mock.new
     rest.expect(:user, Twitter::User.new(:id => 0, :screen_name => 'bot'))
+    rest.expect(:follower_ids, {:ids => []})
     conf = MiniTest::Mock.new
     conf.expect(:"consumer_key=", '', [String])
     conf.expect(:"consumer_secret=", '', [String])
