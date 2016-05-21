@@ -51,6 +51,8 @@ CREATE TABLE bot_keywords (
     id integer NOT NULL,
     notify_at integer,
     uncertain boolean DEFAULT false,
+    tweet_id character varying,
+    twitter_user_id character varying,
     bot_user_id integer,
     user_keyword_id integer,
     created_at timestamp without time zone NOT NULL,

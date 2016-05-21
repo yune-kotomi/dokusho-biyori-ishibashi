@@ -61,3 +61,4 @@ gem 'material_design_lite-sass'
 gem 'kaminari'
 
 gem 'aho_corasick_matcher'
+gem 'twitter'
