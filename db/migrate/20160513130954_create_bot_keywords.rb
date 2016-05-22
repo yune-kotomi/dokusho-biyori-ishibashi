@@ -5,8 +5,8 @@ class CreateBotKeywords < ActiveRecord::Migration
       t.boolean :uncertain, :default => false
       t.string :tweet_id
       t.string :twitter_user_id
+      t.integer :sent_keyword_product_id, :array => true, :default => '{}'
 
-      t.integer :bot_user_id
       t.integer :user_keyword_id
 
       t.timestamps null: false

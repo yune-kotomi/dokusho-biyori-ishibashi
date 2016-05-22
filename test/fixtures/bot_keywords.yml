@@ -4,8 +4,7 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+bot_keyword1:
+  notify_at:
+  user_keyword: user_keyword_bot
+  sent_keyword_product_id: '{}'

@@ -1,6 +1,8 @@
 require 'yahoo_da'
 
 class BotKeyword < ActiveRecord::Base
+  belongs_to :user_keyword
+
   attr_reader :keyword
 
   RELEASE = ['発売', '発行', '刊行', 'リリース', '新刊']
@@ -33,6 +35,24 @@ class BotKeyword < ActiveRecord::Base
       end
       self.user_keyword_id = user_keyword.id
     end
+  end
+
+  def keyword_products_to_notify
+    keyword = user_keyword.keyword
+    today = Time.now.beginning_of_day
+    keyword_products = keyword.keyword_products.includes(:product).references(:products)
+
+    if notify_at.nil?
+      keyword_products = keyword_products.
+        where('products.release_date >= ? and keyword_products.created_at >= ?', today, today)
+    else
+      keyword_products = keyword_products.
+        where('products.release_date = ?', notify_at.days.since(today))
+    end
+
+    keyword_products.
+      where('products.a_release_date_fixed = ?', true).
+      reject{|kp| sent_keyword_product_id.include?(kp.id) }
   end
 
   private

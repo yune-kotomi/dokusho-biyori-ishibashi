@@ -4,9 +4,12 @@ class BotKeywordTest < ActiveSupport::TestCase
   setup do
     @amazon = YAML.load(open('test/fixtures/amazon.txt').read)
 
-    bot_user = User.new
-    bot_user.save
+    bot_user = users(:bot_user)
     Ishibashi::Application.config.bot_user_id = bot_user.id
+
+    @bot_keyword = bot_keywords(:bot_keyword1)
+    date = Time.now.beginning_of_day
+    @bot_keyword.user_keyword.keyword.keyword_products.map(&:product).each{|product| product.update_attributes(:a_release_date => date, :r_release_date => date) }
   end
 
   [
@@ -155,5 +158,36 @@ class BotKeywordTest < ActiveSupport::TestCase
     assert_equal 'ゆゆ式', k.keyword
     assert k.notify_at.nil?
     assert k.uncertain
+  end
+
+  test '情報通知すべき対象を返す' do
+    Time.stub(:now, 10.days.ago) do
+      actual = @bot_keyword.keyword_products_to_notify
+      expected = [products(:product1).id, products(:product2).id].sort
+      assert_equal expected, actual.map(&:product).map(&:id).sort
+    end
+  end
+
+  test '送信済みは除外して返す' do
+    sent = @bot_keyword.user_keyword.keyword.keyword_products.where(:product_id => products(:product1).id).first
+    @bot_keyword.sent_keyword_product_id.push(sent.id)
+
+    Time.stub(:now, 10.days.ago) do
+      actual = @bot_keyword.keyword_products_to_notify
+      expected = [products(:product2).id].sort
+      assert_equal expected, actual.map(&:product).map(&:id).sort
+    end
+  end
+
+  test '当日通知すべき対象を返す' do
+    expected = [products(:product1).id, products(:product2).id].sort
+
+    (7..-7).each do |i|
+      @bot_keyword.notify_at = i
+      Time.stub(:now, i.days.ago) do
+        actual = @bot_keyword.keyword_products_to_notify
+        assert_equal expected, actual.map(&:product).map(&:id).sort
+      end
+    end
   end
 end

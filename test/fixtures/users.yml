@@ -62,3 +62,14 @@ user5:
   random_key: random-key
   private: true
   tags: "{}"
+
+bot_user:
+  domain_name: bot
+  screen_name: bot
+  nickname: bot
+  profile_text: bot
+  kitaguchi_profile_id: -1
+  random_url: false
+  random_key: random-key
+  private: true
+  tags: "{}"
