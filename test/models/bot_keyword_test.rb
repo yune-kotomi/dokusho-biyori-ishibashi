@@ -170,7 +170,7 @@ class BotKeywordTest < ActiveSupport::TestCase
 
   test '送信済みは除外して返す' do
     sent = @bot_keyword.user_keyword.keyword.keyword_products.where(:product_id => products(:product1).id).first
-    @bot_keyword.sent_keyword_product_id.push(sent.id)
+    @bot_keyword.notified(sent)
 
     Time.stub(:now, 10.days.ago) do
       actual = @bot_keyword.keyword_products_to_notify

@@ -55,6 +55,10 @@ class BotKeyword < ActiveRecord::Base
       reject{|kp| sent_keyword_product_id.include?(kp.id) }
   end
 
+  def notified(keyword_product)
+    self.sent_keyword_product_id.push(keyword_product.id)
+  end
+
   private
   def parse_keyword(tree)
     # 発売日を示すチャンクを探す
