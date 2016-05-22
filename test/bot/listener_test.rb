@@ -25,14 +25,14 @@ class DokushoBiyoriBotListenerTest < ActiveSupport::TestCase
 
   test '自分宛ではないtweetは無視する' do
     message = Twitter::Tweet.new(:id => 1, :text => 'にゃー')
-    @rest.expect(:update, Twitter::Tweet.new(:id => 0), [String])
+    @rest.expect(:update, Twitter::Tweet.new(:id => 0), [String, Hash])
     @listener.tweet_received(message)
     assert_raises(::MockExpectationError) { @rest.verify }
   end
 
   test '自分宛だがフォローされてない相手からのmentionは無視する' do
     message = Twitter::Tweet.new(:id => 1, :text => '@bot にゃー')
-    @rest.expect(:update, Twitter::Tweet.new(:id => 0), [String])
+    @rest.expect(:update, Twitter::Tweet.new(:id => 0), [String, Hash])
     @listener.tweet_received(message)
     assert_raises(::MockExpectationError) { @rest.verify }
   end
@@ -56,6 +56,20 @@ class DokushoBiyoriBotListenerTest < ActiveSupport::TestCase
       end
     end
     @rest.verify
+  end
+
+  test 'キーワードを含まないmentionには反応しない' do
+    str = '三上小又のゆゆ式'
+
+    message = Twitter::Tweet.new(
+      :id => 1,
+      :text => "@bot #{str}",
+      :user => {:id => 1, :screen_name => 'user'}
+    )
+    @rest.expect(:update, Twitter::Tweet.new(:id => 0), [String, Hash])
+    @listener.instance_variable_set('@followers', [1])
+    @listener.tweet_received(message)
+    assert_raises(::MockExpectationError) { @rest.verify }
   end
 
   test 'フォロー通知でフォロワーリストを更新' do

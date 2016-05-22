@@ -37,6 +37,11 @@ class BotKeyword < ActiveRecord::Base
     end
   end
 
+  # "発売日"が含まれているか
+  def keyword_included?(message)
+    RELEASE.find{|k| message.include?(k) }.present?
+  end
+
   def keyword_products_to_notify
     keyword = user_keyword.keyword
     today = Time.now.beginning_of_day
