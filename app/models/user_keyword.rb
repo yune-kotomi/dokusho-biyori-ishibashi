@@ -1,6 +1,7 @@
 class UserKeyword < ActiveRecord::Base
   belongs_to :user
   belongs_to :keyword
+  has_many :bot_keywords
 
   after_save :initial_create_user_products
   before_destroy :remove_user_products

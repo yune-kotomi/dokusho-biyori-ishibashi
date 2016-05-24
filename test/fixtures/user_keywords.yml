@@ -29,3 +29,7 @@ user_keyword_5_2:
 user_keyword_bot:
   user: bot_user
   keyword: keyword2
+
+user_keyword_bot2:
+  user: bot_user
+  keyword: bot_keyword1

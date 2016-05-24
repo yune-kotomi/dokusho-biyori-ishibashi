@@ -21,3 +21,7 @@ keyword2:
 keyword3:
   value: ゆゆ式
   category: books
+
+bot_keyword1:
+  value: bot_keyword
+  category: books

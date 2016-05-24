@@ -8,3 +8,14 @@ bot_keyword1:
   notify_at:
   user_keyword: user_keyword_bot
   sent_keyword_product_id: '{}'
+  twitter_user_id: 1
+
+bot_keyword2:
+  user_keyword: user_keyword_bot2
+  sent_keyword_product_id: '{}'
+  twitter_user_id: 2
+
+bot_keyword3:
+  user_keyword: user_keyword_bot2
+  sent_keyword_product_id: '{}'
+  twitter_user_id: 3

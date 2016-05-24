@@ -21,3 +21,15 @@ keyword_product_2_1:
 keyword_product_2_2:
   keyword: keyword2
   product: product2
+
+bot_keyword_product_1:
+  keyword: bot_keyword1
+  product: bot_product1
+
+bot_keyword_product_2:
+  keyword: bot_keyword1
+  product: bot_product2
+
+bot_keyword_product_3:
+  keyword: bot_keyword1
+  product: bot_product3
