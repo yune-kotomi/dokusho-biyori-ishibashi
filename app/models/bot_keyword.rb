@@ -131,6 +131,7 @@ class BotKeyword < ActiveRecord::Base
         remaining = tokens.reject{|t| r.cover?(t.position.min) || r.cover?(t.position.max) }
       end
       remaining.pop if remaining.last && remaining.last.features.include?('助詞')
+      remaining.shift if remaining.first && remaining.first.features.include?('助詞')
       remaining
     end.reject(&:blank?).map{|t| t.map(&:surface).join }
 
