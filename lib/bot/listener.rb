@@ -37,7 +37,7 @@ module DokushoBiyoriBot
       when Twitter::Streaming::FriendList
         # いらない
       else
-        logger.info "unknown message: #{message.inspect}"
+        @logger.info "unknown message: #{message.inspect}"
       end
     end
 
