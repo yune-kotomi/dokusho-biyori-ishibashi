@@ -103,6 +103,19 @@ class BotKeyword < ActiveRecord::Base
       ranges.select{|r| others.select{|other| other.cover?(r.min) && other.cover?(r.max) }.present? }.blank?
     end
 
+    positions = positions.flat_map{|word, ranges| ranges.map{|r| [r, word]} }.
+      combination(2).flat_map do |combination|
+        a = combination.first
+        b = combination.last
+        if a.first.cover?(b.first.min) || a.first.cover?(b.first.max)
+          # 2つの語がオーバーラップしているので長い方を取る
+          [combination.sort{|a, b| a.last.size <=> b.last.size }.last]
+        else
+          combination
+        end
+      end.
+      group_by{|e| e.last }.map{|k, v| [k, v.map(&:first)] }.to_h if positions.size > 1
+
     current = nil
     token_group = tokens.group_by do |t|
       overlapped = positions.values.flatten.find{|r| r.cover?(t.position.min) || r.cover?(t.position.max) }
