@@ -46,7 +46,11 @@ module DokushoBiyoriBot
       mention_marker = "@#{@current_user.screen_name}"
       if tweet.text.include?(mention_marker) && @followers.include?(tweet.user.id)
         # 要求文解釈
-        bot_keyword = BotKeyword.new(:tweet_id => tweet.id, :twitter_user_id => tweet.user.id)
+        bot_keyword = BotKeyword.new(
+          :tweet_id => tweet.id,
+          :twitter_user_id => tweet.user.id,
+          :twitter_user_screen_name => tweet.user.screen_name
+        )
         if bot_keyword.keyword_included?(tweet.text)
           bot_keyword.parse(tweet.text.sub(mention_marker, '').strip)
           bot_keyword.save
