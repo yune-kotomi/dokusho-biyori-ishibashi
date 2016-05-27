@@ -31,17 +31,24 @@ module DokushoBiyoriBot
     # Twitterユーザごとに要求と通知対象をまとめる
     def notify_targets
       bot_keywords = BotKeyword.all.group_by{|bk| bk.twitter_user_id }
-      users = @rest.users(bot_keywords.keys).map{|u| [u.id, u] }.to_h
+      users = @rest.users(bot_keywords.keys.map(&:to_i)).map{|u| [u.id, u] }.to_h
       # {Twitter::User => {BotKeyword => [KeywordProduct]}}
-      bot_keywords.map{|u, bk| [users[u], bk] }.to_h.
-        map{|user, bot_keywords| [user, bot_keywords.map{|bk| [bk, bk.keyword_products_to_notify] }.to_h ] }.to_h
+      bot_keywords.map{|u, bk| [users[u.to_i], bk] }.to_h.
+        map{|user, bot_keywords| [user, bot_keywords.map{|bk| [bk, bk.keyword_products_to_notify] }.to_h ] }.
+        reject{|e| e.last.values.flatten.blank? }.to_h
     end
 
     # 返信実行
     def notify(user, notifications)
       message, reply_to = create_message(user, notifications)
       sleep 2 # 一日1000tweet数の制限を超えないように
-      tweet = @rest.update(message, :in_reply_to_status => reply_to)
+      tweet = @rest.update(message, :in_reply_to_status_id => reply_to.to_i)
+
+      # 送信済みとマーク
+      notifications.each do |bot_keyword, keyword_products|
+        keyword_products.each {|kp| bot_keyword.notified(kp) }
+        bot_keyword.save
+      end
     end
 
     # 返信文生成
@@ -65,6 +72,7 @@ module DokushoBiyoriBot
         product = notifications.values.flatten.map(&:product).
           sort{|a, b| a.release_date <=> b.release_date }.first
         primary_message = "#{product.title}の発売日は#{product.release_date.strftime('%m月%d日')}です。"
+        bot_keyword = notifications.find{|k, v| v.find{|kp| kp.product_id == product.id }.present? }.first
       end
 
       other_products = notifications.values.flatten.map(&:product).
@@ -97,13 +105,13 @@ module DokushoBiyoriBot
           other_products.map(&:ean).map{|e| "ean[]=#{e}" }.join('&')
       end
 
-      [
+      return [
         header,
         primary_message,
         message,
         "詳細は→",
         product_page
-      ].join
+      ].join, bot_keyword.tweet_id
     end
   end
 end

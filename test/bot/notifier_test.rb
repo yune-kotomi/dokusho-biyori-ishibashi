@@ -21,7 +21,7 @@ class DokushoBiyoriBotNotifierTest < ActiveSupport::TestCase
     Ishibashi::Application.config.bot_user_id = users(:bot_user).id
 
     @bot_keywords = (1..3).map{|i| bot_keywords("bot_keyword#{i}".to_sym) }
-    @twitter_users = @bot_keywords.map{|bk| Twitter::User.new(:id => bk.twitter_user_id, :screen_name => "bot-user-#{bk.twitter_user_id}") }
+    @twitter_users = @bot_keywords.map{|bk| Twitter::User.new(:id => bk.twitter_user_id.to_i, :screen_name => "bot-user-#{bk.twitter_user_id}") }
   end
 
   test "フォローされていないユーザの要求を削除" do
@@ -34,47 +34,51 @@ class DokushoBiyoriBotNotifierTest < ActiveSupport::TestCase
   end
 
   test "通知をまとめて返却" do
-    @rest.expect(:users, @twitter_users, [@bot_keywords.map(&:twitter_user_id)])
+    @rest.expect(:users, @twitter_users, [@bot_keywords.map(&:twitter_user_id).map(&:to_i)])
     actual = @notifier.notify_targets
 
-    assert_equal @twitter_users, actual.keys
-    assert_equal @bot_keywords, actual.values.flat_map(&:keys)
+    assert_equal @twitter_users[1, 2], actual.keys
+    assert_equal @bot_keywords[1, 2], actual.values.flat_map(&:keys)
     assert_equal [KeywordProduct], actual.values.map(&:values).flatten.map(&:class).uniq
   end
 
   test "当日通知のみ" do
     bot_keyword = @bot_keywords.last
     bot_keyword.update_attribute(:notify_at, 0)
-    user = @twitter_users.find{|u| u.id == bot_keyword.twitter_user_id }
+    user = @twitter_users.find{|u| u.id == bot_keyword.twitter_user_id.to_i }
     keyword_product = keyword_products(:bot_keyword_product_1)
     product = keyword_product.product
 
-    actual = @notifier.create_message(user, {bot_keyword => [keyword_product]})
+    actual, reply_to = @notifier.create_message(user, {bot_keyword => [keyword_product]})
     expected = [
       "@#{user.screen_name} ",
       "#{product.title}の発売日です。",
       "詳細は→https://dokusho.yumenosora.net/products/#{product.ean}"
     ].join
     assert_equal expected, actual
+    assert reply_to.present?
+    assert_equal bot_keyword.tweet_id, reply_to
   end
 
   test "情報通知単体のみ" do
     bot_keyword = @bot_keywords.last
-    user = @twitter_users.find{|u| u.id == bot_keyword.twitter_user_id }
+    user = @twitter_users.find{|u| u.id == bot_keyword.twitter_user_id.to_i }
     keyword_product = keyword_products(:bot_keyword_product_1)
     product = keyword_product.product
 
-    actual = @notifier.create_message(user, {bot_keyword => [keyword_product]})
+    actual, reply_to = @notifier.create_message(user, {bot_keyword => [keyword_product]})
     expected = [
       "@#{user.screen_name} ",
       "#{product.title}の発売日は#{product.release_date.strftime('%m月%d日')}です。",
       "詳細は→https://dokusho.yumenosora.net/products/#{product.ean}"
     ].join
     assert_equal expected, actual
+    assert reply_to.present?
+    assert_equal bot_keyword.tweet_id, reply_to
   end
 
   test "当日通知＋情報通知" do
-    user = @twitter_users.find{|u| u.id == @bot_keywords.first.twitter_user_id }
+    user = @twitter_users.find{|u| u.id == @bot_keywords.first.twitter_user_id.to_i }
     @bot_keywords[0].update_attribute(:notify_at, 0)
     product = keyword_products(:bot_keyword_product_1).product
     product2 = keyword_products(:bot_keyword_product_2).product
@@ -83,7 +87,7 @@ class DokushoBiyoriBotNotifierTest < ActiveSupport::TestCase
       @bot_keywords[1] => [keyword_products(:bot_keyword_product_2)]
     }
 
-    actual = @notifier.create_message(user, notifications)
+    actual, reply_to = @notifier.create_message(user, notifications)
     expected = [
       "@#{user.screen_name} ",
       "#{product.title}の発売日です。",
@@ -96,7 +100,7 @@ class DokushoBiyoriBotNotifierTest < ActiveSupport::TestCase
   test "当日通知複数" do
     bot_keyword = @bot_keywords.last
     bot_keyword.update_attribute(:notify_at, 0)
-    user = @twitter_users.find{|u| u.id == bot_keyword.twitter_user_id }
+    user = @twitter_users.find{|u| u.id == bot_keyword.twitter_user_id.to_i }
     keyword_products = [
       keyword_products(:bot_keyword_product_1),
       keyword_products(:bot_keyword_product_2),
@@ -104,7 +108,7 @@ class DokushoBiyoriBotNotifierTest < ActiveSupport::TestCase
     product = keyword_products[0].product
     product2 = keyword_products[1].product
 
-    actual = @notifier.create_message(user, {bot_keyword => keyword_products})
+    actual, reply_to = @notifier.create_message(user, {bot_keyword => keyword_products})
     expected = [
       "@#{user.screen_name} ",
       "#{product.title}の発売日です。",
@@ -117,7 +121,7 @@ class DokushoBiyoriBotNotifierTest < ActiveSupport::TestCase
   test "当日通知複数で多い場合" do
     bot_keyword = @bot_keywords.last
     bot_keyword.update_attribute(:notify_at, 0)
-    user = @twitter_users.find{|u| u.id == bot_keyword.twitter_user_id }
+    user = @twitter_users.find{|u| u.id == bot_keyword.twitter_user_id.to_i }
     keyword_products = [
       keyword_products(:bot_keyword_product_1),
       keyword_products(:bot_keyword_product_2),
@@ -127,7 +131,7 @@ class DokushoBiyoriBotNotifierTest < ActiveSupport::TestCase
     product2 = keyword_products[1].product
     product3 = keyword_products[2].product
 
-    actual = @notifier.create_message(user, {bot_keyword => keyword_products})
+    actual, reply_to = @notifier.create_message(user, {bot_keyword => keyword_products})
     expected = [
       "@#{user.screen_name} ",
       "#{product.title}の発売日です。",

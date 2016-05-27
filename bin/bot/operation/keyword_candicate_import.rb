@@ -1,6 +1,7 @@
 open(ARGV[0]).read.split("\n").each do |keyword|
   if ARGV[1] == 'people'
     words = keyword.split(/[ 　・]/)
+    keyword = words.join
   else
     words = [keyword]
   end

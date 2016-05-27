@@ -1,18 +1,21 @@
-config = Ishibashi::Application.config.twitter
+require_relative '../../lib/bot/notifier'
+
+config = Ishibashi::Application.config.twitter.update(:product_page_url => 'https://dokusho.yumenosora.net/products')
 logger = Logger.new("#{Rails.root}/log/notify.log")
-rest = Twitter::REST::Client.new do |c|
-  c.consumer_key = config[:consumer][:key]
-  c.consumer_secret = config[:consumer][:secret]
-  c.access_token = config[:access][:key]
-  c.access_token_secret = config[:access][:secret]
+ActiveRecord::Base.logger = logger
+notifier = DokushoBiyoriBot::Notifier.new(config, logger)
+
+logger.info '通知開始'
+
+logger.info 'クリーニング実行'
+notifier.clean_unfollower
+
+targets = notifier.notify_targets
+targets.each do |user, notifications|
+  logger.info user.screen_name
+  logger.info "BotKeyword: #{notifications.keys.map(&:id)}"
+  logger.info "Product: #{notifications.values.flatten.map(&:product).map(&:ean)}"
+  notifier.notify(user, notifications)
 end
 
-# フォロワー一覧
-followers = rest.follower_ids.to_h[:ids]
-
-# フォロー解除されたユーザのbot_keywordを削除
-BotKeyword.all.
-  reject{|bk| followers.include?(bk.twitter_user_id) }.
-  each do |bk|
-    bk.destroy
-  end
+logger.info '通知終了'

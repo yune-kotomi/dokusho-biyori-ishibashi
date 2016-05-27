@@ -14,7 +14,7 @@ class DokushoBiyoriBotListenerTest < ActiveSupport::TestCase
     conf.expect(:"access_token=", '', [String])
     conf.expect(:"access_token_secret=", '', [String])
     Twitter::REST::Client.stub(:new, rest, conf) do
-      @listener = DokushoBiyoriBot::Listener.new(Ishibashi::Application.config.twitter)
+      @listener = DokushoBiyoriBot::Listener.new(Ishibashi::Application.config.twitter, Logger.new("/dev/null"))
     end
     @listener.instance_variable_set('@rest', @rest)
 

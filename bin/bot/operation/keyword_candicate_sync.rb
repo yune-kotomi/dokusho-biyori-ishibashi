@@ -3,11 +3,9 @@ Product.where(:category => 'books').flat_map(&:authors).uniq.compact.each do |ke
   words = keyword.split(/[ 　・:：]/)
 
   KeywordCandicate.transaction do
-    if KeywordCandicate.where(:value => keyword).count == 0
-      KeywordCandicate.new(
-        :value => keyword,
-        :elements => words
-      ).save
+    kc = KeywordCandicate.where(:value => words.join).first_or_create do |kc|
+      kc.elements = words
     end
+    kc.update_attribute(:elements, words) if words.size > kc.elements.size
   end
 end
