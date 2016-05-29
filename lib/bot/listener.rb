@@ -65,7 +65,9 @@ module DokushoBiyoriBot
             if bot_keyword.notify_at.nil?
               reply.push("発売日が分かり次第お知らせします。")
             else
-              if bot_keyword.notify_at < 0
+              if bot_keyword.notify_at == 0
+                reply.push("発売日にお知らせします。")
+              elsif bot_keyword.notify_at < 0
                 reply.push("発売日の#{bot_keyword.notify_at * -1}日後にお知らせします。")
               else
                 reply.push("発売日の#{bot_keyword.notify_at}日前にお知らせします。")
@@ -81,12 +83,16 @@ module DokushoBiyoriBot
           @logger.info "キーワードが含まれていない: #{tweet.text}"
         end
       end
+    rescue => e
+      @logger.error "#{e.inspect} #{e.backtrace}"
     end
 
     def event_received(event)
       # フォロー通知ならフォロワーに追加
       if event.name == :follow && event.target.id == @current_user.id
         @followers.push(event.source.id)
+      else
+        @logger.info "unknown event: #{event.name} #{event.inspect}"
       end
     end
   end
