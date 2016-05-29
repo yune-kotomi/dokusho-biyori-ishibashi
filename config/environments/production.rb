@@ -76,4 +76,5 @@ Ishibashi::Application.configure do
   # config.autoflush_log = false
 
   config.log_formatter = ::Logger::Formatter.new
+  config.bot_user_id = 241
 end
