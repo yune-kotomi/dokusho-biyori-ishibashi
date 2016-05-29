@@ -4,6 +4,7 @@ class Product < ActiveRecord::Base
   has_many :user_products
 
   before_save :merge_data
+  before_save :update_fulltext
 
   def update_with_amazon(data = nil)
     data = AmazonEcs.get(self.ean) if data.nil?
@@ -100,5 +101,9 @@ class Product < ActiveRecord::Base
     else
       self.release_date = r_release_date
     end
+  end
+
+  def update_fulltext
+    self.fulltext = ::Keyword::FTS_TARGETS.flat_map{|c| self.send(c) }.join("\n")
   end
 end
