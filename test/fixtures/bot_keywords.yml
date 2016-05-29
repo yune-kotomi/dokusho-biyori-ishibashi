@@ -1,0 +1,24 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+bot_keyword1:
+  notify_at:
+  user_keyword: user_keyword_bot
+  sent_keyword_product_id: '{}'
+  twitter_user_id: 1
+  tweet_id: 101
+
+bot_keyword2:
+  user_keyword: user_keyword_bot2
+  sent_keyword_product_id: '{}'
+  twitter_user_id: 2
+  tweet_id: 102
+
+bot_keyword3:
+  user_keyword: user_keyword_bot2
+  sent_keyword_product_id: '{}'
+  twitter_user_id: 3
+  tweet_id: 103

@@ -1,0 +1,5 @@
+Ishibashi::Application.config.yahoo_app_id = ({
+  'development' => '',
+  'production' => '',
+  'test' => 'APPID'
+})[Rails.env]

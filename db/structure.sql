@@ -44,6 +44,76 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: bot_keywords; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE bot_keywords (
+    id integer NOT NULL,
+    notify_at integer,
+    uncertain boolean DEFAULT false,
+    tweet_id character varying,
+    twitter_user_id character varying,
+    twitter_user_screen_name character varying,
+    sent_keyword_product_id integer[] DEFAULT '{}'::integer[],
+    user_keyword_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: bot_keywords_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE bot_keywords_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bot_keywords_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE bot_keywords_id_seq OWNED BY bot_keywords.id;
+
+
+--
+-- Name: keyword_candicates; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE keyword_candicates (
+    id integer NOT NULL,
+    value text,
+    category character varying,
+    elements text[],
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: keyword_candicates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE keyword_candicates_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: keyword_candicates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE keyword_candicates_id_seq OWNED BY keyword_candicates.id;
+
+
+--
 -- Name: keyword_products; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -276,6 +346,20 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY bot_keywords ALTER COLUMN id SET DEFAULT nextval('bot_keywords_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY keyword_candicates ALTER COLUMN id SET DEFAULT nextval('keyword_candicates_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY keyword_products ALTER COLUMN id SET DEFAULT nextval('keyword_products_id_seq'::regclass);
 
 
@@ -312,6 +396,22 @@ ALTER TABLE ONLY user_products ALTER COLUMN id SET DEFAULT nextval('user_product
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Name: bot_keywords_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY bot_keywords
+    ADD CONSTRAINT bot_keywords_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: keyword_candicates_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY keyword_candicates
+    ADD CONSTRAINT keyword_candicates_pkey PRIMARY KEY (id);
 
 
 --
@@ -360,6 +460,13 @@ ALTER TABLE ONLY user_products
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_keyword_candicates_on_value; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_keyword_candicates_on_value ON keyword_candicates USING pgroonga (value);
 
 
 --
@@ -476,4 +583,8 @@ INSERT INTO schema_migrations (version) VALUES ('20160223143832');
 INSERT INTO schema_migrations (version) VALUES ('20160508070550');
 
 INSERT INTO schema_migrations (version) VALUES ('20160508134126');
+
+INSERT INTO schema_migrations (version) VALUES ('20160513130954');
+
+INSERT INTO schema_migrations (version) VALUES ('20160515013022');
 
