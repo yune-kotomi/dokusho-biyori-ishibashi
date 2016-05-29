@@ -1,0 +1,10 @@
+Ishibashi::Application.config.twitter = {
+  :consumer => {
+    :key => '',
+    :secret => ''
+  },
+  :access => {
+    :key => '',
+    :secret => ''
+  }
+}

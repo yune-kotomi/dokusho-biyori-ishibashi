@@ -9,10 +9,10 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test "Amazonの情報で自分自身を更新する" do
-    mock(AmazonEcs).get(@product.ean) { @amazon }
-
     assert_no_difference "Product.count" do
-      @product.update_with_amazon
+      AmazonEcs.stub(:get, @amazon) do
+        @product.update_with_amazon
+      end
       @product.save
     end
     assert_equal @amazon[:a_title], @product.a_title
@@ -21,10 +21,10 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test "楽天ブックスの情報で自分自身を更新する" do
-    mock(RakutenBooks).get(@product.ean) { @rakuten_books }
-
     assert_no_difference "Product.count" do
-      @product.update_with_rakuten_books
+      RakutenBooks.stub(:get, @rakuten_books) do
+        @product.update_with_rakuten_books
+      end
       @product.save
     end
     assert_equal @rakuten_books[:r_title], @product.r_title

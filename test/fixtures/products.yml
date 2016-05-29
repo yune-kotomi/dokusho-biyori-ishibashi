@@ -95,3 +95,21 @@ product2:
   r_release_date:
 
   release_date: 2014-05-27 00:00:00 +09:00
+
+bot_product1:
+  ean: 1000000000002
+  category: books
+  a_title: bot_product1
+  release_date: 2114-05-27 00:00:00 +09:00
+
+bot_product2:
+  ean: 1000000000002
+  category: books
+  a_title: bot_product2
+  release_date: 2114-05-27 00:00:00 +09:00
+
+bot_product3:
+  ean: 1000000000002
+  category: books
+  a_title: bot_product3長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い長い
+  release_date: 2114-05-27 00:00:00 +09:00

@@ -40,7 +40,6 @@ end
 # gem 'debugger', group: [:development, :test]
 group :test do
   gem 'webmock'
-  gem 'rr', :require => false
 end
 
 group :development, :test do
@@ -58,5 +57,8 @@ gem 'rakuten_web_service'
 gem 'autoprefixer-rails'
 gem 'material_design_lite-sass'
 
-gem 'charlock_holmes'
+# gem 'charlock_holmes'
 gem 'kaminari'
+
+gem 'aho_corasick_matcher'
+gem 'twitter'

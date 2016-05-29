@@ -6,6 +6,8 @@ before_script:
   - psql -c 'create database kiyoshikojin_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
   - cp config/initializers/kitaguchi.rb.example config/initializers/kitaguchi.rb
+  - cp config/initializers/yahoo.rb.example config/initializers/yahoo.rb
+  - cp config/initializers/twitter.rb.example config/initializers/twitter.rb
 before_install:
   - curl --silent --location https://github.com/pgroonga/pgroonga/raw/master/data/travis/setup.sh | sh
 cache: bundler

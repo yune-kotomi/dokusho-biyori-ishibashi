@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+yuyushiki1:
+  value: 三上小又
+  category: author
+  elements: '{三上,小又}'
+
+ashinano:
+  value: 芦奈野ひとし
+  category: author
+  elements: '{芦奈野,ひとし}'
+
+shinonome1:
+  value: 成瀬ちさと
+  category: author
+  elements: '{成瀬,ちさと}'
+
+shinonome2:
+  value: 東雲侑子は短編小説をあいしている
+  category: series
+  elements: '{東雲侑子は短編小説をあいしている}'

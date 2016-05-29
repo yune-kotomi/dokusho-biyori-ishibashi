@@ -20,5 +20,8 @@ vendor/bundle
 config/initializers/amazon_ecs.rb
 config/initializers/rakuten_books.rb
 config/initializers/kitaguchi.rb
+config/initializers/yahoo.rb
+config/initializers/twitter.rb
+
 db/groonga/
 config/initializers/exception_notification.rb

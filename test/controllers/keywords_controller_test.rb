@@ -26,10 +26,11 @@ class KeywordsControllerTest < ActionController::TestCase
   test "新しいキーワードを追加するとkeywordとuser_keywordを生成する" do
     assert_difference('Keyword.count') do
       assert_difference('UserKeyword.count') do
-        stub(AmazonEcs).search { [0, []] }
-        post :create,
-          {:keyword => {:value => 'キーワード', :category => 'books'}, :format => :json},
-          :user_id => @user1.id
+        AmazonEcs.stub(:search, [0, []]) do
+          post :create,
+            {:keyword => {:value => 'キーワード', :category => 'books'}, :format => :json},
+            :user_id => @user1.id
+        end
       end
     end
     assert_response :success
