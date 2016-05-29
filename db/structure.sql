@@ -204,7 +204,8 @@ CREATE TABLE products (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     a_authors text[],
-    r_authors text[]
+    r_authors text[],
+    fulltext text
 );
 
 
@@ -477,45 +478,10 @@ CREATE INDEX index_keyword_products_on_product_id ON keyword_products USING btre
 
 
 --
--- Name: index_products_on_a_authors; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_products_on_fulltext; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_products_on_a_authors ON products USING pgroonga (a_authors);
-
-
---
--- Name: index_products_on_a_manufacturer; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_products_on_a_manufacturer ON products USING pgroonga (a_manufacturer);
-
-
---
--- Name: index_products_on_a_title; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_products_on_a_title ON products USING pgroonga (a_title);
-
-
---
--- Name: index_products_on_r_authors; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_products_on_r_authors ON products USING pgroonga (r_authors);
-
-
---
--- Name: index_products_on_r_manufacturer; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_products_on_r_manufacturer ON products USING pgroonga (r_manufacturer);
-
-
---
--- Name: index_products_on_r_title; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_products_on_r_title ON products USING pgroonga (r_title);
+CREATE INDEX index_products_on_fulltext ON products USING pgroonga (fulltext);
 
 
 --
@@ -587,4 +553,8 @@ INSERT INTO schema_migrations (version) VALUES ('20160508134126');
 INSERT INTO schema_migrations (version) VALUES ('20160513130954');
 
 INSERT INTO schema_migrations (version) VALUES ('20160515013022');
+
+INSERT INTO schema_migrations (version) VALUES ('20160529082940');
+
+INSERT INTO schema_migrations (version) VALUES ('20160529084534');
 

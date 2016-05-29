@@ -18,6 +18,7 @@ class ProductTest < ActiveSupport::TestCase
     assert_equal @amazon[:a_title], @product.a_title
     assert_equal @amazon[:category], @product.category
     assert_equal @amazon[:ean], @product.ean
+    assert @product.fulltext.present?
   end
 
   test "楽天ブックスの情報で自分自身を更新する" do
