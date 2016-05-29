@@ -49,7 +49,7 @@ class BotKeyword < ActiveRecord::Base
 
     if notify_at.nil?
       keyword_products = keyword_products.
-        where('products.release_date >= ? and keyword_products.created_at >= ?', today, 1.day.ago(today))
+        where('products.release_date >= ?', today)
     else
       keyword_products = keyword_products.
         where('products.release_date = ?', notify_at.days.since(today))
