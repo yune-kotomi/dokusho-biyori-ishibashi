@@ -58,6 +58,20 @@ class DokushoBiyoriBotListenerTest < ActiveSupport::TestCase
     @rest.verify
   end
 
+  test '自分のtweetのリツイートは無視する(replyに見えるので誤認しないように)' do
+    str = '三上小又のゆゆ式の発売日を教えて。'
+    message = Twitter::Tweet.new(
+      :id => 1,
+      :text => "@bot #{str}",
+      :user => {:id => 1, :screen_name => 'user'},
+      :retweeted_status => Twitter::Tweet.new(:id => 2)
+    )
+    @listener.instance_variable_set('@followers', [1])
+    @rest.expect(:update, Twitter::Tweet.new(:id => 0), [String, Hash])
+    @listener.tweet_received(message)
+    assert_raises(::MockExpectationError) { @rest.verify }
+  end
+
   test 'キーワードを含まないmentionには反応しない' do
     str = '三上小又のゆゆ式'
 

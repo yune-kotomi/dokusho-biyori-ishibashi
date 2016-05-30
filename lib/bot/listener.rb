@@ -44,7 +44,7 @@ module DokushoBiyoriBot
     def tweet_received(tweet)
       # フォロワーからの自分宛のmentionのみ解釈する
       mention_marker = "@#{@current_user.screen_name}"
-      if tweet.text.include?(mention_marker) && @followers.include?(tweet.user.id)
+      if tweet.text.include?(mention_marker) && @followers.include?(tweet.user.id) && !tweet.retweet?
         # 要求文解釈
         bot_keyword = BotKeyword.new(
           :tweet_id => tweet.id,
