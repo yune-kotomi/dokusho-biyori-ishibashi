@@ -34,8 +34,8 @@ module DokushoBiyoriBot
       users = @rest.users(bot_keywords.keys.map(&:to_i)).map{|u| [u.id, u] }.to_h
       # {Twitter::User => {BotKeyword => [KeywordProduct]}}
       bot_keywords.map{|u, bk| [users[u.to_i], bk] }.to_h.
-        map{|user, bot_keywords| [user, bot_keywords.map{|bk| [bk, bk.keyword_products_to_notify] }.to_h ] }.
-        reject{|e| e.last.values.flatten.blank? }.to_h
+        map{|user, bot_keywords| [user, bot_keywords.map{|bk| [bk, bk.keyword_products_to_notify] }.to_h ] }.to_h.
+        map{|user, notifications| [user, notifications.reject{|k, v| v.blank? }] }.reject{|e| e.last.blank? }.to_h
     end
 
     # 返信実行
