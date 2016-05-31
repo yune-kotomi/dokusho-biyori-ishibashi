@@ -71,7 +71,7 @@ module DokushoBiyoriBot
         # 発売日が一番早いものを優先
         product = notifications.values.flatten.map(&:product).
           sort{|a, b| a.release_date <=> b.release_date }.first
-        primary_message = "#{product.title}の発売日は#{product.release_date.strftime('%m月%d日')}です。"
+        primary_message = "#{product.title}は#{product.release_date.month}月#{product.release_date.day}日発売です。"
         bot_keyword = notifications.find{|k, v| v.find{|kp| kp.product_id == product.id }.present? }.first
       end
 

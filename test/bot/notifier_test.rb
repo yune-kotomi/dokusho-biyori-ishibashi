@@ -69,7 +69,7 @@ class DokushoBiyoriBotNotifierTest < ActiveSupport::TestCase
     actual, reply_to = @notifier.create_message(user, {bot_keyword => [keyword_product]})
     expected = [
       "@#{user.screen_name} ",
-      "#{product.title}の発売日は#{product.release_date.strftime('%m月%d日')}です。",
+      "#{product.title}は#{product.release_date.month}月#{product.release_date.day}日発売です。",
       "詳細は→https://dokusho.yumenosora.net/products/#{product.ean}"
     ].join
     assert_equal expected, actual
