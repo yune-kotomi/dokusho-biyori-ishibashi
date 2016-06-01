@@ -14,7 +14,7 @@ class DokushoBiyoriBotListenerTest < ActiveSupport::TestCase
     conf.expect(:"access_token=", '', [String])
     conf.expect(:"access_token_secret=", '', [String])
     Twitter::REST::Client.stub(:new, rest, conf) do
-      @listener = DokushoBiyoriBot::Listener.new(Ishibashi::Application.config.twitter, Logger.new("/dev/null"))
+      @listener = DokushoBiyoriBot::Listener.new(Ishibashi::Application.config.twitter.update(:product_page_url => 'https://dokusho.yumenosora.net/products'), Logger.new("/dev/null"))
     end
     @listener.instance_variable_set('@rest', @rest)
 
@@ -56,6 +56,30 @@ class DokushoBiyoriBotListenerTest < ActiveSupport::TestCase
       end
     end
     @rest.verify
+  end
+
+  test '発売を控えた商品がある場合はその旨通知に足す' do
+    str = 'ゆゆ式の発売日を教えて。'
+    keyword_product = keyword_products(:bot_keyword_product_yuyushiki)
+    product = products(:bot_product2)
+    reply = "@user #{product.title}が#{product.release_date.month}月#{product.release_date.day}日発売です。詳細は→https://dokusho.yumenosora.net/products/#{product.ean} また「ゆゆ式」で検索して次作の発売日が分かり次第お知らせします。"
+
+    message = Twitter::Tweet.new(
+      :id => 1,
+      :text => "@bot #{str}",
+      :user => {:id => 1, :screen_name => 'user'}
+    )
+    @rest.expect(:update, Twitter::Tweet.new(:id => 0), [reply, Hash])
+    mock_yahoo_da('APPID', str)
+    @listener.instance_variable_set('@followers', [1])
+
+    AmazonEcs.stub(:search, [0, []]) do
+      assert_difference 'BotKeyword.count' do
+        @listener.tweet_received(message)
+      end
+    end
+    @rest.verify
+    assert_equal [keyword_product.id], BotKeyword.order(:created_at).last.sent_keyword_product_id
   end
 
   test '自分のtweetのリツイートは無視する(replyに見えるので誤認しないように)' do

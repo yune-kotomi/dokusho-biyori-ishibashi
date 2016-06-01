@@ -33,3 +33,7 @@ bot_keyword_product_2:
 bot_keyword_product_3:
   keyword: bot_keyword1
   product: bot_product3
+
+bot_keyword_product_yuyushiki:
+  keyword: keyword3
+  product: bot_product2

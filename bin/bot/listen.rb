@@ -1,6 +1,6 @@
 require_relative '../../lib/bot/listener'
 
-config = Ishibashi::Application.config.twitter
+config = Ishibashi::Application.config.twitter.update(:product_page_url => 'https://dokusho.yumenosora.net/products')
 logger = Logger.new("#{Rails.root}/log/listen.log")
 ActiveRecord::Base.logger = logger
 listener = DokushoBiyoriBot::Listener.new(config, logger)

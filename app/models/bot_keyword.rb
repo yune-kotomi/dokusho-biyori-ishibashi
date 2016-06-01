@@ -42,7 +42,7 @@ class BotKeyword < ActiveRecord::Base
     RELEASE.find{|k| message.include?(k) }.present?
   end
 
-  def keyword_products_to_notify
+  def keyword_products_to_notify(notify_at = self.notify_at)
     keyword = user_keyword.keyword
     today = Time.now.beginning_of_day
     keyword_products = keyword.keyword_products.includes(:product).references(:products)
@@ -57,7 +57,8 @@ class BotKeyword < ActiveRecord::Base
 
     keyword_products.
       where('products.a_release_date_fixed = ?', true).
-      reject{|kp| sent_keyword_product_id.include?(kp.id) }
+      reject{|kp| sent_keyword_product_id.include?(kp.id) }.
+      sort{|a, b| a.product.release_date <=> b.product.release_date }
   end
 
   def notified(keyword_product)
