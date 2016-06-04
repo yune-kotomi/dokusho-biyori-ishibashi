@@ -1,0 +1,13 @@
+@<%= @tweet.user.screen_name %> <%= @product.title %>が<%= @product.release_date.month %>月<%= @product.release_date.day %>日発売です。
+詳細は<%= @product_page %> また「<%= @bot_keyword.keyword %>」で検索して
+<% if @bot_keyword.notify_at.nil? %>
+  次作の発売日が分かり次第お知らせします。
+<% else %>
+  <% if @bot_keyword.notify_at == 0 %>
+    発売日にお知らせします。
+  <% elsif @bot_keyword.notify_at < 0 %>
+    発売日の<%= @bot_keyword.notify_at * -1 %>日後にお知らせします。
+  <% else %>
+    発売日の<%= @bot_keyword.notify_at %>日前にお知らせします。
+  <% end %>
+<% end %>

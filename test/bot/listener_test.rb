@@ -39,7 +39,7 @@ class DokushoBiyoriBotListenerTest < ActiveSupport::TestCase
 
   test 'フォロワーからの自分宛mentionを解釈し、応答する' do
     str = '三上小又のゆゆ式の発売日を教えて。'
-    reply = '@user はい、「三上 小又 ゆゆ式」で検索して発売日が分かり次第お知らせします。'
+    reply = '@user はい、「三上 小又 ゆゆ式」で検索して次作の発売日が分かり次第お知らせします。'
 
     message = Twitter::Tweet.new(
       :id => 1,
@@ -62,7 +62,7 @@ class DokushoBiyoriBotListenerTest < ActiveSupport::TestCase
     str = 'ゆゆ式の発売日を教えて。'
     keyword_product = keyword_products(:bot_keyword_product_yuyushiki)
     product = products(:bot_product2)
-    reply = "@user #{product.title}が#{product.release_date.month}月#{product.release_date.day}日発売です。詳細は→https://dokusho.yumenosora.net/products/#{product.ean} また「ゆゆ式」で検索して次作の発売日が分かり次第お知らせします。"
+    reply = "@user #{product.title}が#{product.release_date.month}月#{product.release_date.day}日発売です。詳細はhttps://dokusho.yumenosora.net/products/#{product.ean} また「ゆゆ式」で検索して次作の発売日が分かり次第お知らせします。"
 
     message = Twitter::Tweet.new(
       :id => 1,
