@@ -49,74 +49,40 @@ module DokushoBiyoriBot
       mention_marker = "@#{@current_user.screen_name}"
       if tweet.text.include?(mention_marker) && @followers.include?(tweet.user.id) && !tweet.retweet?
         # 要求文解釈
-        bot_keyword = BotKeyword.new(
+        @bot_keyword = BotKeyword.new(
           :tweet_id => tweet.id,
           :twitter_user_id => tweet.user.id,
           :twitter_user_screen_name => tweet.user.screen_name
         )
-        if bot_keyword.keyword_included?(tweet.text)
-          bot_keyword.parse(tweet.text.sub(mention_marker, '').strip)
-          bot_keyword.save
-          # 応答組み立て
-          header = "@#{tweet.user.screen_name} "
-          answer = "はい。"
-          recent = ''
-          product_page = ''
-          keyword = ''
+        if @bot_keyword.keyword_included?(tweet.text)
+          @bot_keyword.parse(tweet.text.sub(mention_marker, '').strip)
+          @bot_keyword.save
 
-          unless bot_keyword.uncertain
-            notify_targets = bot_keyword.keyword_products_to_notify(nil)
+          unless @bot_keyword.uncertain
+            @tweet = tweet
+            notify_targets = @bot_keyword.keyword_products_to_notify(nil)
             if notify_targets.present?
               keyword_product = notify_targets.first
-              product = keyword_product.product
-              recent = "#{product.title}が#{product.release_date.month}月#{product.release_date.day}日発売です。詳細は→"
-              product_page = "#{@product_page_url}/#{product.ean} "
+              @product = keyword_product.product
+              @product_page = "#{@product_page_url}/#{@product.ean}"
 
-              keyword = "また「#{bot_keyword.keyword}」で検索して"
-              if bot_keyword.notify_at.nil?
-                keyword += "次作の発売日が分かり次第お知らせします。"
-              else
-                if bot_keyword.notify_at == 0
-                  keyword += "発売日にお知らせします。"
-                elsif bot_keyword.notify_at < 0
-                  keyword += "発売日の#{bot_keyword.notify_at * -1}日後にお知らせします。"
-                else
-                  keyword += "発売日の#{bot_keyword.notify_at}日前にお知らせします。"
-                end
-              end
+              templates = ['reply_with_product', 'reply', 'reply_short'].
+                map{|f| File.join(Rails.root, "lib/bot/views/listener/#{f}.text.erb") }
+              reply = render(templates)
             else
-              keyword = "はい、「#{bot_keyword.keyword}」で検索して"
-
-              if bot_keyword.notify_at.nil?
-                keyword += "発売日が分かり次第お知らせします。"
-              else
-                if bot_keyword.notify_at == 0
-                  keyword += "発売日にお知らせします。"
-                elsif bot_keyword.notify_at < 0
-                  keyword += "発売日の#{bot_keyword.notify_at * -1}日後にお知らせします。"
-                else
-                  keyword += "発売日の#{bot_keyword.notify_at}日前にお知らせします。"
-                end
-              end
+              templates = ['reply', 'reply_short'].
+                map{|f| File.join(Rails.root, "lib/bot/views/listener/#{f}.text.erb") }
+              reply = render(templates)
             end
           end
 
-          # 応答文組み立て
-          text = [header, recent, keyword].join
-          if product_page.present? && text.size <= 140-25 # URL+スペース
-              reply = [header, recent, product_page, keyword].join
-
-              if bot_keyword.notify_at.nil?
-                bot_keyword.notified(keyword_product)
-                bot_keyword.save
-              end
-          elsif keyword.present? && text.size <= 140
-            reply = [header, keyword].join
-          else
-            reply = [header, answer].join
-          end
           # 応答実行
           @rest.update(reply, :in_reply_to_status => tweet)
+
+          if @bot_keyword.notify_at.nil? && @product_page.present? && reply.include?(@product_page)
+            @bot_keyword.notified(keyword_product)
+            @bot_keyword.save
+          end
         else
           @logger.info "キーワードが含まれていない: #{tweet.text}"
         end
@@ -132,6 +98,16 @@ module DokushoBiyoriBot
       else
         @logger.info "unknown event: #{event.name} #{event.inspect}"
       end
+    end
+
+    private
+    def render(templates)
+      templates.map{|path| ERB.new(open(path).read) }.
+        map{|t| t.result(binding)}.
+        map{|r| r.gsub(/^ +/, '').gsub("\n", '') }.
+        sort{|a, b| b.size <=> a.size }.
+        reject{|r| r.gsub(@product_page || 'a' * 24, 'a' * 24).size > 140 }.
+        first
     end
   end
 end
