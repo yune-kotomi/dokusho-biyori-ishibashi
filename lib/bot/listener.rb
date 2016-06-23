@@ -95,6 +95,9 @@ module DokushoBiyoriBot
       # フォロー通知ならフォロワーに追加
       if event.name == :follow && event.target.id == @current_user.id
         @followers.push(event.source.id)
+
+        # 鍵アカウントならフォローを返す
+        @rest.follow(event.source) if event.source.protected?
       else
         @logger.info "unknown event: #{event.name} #{event.inspect}"
       end

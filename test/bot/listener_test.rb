@@ -120,4 +120,14 @@ class DokushoBiyoriBotListenerTest < ActiveSupport::TestCase
     list = @listener.instance_variable_get('@followers')
     assert list.include?(1)
   end
+
+  test '鍵ユーザにはフォローを返す' do
+    event = Twitter::Streaming::Event.new(
+      :event => 'follow',
+      :source => {:id => 2, :protected => true},
+      :target => {:id => 0}
+    )
+    @rest.expect(:follow, [Twitter::User.new(:id => 2)], [Twitter::User])
+    @listener.event_received(event)
+  end
 end
