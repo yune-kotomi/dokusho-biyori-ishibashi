@@ -53,65 +53,46 @@ module DokushoBiyoriBot
 
     # 返信文生成
     def create_message(user, notifications)
-      header = "@#{user.screen_name} "
-
+      @user = user
       if notifications.keys.find{|bk| bk.notify_at.present? }.present?
         # 当日通知を優先
+        template = 'current'
         # 本日に一番近いものを選択
-        bot_keyword = notifications.keys.
+        @bot_keyword = notifications.keys.
           reject{|bk| bk.notify_at.nil? }.
           sort{|a, b| a.notify_at <=> b.notify_at }.first
-        product = notifications[bot_keyword].first.product
-        primary_message = "#{product.title}の発売日"
-        primary_message += "#{bot_keyword.notify_at}日前" if bot_keyword.notify_at > 0
-        primary_message += "#{bot_keyword.notify_at * -1}日後" if bot_keyword.notify_at < 0
-        primary_message += 'です。'
+        @product = notifications[@bot_keyword].first.product
       else
         # 情報通知のみ
+        template = 'info'
         # 発売日が一番早いものを優先
-        product = notifications.values.flatten.map(&:product).
+        @product = notifications.values.flatten.map(&:product).
           sort{|a, b| a.release_date <=> b.release_date }.first
-        primary_message = "#{product.title}は#{product.release_date.month}月#{product.release_date.day}日発売です。"
-        bot_keyword = notifications.find{|k, v| v.find{|kp| kp.product_id == product.id }.present? }.first
+        @bot_keyword = notifications.find{|k, v| v.find{|kp| kp.product_id == @product.id }.present? }.first
       end
 
-      other_products = notifications.values.flatten.map(&:product).
-        reject{|p| p == product }.
+      @other_products = notifications.values.flatten.map(&:product).
+        reject{|p| p == @product }.
         sort{|a, b| a.release_date <=> b.release_date }
 
-      postfix_count = 28 # 「詳細は→URL」
-      postfix_count += 4 if other_products.present? # 「他に〜等、」
-      remaining_count = 140 - (header.size + primary_message.size + postfix_count.size)
-
-      # 残りの商品名が入るだけ詰める
-      titles = other_products.map(&:title)
-      case
-      when titles.join('、').size > remaining_count
-        message = ''
-        titles.each do |t|
-          break if (message + t).size > remaining_count
-          message += t
-        end
-        message = "他に#{message}等、"
-      when titles.blank?
-        message = ''
-      else
-        message = "他には#{titles.join('、')}、"
+      @product_page = "#{@product_page_url}/#{@product.ean}"
+      if @other_products.present?
+        @product_page += '?' +
+          @other_products.map(&:ean).map{|e| "ean[]=#{e}" }.join('&')
       end
 
-      product_page = "#{@product_page_url}/#{product.ean}"
-      if other_products.present?
-        product_page += '?' +
-          other_products.map(&:ean).map{|e| "ean[]=#{e}" }.join('&')
-      end
+      return render(template), @bot_keyword.tweet_id
+    end
 
-      return [
-        header,
-        primary_message,
-        message,
-        "詳細は→",
-        product_page
-      ].join, bot_keyword.tweet_id
+    private
+    def render(template)
+      t = ERB.new(open("lib/bot/views/notifier/#{template}.text.erb").read)
+      (0..@other_products.size).
+        map{|i| @include_others_size = i; t.result(binding) }.
+        map{|r| r.gsub(/^ +/, '').gsub("\n", '') }.
+        sort{|a, b| b.size <=> a.size }.
+        reject{|r| r.gsub(@product_page || 'a' * 24, 'a' * 24).size > 140 }.
+        first
     end
   end
 end

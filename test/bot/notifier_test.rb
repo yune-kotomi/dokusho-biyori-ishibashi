@@ -53,7 +53,7 @@ class DokushoBiyoriBotNotifierTest < ActiveSupport::TestCase
     expected = [
       "@#{user.screen_name} ",
       "#{product.title}の発売日です。",
-      "詳細は→https://dokusho.yumenosora.net/products/#{product.ean}"
+      "詳細はhttps://dokusho.yumenosora.net/products/#{product.ean}"
     ].join
     assert_equal expected, actual
     assert reply_to.present?
@@ -70,7 +70,7 @@ class DokushoBiyoriBotNotifierTest < ActiveSupport::TestCase
     expected = [
       "@#{user.screen_name} ",
       "#{product.title}は#{product.release_date.month}月#{product.release_date.day}日発売です。",
-      "詳細は→https://dokusho.yumenosora.net/products/#{product.ean}"
+      "詳細はhttps://dokusho.yumenosora.net/products/#{product.ean}"
     ].join
     assert_equal expected, actual
     assert reply_to.present?
@@ -91,8 +91,8 @@ class DokushoBiyoriBotNotifierTest < ActiveSupport::TestCase
     expected = [
       "@#{user.screen_name} ",
       "#{product.title}の発売日です。",
-      "他には#{product2.title}、",
-      "詳細は→https://dokusho.yumenosora.net/products/#{product.ean}?ean[]=#{product2.ean}"
+      "他、#{product2.title}について",
+      "詳細はhttps://dokusho.yumenosora.net/products/#{product.ean}?ean[]=#{product2.ean}"
     ].join
     assert_equal expected, actual
   end
@@ -112,8 +112,8 @@ class DokushoBiyoriBotNotifierTest < ActiveSupport::TestCase
     expected = [
       "@#{user.screen_name} ",
       "#{product.title}の発売日です。",
-      "他には#{product2.title}、",
-      "詳細は→https://dokusho.yumenosora.net/products/#{product.ean}?ean[]=#{product2.ean}"
+      "他、#{product2.title}について",
+      "詳細はhttps://dokusho.yumenosora.net/products/#{product.ean}?ean[]=#{product2.ean}"
     ].join
     assert_equal expected, actual
   end
@@ -136,7 +136,7 @@ class DokushoBiyoriBotNotifierTest < ActiveSupport::TestCase
       "@#{user.screen_name} ",
       "#{product.title}の発売日です。",
       "他に#{product2.title}等、",
-      "詳細は→https://dokusho.yumenosora.net/products/#{product.ean}?ean[]=#{product2.ean}&ean[]=#{product3.ean}"
+      "詳細はhttps://dokusho.yumenosora.net/products/#{product.ean}?ean[]=#{product2.ean}&ean[]=#{product3.ean}"
     ].join
     assert_equal expected, actual
   end

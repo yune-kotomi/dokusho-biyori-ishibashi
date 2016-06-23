@@ -1,0 +1,15 @@
+@<%= @user.screen_name %> <%= @product.title %>の発売日
+<% if @bot_keyword.notify_at > 0 %>
+  <%= @bot_keyword.notify_at %>日前
+<% elsif @bot_keyword.notify_at < 0 %>
+  <%= @bot_keyword.notify_at %>日後
+<% end %>
+です。
+<% if @other_products.size > 0 %>
+  <% if @other_products.size == @include_others_size %>
+    <%= "他、#{@other_products.map(&:title).join('、')}について" %>
+  <% else %>
+    <%= "他に#{@other_products[0, @include_others_size].map(&:title).join('、')}等、" %>
+  <% end %>
+<% end %>
+詳細は<%= @product_page %>
