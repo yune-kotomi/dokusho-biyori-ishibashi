@@ -213,7 +213,7 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_response :success
     assert_nothing_raised RuntimeError do
-      ics = Icalendar.parse(@response.body)
+      ics = Icalendar::Calendar.parse(@response.body)
       assert_not_nil ics.first
 
       titles = @user1.user_products.where(:type_name => 'search').map{|up| up.product.title}.sort
