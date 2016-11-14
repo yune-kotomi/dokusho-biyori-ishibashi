@@ -72,13 +72,6 @@
     </ul>
   </div>
   <% @title += ' ほか' %>
-<% else %>
-  <div>
-    <h3>関連商品</h3>
-    <ul class="product-list">
-      <%= render :partial => 'products/list_element', :collection => @product.related_products %>
-    </ul>
-  </div>
 <% end %>
 
 <% content_for(:head) do %>
